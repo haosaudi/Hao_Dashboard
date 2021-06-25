@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
-import React, { useEffect, useState, createRef } from 'react'
-import classNames from 'classnames'
-import DatePicker from 'react-datepicker'
+import PropTypes from "prop-types";
+import React, { useEffect, useState, createRef } from "react";
+import classNames from "classnames";
+import DatePicker from "react-datepicker";
 
-import 'react-datepicker/dist/react-datepicker.css'
+import "react-datepicker/dist/react-datepicker.css";
 import {
   CCard,
   CCardBody,
@@ -15,42 +15,56 @@ import {
   CForm,
   CFormLabel,
   CFormCheck,
-  CSpinner,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { DocsLink } from 'src/reusable'
-import { CategoryAction, CityAction } from 'src/redux-store/actions'
-import { connect } from 'react-redux'
-import { ImageUpload } from 'src/utils/api_calls'
-import { missingFieldsCheckOut } from 'src/utils/globalFunction'
-import { toast } from 'react-toastify'
+  CFormSelect,
+} from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import { DocsLink } from "src/reusable";
+import {
+  CategoryAction,
+  CityAction,
+  CouponAction,
+} from "src/redux-store/actions";
+import { connect } from "react-redux";
+import { ImageUpload } from "src/utils/api_calls";
+import { missingFieldsCheckOut } from "src/utils/globalFunction";
+import { toast } from "react-toastify";
+import moment from "moment";
 
 const City = (props) => {
   const [state, setState] = useState({
-    name_ar: '',
-    loading: false,
-  })
-  const [status, setStatus] = useState(false)
+    coupon_code: "",
+    coupon_type: "",
+    amount: "",
+    amount_type: "",
+    expiry_date: new Date(),
+    balance_note: "",
+  });
+  const [status, setStatus] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
 
-  const AddCity = async () => {
-    let data = state
-    delete data.loading
-    let message = missingFieldsCheckOut(data)
-    let isMissed = message.length > 0
+  const AddCoupon = async () => {
+    let data = state;
+    delete data.expiry_date;
+    let message = missingFieldsCheckOut(data);
+    let isMissed = message.length > 0;
     if (isMissed) {
       toast.warn(`Please fill all Fields ${message}`, {
-        position: 'top-right',
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-      })
+      });
     } else {
-      props.AddCity({ ...data, status: status ? 1 : 0 }, props.token, props.history)
+      props.AddCoupon(
+        { ...state, expiry_date: moment(state.expiry_date).format("yy-MM-DD") },
+        props.token,
+        props.history
+      );
     }
-  }
+  };
   return (
     <>
       <CCard className="mb-4">
@@ -63,22 +77,24 @@ const City = (props) => {
         // }}
         >
           <CRow>
-            <CCol style={{ alignItems: 'center', display: 'flex' }}>Add Coupon</CCol>
-            <CCol style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <CCol style={{ alignItems: "center", display: "flex" }}>
+              Add Coupon
+            </CCol>
+            <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
               <CButton
-                onClick={AddCity}
+                onClick={AddCoupon}
                 disabled={state.loading || props.isLoading}
-                style={{ color: 'white', fontSize: 12 }}
-                color={'info'}
+                style={{ color: "white", fontSize: 12 }}
+                color={"info"}
                 shape="rounded-0"
               >
                 Add
               </CButton>
               &nbsp; &nbsp;
               <CButton
-                onClick={() => props.history.push('/category')}
-                style={{ color: 'grey', fontSize: 12 }}
-                color={'light'}
+                onClick={() => props.history.push("/category")}
+                style={{ color: "grey", fontSize: 12 }}
+                color={"light"}
                 shape="rounded-0"
               >
                 Cancel
@@ -111,12 +127,17 @@ const City = (props) => {
         */}
           <CForm>
             <CRow className="mb-3">
-              <CFormLabel htmlFor="inputEmail3" className="col-sm-2 col-form-label">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
                 Coupon Code
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
-                  onChange={(e) => setState({ ...state, name_ar: e.target.value })}
+                  onChange={(e) =>
+                    setState({ ...state, coupon_code: e.target.value })
+                  }
                   placeholder="Coupon Code"
                   type="email"
                   id="inputEmail3"
@@ -126,29 +147,42 @@ const City = (props) => {
             </CRow>
 
             <CRow className="mb-3">
-              <CFormLabel htmlFor="inputEmail3" className="col-sm-2 col-form-label">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
                 Coupon Level
               </CFormLabel>
               <CCol sm="4">
-                <CFormControl
-                  onChange={(e) => setState({ ...state, name_ar: e.target.value })}
-                  placeholder="City Name"
-                  type="email"
-                  id="inputEmail3"
-                />
+                <CFormSelect
+                  onChange={(e) => {
+                    setState({ ...state, coupon_type: e.target.value });
+                  }}
+                  aria-label="Default select example"
+                >
+                  <option>Coupon Level</option>
+                  <option value="Website">Website</option>
+                  <option value="Experience">Experience</option>
+                  <option value="UserExp">UserExp</option>
+                </CFormSelect>
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
 
             <CRow className="mb-3">
-              <CFormLabel htmlFor="inputEmail3" className="col-sm-2 col-form-label">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
                 Amount
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
-                  onChange={(e) => setState({ ...state, name_ar: e.target.value })}
-                  placeholder="City Name"
-                  type="email"
+                  onChange={(e) =>
+                    setState({ ...state, amount: e.target.value })
+                  }
+                  placeholder="Amount"
+                  type="number"
                   id="inputEmail3"
                 />
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
@@ -156,43 +190,53 @@ const City = (props) => {
             </CRow>
 
             <CRow className="mb-3">
-              <CFormLabel htmlFor="inputEmail3" className="col-sm-2 col-form-label">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
                 Amount Type
               </CFormLabel>
               <CCol sm="4">
-                <CFormControl
-                  onChange={(e) => setState({ ...state, name_ar: e.target.value })}
-                  placeholder="City Name"
-                  type="email"
-                  id="inputEmail3"
-                />
+                <CFormSelect
+                  onChange={(e) => {
+                    setState({ ...state, amount_type: e.target.value });
+                  }}
+                  aria-label="Default select example"
+                >
+                  <option>Amount Type</option>
+                  <option value="Fixed">Fixed</option>
+                  <option value="Percentage">Percentage</option>
+                </CFormSelect>
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
 
             <CRow className="mb-3">
-              <CFormLabel htmlFor="inputEmail3" className="col-sm-2 col-form-label">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
                 Expiry Date
               </CFormLabel>
               <CCol sm="4">
-                <CFormControl
-                  onChange={(e) => setState({ ...state, name_ar: e.target.value })}
-                  placeholder="City Name"
-                  type="email"
-                  id="inputEmail3"
+                <DatePicker
+                  selected={state.expiry_date}
+                  onChange={(date) => setState({ ...state, expiry_date: date })}
                 />
-                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
 
             <CRow className="mb-3">
-              <CFormLabel htmlFor="inputPassword3" className="col-sm-2 col-form-label">
+              <CFormLabel
+                htmlFor="inputPassword3"
+                className="col-sm-2 col-form-label"
+              >
                 Single Use?
               </CFormLabel>
               <CCol sm="4">
                 <CFormCheck
                   onChange={(e) => {
-                    setStatus(e.target.checked)
+                    setStatus(e.target.checked);
                   }}
                   type="checkbox"
                   id="gridCheck1"
@@ -203,16 +247,23 @@ const City = (props) => {
             </CRow>
 
             <CRow className="mb-3">
-              <CFormLabel htmlFor="inputEmail3" className="col-sm-2 col-form-label">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
                 Note
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
-                  onChange={(e) => setState({ ...state, name_ar: e.target.value })}
-                  placeholder="City Name"
-                  type="email"
-                  id="inputEmail3"
-                />
+                  onChange={(e) =>
+                    setState({ ...state, balance_note: e.target.value })
+                  }
+                  component="textarea"
+                  id="validationTextarea"
+                  // placeholder="Required example textarea"
+                  // invalid
+                  // required
+                ></CFormControl>
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -220,26 +271,26 @@ const City = (props) => {
         </CCardBody>
       </CCard>
     </>
-  )
-}
+  );
+};
 
 City.propTypes = {
-  AddCity: PropTypes.func,
+  AddCoupon: PropTypes.func,
   token: PropTypes.string,
   isLoading: PropTypes.bool,
   history: PropTypes.object,
   cities: PropTypes.array,
-}
+};
 
 const mapStateToProp = (state) => ({
   isLoading: state.AuthReducer.isLoading,
   token: state.AuthReducer.token,
   cities: state.CityReducer.cities,
   // userData: state.AuthReducer.userData,
-})
+});
 
 const mapDispatchToProps = {
-  AddCity: CityAction.AddCity,
-}
+  AddCoupon: CouponAction.AddCoupon,
+};
 
-export default connect(mapStateToProp, mapDispatchToProps)(City)
+export default connect(mapStateToProp, mapDispatchToProps)(City);
