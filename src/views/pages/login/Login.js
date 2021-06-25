@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
   CButton,
   CCard,
@@ -14,38 +14,38 @@ import {
   CInputGroupText,
   CRow,
   CSpinner,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { AuthAction } from 'src/redux-store/actions'
-import { connect } from 'react-redux'
-import { toast } from 'react-toastify'
+} from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import { AuthAction } from "src/redux-store/actions";
+import { connect } from "react-redux";
+import { toast } from "react-toastify";
 
 const Login = (props) => {
-  const [state, setState] = useState({ email: '', password: '' })
+  const [state, setState] = useState({ email: "", password: "" });
   const login = () => {
     // console.log('SAHI BAAT HY!!', props)
-    if (state.email !== '' && state.password !== '') {
-      props.SignIn({ email: state.email, password: state.password })
+    if (state.email !== "" && state.password !== "") {
+      props.SignIn({ email: state.email, password: state.password });
     } else {
-      toast.warn('Please fill all Fields', {
-        position: 'top-right',
+      toast.warn("Please fill all Fields", {
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-      })
+      });
     }
-  }
+  };
   useEffect(() => {
-    if (props.token && props.token !== '') {
-      props.history.push('/')
+    if (props.token && props.token !== "") {
+      props.history.push("/");
     }
-  }, [props.token])
+  }, [props.token]);
   const onChange = (value, name) => {
-    setState({ ...state, [name]: value })
-  }
+    setState({ ...state, [name]: value });
+  };
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -56,14 +56,16 @@ const Login = (props) => {
                 <CCardBody>
                   <CForm>
                     <h1>Login</h1>
-                    <p className="text-medium-emphasis">Sign In to your account</p>
+                    <p className="text-medium-emphasis">
+                      Sign In to your account
+                    </p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon name="cil-user" />
                       </CInputGroupText>
                       <CFormControl
                         onChange={(e) => {
-                          onChange(e.target.value, 'email')
+                          onChange(e.target.value, "email");
                         }}
                         placeholder="Username"
                         autoComplete="username"
@@ -75,7 +77,7 @@ const Login = (props) => {
                       </CInputGroupText>
                       <CFormControl
                         onChange={(e) => {
-                          onChange(e.target.value, 'password')
+                          onChange(e.target.value, "password");
                         }}
                         type="password"
                         placeholder="Password"
@@ -95,16 +97,20 @@ const Login = (props) => {
                             Loading...
                           </CButton>
                         ) : (
-                          <CButton onClick={login} color="primary" className="px-4">
+                          <CButton
+                            onClick={login}
+                            color="primary"
+                            className="px-4"
+                          >
                             Login
                           </CButton>
                         )}
                       </CCol>
-                      <CCol xs="6" className="text-right">
+                      {/* <CCol xs="6" className="text-right">
                         <CButton color="link" className="px-0">
                           Forgot password?
                         </CButton>
-                      </CCol>
+                      </CCol> */}
                     </CRow>
                   </CForm>
                 </CCardBody>
@@ -130,24 +136,24 @@ const Login = (props) => {
         </CRow>
       </CContainer>
     </div>
-  )
-}
+  );
+};
 
 Login.propTypes = {
   SignIn: PropTypes.func,
   token: PropTypes.string,
   isLoading: PropTypes.bool,
   history: PropTypes.object,
-}
+};
 
 const mapStateToProp = (state) => ({
   isLoading: state.AuthReducer.isLoading,
   token: state.AuthReducer.token,
   // userData: state.AuthReducer.userData,
-})
+});
 
 const mapDispatchToProps = {
   SignIn: AuthAction.Signin,
-}
+};
 
-export default connect(mapStateToProp, mapDispatchToProps)(Login)
+export default connect(mapStateToProp, mapDispatchToProps)(Login);

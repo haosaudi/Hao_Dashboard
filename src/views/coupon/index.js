@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
-import React, { useEffect, useState, createRef } from 'react'
-import classNames from 'classnames'
+import PropTypes from "prop-types";
+import React, { useEffect, useState, createRef } from "react";
+import classNames from "classnames";
 import {
   CCard,
   CCardBody,
@@ -14,68 +14,69 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
-} from '@coreui/react'
-import { DocsLink } from 'src/reusable'
-import { CategoryAction, CityAction } from 'src/redux-store/actions'
-import { connect } from 'react-redux'
-import swal from 'sweetalert'
-import CouponAction from 'src/redux-store/actions/coupon'
-import moment from 'moment'
+} from "@coreui/react";
+import { DocsLink } from "src/reusable";
+import { CategoryAction, CityAction } from "src/redux-store/actions";
+import { connect } from "react-redux";
+import swal from "sweetalert";
+import CouponAction from "src/redux-store/actions/coupon";
+import moment from "moment";
 
 const Category = (props) => {
   const categoryTableHeading = [
-    'Booked By',
-    'Coupon Level',
-    'Amount',
-    'Amount Type',
-    'Expire Date',
-    'Single Use?',
-    'Enabled',
-  ]
+    "Booked By",
+    "Coupon Level",
+    "Amount",
+    "Amount Type",
+    "Expire Date",
+    "Single Use?",
+    "Enabled",
+    "Action",
+  ];
 
-  const [coupons, setCoupons] = useState([])
+  const [coupons, setCoupons] = useState([]);
 
   useEffect(() => {
     if (props.token) {
-      props.GetCoupons(props.token)
+      props.GetCoupons(props.token);
     }
-  }, [])
+  }, []);
   useEffect(() => {
-    setCoupons(props.coupons)
-  }, [props.coupons])
+    setCoupons(props.coupons);
+  }, [props.coupons]);
   const DeleteCoupon = (i, id) => {
     swal({
-      title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this category!',
-      icon: 'warning',
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this coupon!",
+      icon: "warning",
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        swal('Poof! Your category has been deleted!', {
-          icon: 'success',
-        })
-        props.DeleteCoupon(id, props.token)
-        setCoupons(coupons.filter((item, ind) => ind !== i))
+        swal("Poof! Your coupon has been deleted!", {
+          icon: "success",
+        });
+        props.DeleteCoupon(id, props.token);
+        setCoupons(coupons.filter((item, ind) => ind !== i));
       } else {
-        swal('Your category is safe!')
+        swal("Your coupon is safe!");
       }
-    })
-  }
+    });
+  };
   return (
     <>
-      {console.log('I GOT THE CATEGORIES', props.coupons)}
+      {console.log("I GOT THE CATEGORIES", props.coupons)}
       <CCard className="mb-4">
-        <CCardHeader style={{ fontWeight: 'bold' }}>
-          Coupons{' '}
+        <CCardHeader style={{ fontWeight: "bold" }}>
+          Coupons{" "}
           <span
-            onClick={() => props.history.push('/coupon/add')}
+            onClick={() => props.history.push("/coupon/add")}
             style={{
               fontSize: 12,
-              fontWeight: '400',
-              color: '#309CE4',
-              textDecorationLine: 'underline',
-              cursor: 'pointer',
+              fontWeight: "400",
+              color: "#309CE4",
+              textDecorationLine: "underline",
+              cursor: "pointer",
             }}
           >
             Add New Coupons
@@ -100,17 +101,38 @@ const Category = (props) => {
               {coupons?.length > 0
                 ? coupons?.map((val, index) => (
                     <CTableRow key={index}>
-                      <CTableHeaderCell scope="row">{val.coupon_code}</CTableHeaderCell>
+                      <CTableHeaderCell scope="row">
+                        {val.coupon_code}
+                      </CTableHeaderCell>
                       <CTableDataCell>{val.coupon_type}</CTableDataCell>
                       {/* <CTableDataCell>{val.description_ar}</CTableDataCell> */}
                       <CTableDataCell>{val.amount}</CTableDataCell>
                       <CTableDataCell>{val.amount_type}</CTableDataCell>
-                      <CTableDataCell>{moment(val.expiry_date).format('DD-MM-yy')}</CTableDataCell>
+                      <CTableDataCell>
+                        {moment(val.expiry_date).format("DD-MM-yy")}
+                      </CTableDataCell>
                       <CTableDataCell>{val.status}</CTableDataCell>
                       <CTableDataCell
                       // style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
                       >
                         {val.status}
+                      </CTableDataCell>
+                      <CTableDataCell
+                      // style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
+                      >
+                        <span
+                          onClick={() => {
+                            DeleteCoupon(index, val.id);
+                          }}
+                          style={{
+                            color: "red",
+                            fontSize: 12,
+                            cursor: "pointer",
+                            paddingLeft: 5,
+                          }}
+                        >
+                          Delete
+                        </span>
                       </CTableDataCell>
                     </CTableRow>
                   ))
@@ -120,8 +142,8 @@ const Category = (props) => {
         </CCardBody>
       </CCard>
     </>
-  )
-}
+  );
+};
 
 Category.propTypes = {
   GetCoupons: PropTypes.func,
@@ -130,18 +152,18 @@ Category.propTypes = {
   isLoading: PropTypes.bool,
   history: PropTypes.object,
   coupons: PropTypes.array,
-}
+};
 
 const mapStateToProp = (state) => ({
   isLoading: state.AuthReducer.isLoading,
   token: state.AuthReducer.token,
   coupons: state.CouponReducer.coupons,
   // userData: state.AuthReducer.userData,
-})
+});
 
 const mapDispatchToProps = {
   GetCoupons: CouponAction.GetAllCoupons,
   DeleteCoupon: CouponAction.DeleteCoupon,
-}
+};
 
-export default connect(mapStateToProp, mapDispatchToProps)(Category)
+export default connect(mapStateToProp, mapDispatchToProps)(Category);
