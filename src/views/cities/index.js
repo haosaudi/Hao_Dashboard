@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
-import React, { useEffect, useState, createRef } from 'react'
-import classNames from 'classnames'
+import PropTypes from "prop-types";
+import React, { useEffect, useState, createRef } from "react";
+import classNames from "classnames";
 import {
   CCard,
   CCardBody,
@@ -14,58 +14,63 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
-} from '@coreui/react'
-import { DocsLink } from 'src/reusable'
-import { CategoryAction, CityAction } from 'src/redux-store/actions'
-import { connect } from 'react-redux'
-import swal from 'sweetalert'
+} from "@coreui/react";
+import { DocsLink } from "src/reusable";
+import { CategoryAction, CityAction } from "src/redux-store/actions";
+import { connect } from "react-redux";
+import swal from "sweetalert";
 
 const Category = (props) => {
-  const categoryTableHeading = ['City Image', 'City Name', 'City Status', 'Action']
+  const categoryTableHeading = [
+    "City Image",
+    "City Name",
+    "City Status",
+    "Action",
+  ];
 
-  const [cities, setCities] = useState([])
+  const [cities, setCities] = useState([]);
 
   useEffect(() => {
     if (props.token) {
-      props.GetCities(props.token)
+      props.GetCities(props.token);
     }
-  }, [])
+  }, []);
   useEffect(() => {
-    setCities(props.cities)
-  }, [props.cities])
+    setCities(props.cities);
+  }, [props.cities]);
   const deleteCity = (i, id) => {
     swal({
-      title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this category!',
-      icon: 'warning',
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this city!",
+      icon: "warning",
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        swal('Poof! Your category has been deleted!', {
-          icon: 'success',
-        })
-        props.DeleteCity(id, props.token)
-        setCities(cities.filter((item, ind) => ind !== i))
+        swal("Poof! Your city has been deleted!", {
+          icon: "success",
+        });
+        props.DeleteCity(id, props.token);
+        setCities(cities.filter((item, ind) => ind !== i));
       } else {
-        swal('Your category is safe!')
+        swal("Your city is safe!");
       }
-    })
-  }
+    });
+  };
   return (
     <>
-      {console.log('I GOT THE CATEGORIES', props.cities)}
+      {console.log("I GOT THE CATEGORIES", props.cities)}
       <CCard className="mb-4">
-        <CCardHeader style={{ fontWeight: 'bold' }}>
-          Cities{' '}
+        <CCardHeader style={{ fontWeight: "bold" }}>
+          Cities{" "}
           <span
-            onClick={() => props.history.push('/city/add')}
+            onClick={() => props.history.push("/city/add")}
             style={{
               fontSize: 12,
-              fontWeight: '400',
-              color: '#309CE4',
-              textDecorationLine: 'underline',
-              cursor: 'pointer',
+              fontWeight: "400",
+              color: "#309CE4",
+              textDecorationLine: "underline",
+              cursor: "pointer",
             }}
           >
             Add New City
@@ -96,13 +101,13 @@ const Category = (props) => {
                             width: 40,
                             height: 40,
                             borderRadius: 100,
-                            border: '0.2px solid grey',
+                            border: "0.2px solid grey",
                           }}
                           src={
-                            val.img?.search('amazonaws') !== -1
+                            val.img?.search("amazonaws") !== -1
                               ? val.img
                               : `http://18.217.187.206/img/city_img/${
-                                  val.img ? val.img.toLowerCase() : ''
+                                  val.img ? val.img.toLowerCase() : ""
                                 }`
                           }
                         />
@@ -114,19 +119,25 @@ const Category = (props) => {
                       // style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
                       >
                         <span
-                          onClick={() => props.history.push(`/city/edit/${val.id}`)}
-                          style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
+                          onClick={() =>
+                            props.history.push(`/city/edit/${val.id}`)
+                          }
+                          style={{
+                            color: "#309CE4",
+                            fontSize: 12,
+                            cursor: "pointer",
+                          }}
                         >
                           Edit
                         </span>
                         <span
                           onClick={() => {
-                            deleteCity(index, val.id)
+                            deleteCity(index, val.id);
                           }}
                           style={{
-                            color: 'red',
+                            color: "red",
                             fontSize: 12,
-                            cursor: 'pointer',
+                            cursor: "pointer",
                             paddingLeft: 5,
                           }}
                         >
@@ -154,8 +165,8 @@ const Category = (props) => {
         </CCardBody>
       </CCard>
     </>
-  )
-}
+  );
+};
 
 Category.propTypes = {
   GetCities: PropTypes.func,
@@ -164,18 +175,18 @@ Category.propTypes = {
   isLoading: PropTypes.bool,
   history: PropTypes.object,
   cities: PropTypes.array,
-}
+};
 
 const mapStateToProp = (state) => ({
   isLoading: state.AuthReducer.isLoading,
   token: state.AuthReducer.token,
   cities: state.CityReducer.cities,
   // userData: state.AuthReducer.userData,
-})
+});
 
 const mapDispatchToProps = {
   GetCities: CityAction.GetAllCities,
   DeleteCity: CityAction.DeleteCity,
-}
+};
 
-export default connect(mapStateToProp, mapDispatchToProps)(Category)
+export default connect(mapStateToProp, mapDispatchToProps)(Category);
