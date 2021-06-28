@@ -14,50 +14,46 @@ import {
   CFormControl,
   CForm,
   CFormLabel,
-  CFormCheck,
+  CFormSelect,
   CSpinner,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { DocsLink } from "src/reusable";
-import { CategoryAction } from "src/redux-store/actions";
+import {
+  CategoryAction,
+  CityAction,
+  ProviderApprovalAction,
+} from "src/redux-store/actions";
 import { connect } from "react-redux";
 import { ImageUpload } from "src/utils/api_calls";
 import { missingFieldsCheckOut } from "src/utils/globalFunction";
 import { toast } from "react-toastify";
+import moment from "moment";
 const Category = (props) => {
   const [state, setState] = useState({
-    name_ar: "",
-    description_ar: "",
-    img: "",
+    req_status: "",
     loading: false,
   });
   const [status, setStatus] = useState(false);
   useEffect(() => {
     if (props.token) {
       if (props.match?.params?.id) {
-        props.GetCategoryById(props.match?.params?.id, props.token);
+        props.GetRequestById(props.match?.params?.id, props.token);
       } else {
-        props.history.push("/category");
+        props.history.push("/city");
       }
     }
   }, []);
   useEffect(() => {
-    if (props.category) {
-      let { category } = props;
+    if (props.request) {
+      let { request } = props;
+      document.getElementById("done").value = request.req_status;
       setState({
         ...state,
-        name_ar: category.name_ar,
-        description_ar: category.description_ar,
-        img: category.img,
+        req_status: request.req_status,
       });
-      console.log(category.status == 1);
-      // if (document.getElementById("gridCheck1")) {
-      document.getElementById("gridCheck1").setAttribute("checked", true);
-      // }
-
-      setStatus(category.status == 1);
     }
-  }, [props.category]);
+  }, [props.request]);
   const imageUpload = async (file) => {
     setState({ ...state, loading: true });
     let data = new FormData();
@@ -71,7 +67,7 @@ const Category = (props) => {
     // setState({ ...state, loading: false })
     console.log("imageData", imageData);
   };
-  const EditCategory = async () => {
+  const EditCity = async () => {
     let data = state;
     delete data.loading;
     let message = missingFieldsCheckOut(data);
@@ -87,9 +83,9 @@ const Category = (props) => {
         progress: undefined,
       });
     } else {
-      props.UpdateCategory(
+      props.UpdateProviderRequest(
         props.match?.params?.id,
-        { ...data, slug: state.name_ar, status: status ? 1 : 0 },
+        { ...data, status: status ? 1 : 0 },
         props.token,
         props.history
       );
@@ -113,7 +109,7 @@ const Category = (props) => {
             </CCol>
             <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
               <CButton
-                onClick={EditCategory}
+                onClick={EditCity}
                 disabled={state.loading || props.isLoading}
                 style={{ color: "white", fontSize: 12 }}
                 color={"info"}
@@ -123,7 +119,7 @@ const Category = (props) => {
               </CButton>
               &nbsp; &nbsp;
               <CButton
-                onClick={() => props.history.push("/category")}
+                onClick={() => props.history.push("/city")}
                 style={{ color: "grey", fontSize: 12 }}
                 color={"light"}
                 shape="rounded-0"
@@ -162,18 +158,107 @@ const Category = (props) => {
                 htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
               >
-                Category Name
+                Requested User
               </CFormLabel>
-              <CCol sm="4">
-                <CFormControl
-                  onChange={(e) =>
-                    setState({ ...state, name_ar: e.target.value })
-                  }
-                  placeholder="Category Name"
-                  type="email"
-                  value={state.name_ar}
-                  id="inputEmail3"
-                />
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.request?.first_name + " " + props?.request?.last_name ||
+                  "s"}
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                Email
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.request?.email || ""}
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                Mobile
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.request?.mobile || ""}
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                City
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.request?.city || ""}
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                Category
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.request?.category || ""}
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                Requested Date
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {moment(props?.request?.created_at).format("yy-MM-DD") || ""}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -182,68 +267,22 @@ const Category = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
-                Category Description
+                Request Status
               </CFormLabel>
               <CCol sm="4">
-                <CFormControl
-                  onChange={(e) =>
-                    setState({ ...state, description_ar: e.target.value })
-                  }
-                  component="textarea"
-                  value={state.description_ar}
-                  id="validationTextarea"
-                  // placeholder="Required example textarea"
-                  // invalid
-                  // required
-                ></CFormControl>
-              </CCol>
-            </CRow>
-            <CRow className="mb-3">
-              <CFormLabel
-                htmlFor="inputPassword3"
-                className="col-sm-2 col-form-label"
-              >
-                Enabled
-              </CFormLabel>
-              <CCol sm="4">
-                <CFormCheck
-                  id="enabled"
-                  defaultChecked={status}
+                <CFormSelect
+                  id="done"
                   onChange={(e) => {
-                    setStatus(e.target.checked);
+                    setState({ ...state, req_status: e.target.value });
                   }}
-                  type="checkbox"
-                  id="gridCheck1"
-                  label=""
-                />
+                  defaultValue={state.req_status}
+                  aria-label="Default select example"
+                >
+                  <option value="Requested">Requested</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                </CFormSelect>
               </CCol>
-              {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
-            </CRow>
-            <CRow className="mb-3">
-              <CFormLabel
-                htmlFor="inputPassword3"
-                className="col-sm-2 col-form-label"
-              >
-                Category Image
-              </CFormLabel>
-              <CCol sm="4">
-                <CFormControl
-                  onChange={(e) => {
-                    imageUpload(e.target.files[0]);
-                  }}
-                  type="file"
-                  id="formFile"
-                />
-              </CCol>
-              {state.loading ? (
-                <CCol sm="2">
-                  <CSpinner style={{ height: 25, width: 25 }} />
-                </CCol>
-              ) : state.img?.length > 0 ? (
-                <CCol sm="2">Uploaded</CCol>
-              ) : null}
-
-              {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
             </CRow>
           </CForm>
         </CCardBody>
@@ -253,25 +292,25 @@ const Category = (props) => {
 };
 
 Category.propTypes = {
-  UpdateCategory: PropTypes.func,
-  GetCategoryById: PropTypes.func,
+  UpdateProviderRequest: PropTypes.func,
+  GetRequestById: PropTypes.func,
   token: PropTypes.string,
   isLoading: PropTypes.bool,
   history: PropTypes.object,
   match: PropTypes.object,
-  category: PropTypes.object,
+  request: PropTypes.object,
 };
 
 const mapStateToProp = (state) => ({
-  isLoading: state.AuthReducer.isLoading,
+  isLoading: state.ProviderApprovalReducer.isLoading,
   token: state.AuthReducer.token,
-  category: state.CategoryReducer.category,
+  request: state.ProviderApprovalReducer.request,
   // userData: state.AuthReducer.userData,
 });
 
 const mapDispatchToProps = {
-  GetCategoryById: CategoryAction.GetCategoryById,
-  UpdateCategory: CategoryAction.UpdateCategory,
+  GetRequestById: ProviderApprovalAction.GetProviderRequestById,
+  UpdateProviderRequest: ProviderApprovalAction.UpdateProviderRequest,
 };
 
 export default connect(mapStateToProp, mapDispatchToProps)(Category);
