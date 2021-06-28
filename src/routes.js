@@ -6,6 +6,7 @@ import EditCity from "./views/cities/editCities";
 import AddCoupon from "./views/coupon/addCoupon";
 import EditCoupon from "./views/coupon/editCoupon";
 import EditProviderApproval from "./views/providerApproval/editProviderApproval";
+import managereviews from "./views/managereviews";
 
 // examples
 
@@ -133,6 +134,12 @@ const routes = [
     path: "/request",
     name: "Provider Approval",
     component: ProviderApproval,
+    exact: true,
+  },
+  {
+    path: "/reviews",
+    name: "Manage Reviews",
+    component: managereviews,
     exact: true,
   },
   {
