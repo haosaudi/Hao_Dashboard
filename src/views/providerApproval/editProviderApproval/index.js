@@ -85,7 +85,7 @@ const Category = (props) => {
     } else {
       props.UpdateProviderRequest(
         props.match?.params?.id,
-        { ...data, status: status ? 1 : 0 },
+        { ...data },
         props.token,
         props.history
       );
