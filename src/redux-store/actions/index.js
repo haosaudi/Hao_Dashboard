@@ -4,6 +4,7 @@ import CategoryAction from "./category";
 import CityAction from "./city";
 import CouponAction from "./coupon";
 import ProviderApprovalAction from "./providerApproval";
+import ReviewsAction from "./reviews";
 
 export {
   ActionType,
@@ -12,4 +13,6 @@ export {
   CityAction,
   CouponAction,
   ProviderApprovalAction,
+  ReviewsAction
 };
+
