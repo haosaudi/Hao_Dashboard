@@ -98,7 +98,7 @@ const Category = (props) => {
                             {reviews?.length > 0
                                 ? reviews?.map((val, index) => (
                                     <CTableRow key={index}>
-
+                                        {""}
                                         <CTableDataCell>{val?.title_ar}</CTableDataCell>
                                         <CTableDataCell>{val?.first_name + " " + val?.last_name}</CTableDataCell>
                                         <CTableDataCell>{val?.comment}</CTableDataCell>
