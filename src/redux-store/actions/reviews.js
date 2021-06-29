@@ -16,16 +16,16 @@ export default class CategoryAction {
       })
     }
   }
-  static GetCategoryById = (id, token) => {
+  static GetReviewById = (id, token) => {
     return async (dispatch) => {
-      console.log('get category by id data in Action', token)
-      dispatch({ type: ActionType.GET_CATEGORY })
-      await GET(`category/detail/${id}`, token).then((data) => {
+      console.log('get GetReviewById by id data in Action', token)
+      dispatch({ type: ActionType.GET_REVIEWS })
+      await GET(`review/detail/${id}`, token).then((data) => {
         if (data) {
-          console.log('GOT THE CATEGORY ID!!', data)
-          dispatch({ type: ActionType.GET_CATEGORY_SUCCESS, payload: data.data })
+          console.log('GOT THE GetReviewById ID!!====', data)
+          dispatch({ type: ActionType.GET_REVIEWS_SUCCESS, payload: data.data })
         } else {
-          dispatch({ type: ActionType.GET_CATEGORY_FAIL })
+          dispatch({ type: ActionType.GET_REVIEWS_FAIL })
         }
       })
     }
@@ -52,7 +52,7 @@ export default class CategoryAction {
       dispatch({ type: ActionType.REVIEWS_UPDATE })
       await PUT(`review/${id}`, data, token).then((data) => {
         if (data) {
-          console.log('UPDATE THE reviews', data)
+          console.log('UPDATE THE reviews=================================', data)
           toast('REVIEWS UPDATED SUCCESSFULLY')
           dispatch({ type: ActionType.REVIEWS_UPDATE_SUCCESS })
           history.push('/reviews')

@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import './scss/style.scss'
-
+import '@fortawesome/fontawesome-free/css/all.min.css'; import
+  'bootstrap-css-only/css/bootstrap.min.css'; import
+  'mdbreact/dist/css/mdb.css';
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 const loading = (

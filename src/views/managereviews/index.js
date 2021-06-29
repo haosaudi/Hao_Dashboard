@@ -105,12 +105,12 @@ const Category = (props) => {
                                         <CTableDataCell>{moment(val?.created_at).format("yy-MM-DD")}</CTableDataCell>
                                         <CTableDataCell
                                         >
-                                            {/* <span
-                                                onClick={() => props.history.push(`/category/edit/${val.id}`)}
+                                            <span
+                                                onClick={() => props.history.push(`/reviews/edit/${val.id}`)}
                                                 style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
                                             >
                                                 Edit
-                                            </span> */}
+                                            </span>
                                             <span
                                                 onClick={() => {
                                                     console.log("sss", val, val.id)
@@ -125,6 +125,8 @@ const Category = (props) => {
                                             >
                                                 Delete
                                             </span>
+
+
                                         </CTableDataCell>
                                     </CTableRow>
                                 ))

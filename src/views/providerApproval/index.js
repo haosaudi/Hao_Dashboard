@@ -89,60 +89,60 @@ const ProviderApproval = (props) => {
             <CTableBody>
               {requests?.length > 0
                 ? requests?.map((val, index) => (
-                    <CTableRow key={index}>
-                      <CTableHeaderCell scope="row">
-                        {val.first_name + " " + val.last_name}
-                      </CTableHeaderCell>
-                      <CTableDataCell>{val.email}</CTableDataCell>
-                      <CTableDataCell>{val.mobile}</CTableDataCell>
-                      <CTableDataCell>{val.city}</CTableDataCell>
-                      <CTableDataCell>{val.category}</CTableDataCell>
-                      <CTableDataCell>
-                        {moment(val.created_at).format("yy-MM-DD")}
-                      </CTableDataCell>
-                      <CTableDataCell
-                        style={{
-                          color:
-                            val.req_status == "Requested"
-                              ? "#79D363"
-                              : val.req_status == "Approved"
+                  <CTableRow key={index}>
+                    <CTableHeaderCell scope="row">
+                      {val.first_name + " " + val.last_name}
+                    </CTableHeaderCell>
+                    <CTableDataCell>{val.email}</CTableDataCell>
+                    <CTableDataCell>{val.mobile}</CTableDataCell>
+                    <CTableDataCell>{val.city}</CTableDataCell>
+                    <CTableDataCell>{val.category}</CTableDataCell>
+                    <CTableDataCell>
+                      {moment(val.created_at).format("yy-MM-DD")}
+                    </CTableDataCell>
+                    <CTableDataCell
+                      style={{
+                        color:
+                          val.req_status == "Requested"
+                            ? "#79D363"
+                            : val.req_status == "Approved"
                               ? "#67B5E9"
                               : "#E53452",
+                      }}
+                    >
+                      {val.req_status}
+                    </CTableDataCell>
+                    <CTableDataCell
+                    // style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
+                    >
+                      <span
+                        onClick={() =>
+                          props.history.push(`/request/edit/${val.id}`)
+                        }
+                        style={{
+                          color: "#309CE4",
+                          fontSize: 12,
+                          cursor: "pointer",
                         }}
                       >
-                        {val.req_status}
-                      </CTableDataCell>
-                      <CTableDataCell
-                      // style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
+                        Edit
+                      </span>
+                      <span
+                        onClick={() => {
+                          deleteRequest(index, val.id);
+                        }}
+                        style={{
+                          color: "red",
+                          fontSize: 12,
+                          cursor: "pointer",
+                          paddingLeft: 5,
+                        }}
                       >
-                        <span
-                          onClick={() =>
-                            props.history.push(`/request/edit/${val.id}`)
-                          }
-                          style={{
-                            color: "#309CE4",
-                            fontSize: 12,
-                            cursor: "pointer",
-                          }}
-                        >
-                          Edit
-                        </span>
-                        <span
-                          onClick={() => {
-                            deleteRequest(index, val.id);
-                          }}
-                          style={{
-                            color: "red",
-                            fontSize: 12,
-                            cursor: "pointer",
-                            paddingLeft: 5,
-                          }}
-                        >
-                          Delete
-                        </span>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))
+                        Delete
+                      </span>
+                    </CTableDataCell>
+                  </CTableRow>
+                ))
                 : null}
 
               {/* <CTableRow>

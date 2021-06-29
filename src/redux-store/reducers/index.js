@@ -4,6 +4,7 @@ import CityReducer from "./city";
 import CouponReducer from "./coupon";
 import ProviderApprovalReducer from "./providerApproval";
 import ReviewsReducer from "./reviews";
+import BookingsReducer from "./bookings";
 
 export default {
   AuthReducer,
@@ -11,5 +12,6 @@ export default {
   CouponReducer,
   CityReducer,
   ProviderApprovalReducer,
-  ReviewsReducer
+  ReviewsReducer,
+  BookingsReducer
 };

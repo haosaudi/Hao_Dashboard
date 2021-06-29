@@ -95,52 +95,51 @@ const Category = (props) => {
             <CTableBody>
               {categories?.length > 0
                 ? categories?.map((val, index) => (
-                    <CTableRow key={index}>
-                      <CTableHeaderCell scope="row">
-                        <img
-                          style={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: 100,
-                            border: '0.2px solid grey',
-                          }}
-                          src={
-                            val.img?.search('amazonaws') !== -1
-                              ? val.img
-                              : `http://18.217.187.206/img/category_img/${
-                                  val.img ? val.img.toLowerCase() : ''
-                                }`
-                          }
-                        />
-                      </CTableHeaderCell>
-                      <CTableDataCell>{val.name_ar}</CTableDataCell>
-                      <CTableDataCell>{val.description_ar}</CTableDataCell>
-                      <CTableDataCell>{val.status}</CTableDataCell>
-                      <CTableDataCell
-                      // style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
+                  <CTableRow key={index}>
+                    <CTableHeaderCell scope="row">
+                      <img
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: 100,
+                          border: '0.2px solid grey',
+                        }}
+                        src={
+                          val.img?.search('amazonaws') !== -1
+                            ? val.img
+                            : `http://18.217.187.206/img/category_img/${val.img ? val.img.toLowerCase() : ''
+                            }`
+                        }
+                      />
+                    </CTableHeaderCell>
+                    <CTableDataCell>{val.name_ar}</CTableDataCell>
+                    <CTableDataCell>{val.description_ar}</CTableDataCell>
+                    <CTableDataCell>{val.status}</CTableDataCell>
+                    <CTableDataCell
+                    // style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
+                    >
+                      <span
+                        onClick={() => props.history.push(`/category/edit/${val.id}`)}
+                        style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
                       >
-                        <span
-                          onClick={() => props.history.push(`/category/edit/${val.id}`)}
-                          style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
-                        >
-                          Edit
-                        </span>
-                        <span
-                          onClick={() => {
-                            deleteCategory(index, val.id)
-                          }}
-                          style={{
-                            color: 'red',
-                            fontSize: 12,
-                            cursor: 'pointer',
-                            paddingLeft: 5,
-                          }}
-                        >
-                          Delete
-                        </span>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))
+                        Edit
+                      </span>
+                      <span
+                        onClick={() => {
+                          deleteCategory(index, val.id)
+                        }}
+                        style={{
+                          color: 'red',
+                          fontSize: 12,
+                          cursor: 'pointer',
+                          paddingLeft: 5,
+                        }}
+                      >
+                        Delete
+                      </span>
+                    </CTableDataCell>
+                  </CTableRow>
+                ))
                 : null}
 
               {/* <CTableRow>

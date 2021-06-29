@@ -7,6 +7,9 @@ import AddCoupon from "./views/coupon/addCoupon";
 import EditCoupon from "./views/coupon/editCoupon";
 import EditProviderApproval from "./views/providerApproval/editProviderApproval";
 import managereviews from "./views/managereviews";
+import editReviews from "./views/managereviews/editReviews";
+import bookings from "./views/bookings";
+import editBookings from "./views/bookings/editBookings";
 
 // examples
 
@@ -15,7 +18,7 @@ const Category = React.lazy(() => import("./views/category"));
 const ProviderApproval = React.lazy(() => import("./views/providerApproval"));
 const City = React.lazy(() => import("./views/cities"));
 const Coupon = React.lazy(() => import("./views/coupon"));
-// const EditCategory = React.lazy(() => import('./views/category/editCategory'))
+// const EditCategory = React .lazy(() => import('./views/category/editCategory'))
 const Typography = React.lazy(() =>
   import("./views/theme/typography/Typography")
 );
@@ -131,6 +134,16 @@ const routes = [
     component: EditCategory,
   },
   {
+    path: "/bookings",
+    name: "Bookings",
+    component: bookings,
+  },
+  {
+    path: "/bookingdetails/edit/:id",
+    name: "editBookings",
+    component: editBookings,
+  },
+  {
     path: "/request",
     name: "Provider Approval",
     component: ProviderApproval,
@@ -146,6 +159,11 @@ const routes = [
     path: "/request/edit/:id",
     name: "Edit Provider Approval",
     component: EditProviderApproval,
+  },
+  {
+    path: "/reviews/edit/:id",
+    name: "Edit Review",
+    component: editReviews,
   },
   { path: "/city", name: "City", component: City, exact: true },
   { path: "/city/add", name: "Add City", component: AddCity },
