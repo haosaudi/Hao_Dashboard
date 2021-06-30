@@ -54,11 +54,9 @@ export default class BookingAction {
       dispatch({ type: ActionType.GROUPBOOKING_REJECT })
       await POST(`groupBooking/accept/${id}`, data, token).then((data) => {
         if (data) {
-          history.push("/groupbooking")
           console.log('UPDATE THE BOOKING', data)
-          toast('ApprovedGroupBooking  SUCCESSFULLY')
-          // dispatch({ type: ActionType.GROUPBOOKING_REJECT_SUCCESS })
-          history.push('/bookings')
+          toast('APPROVED  SUCCESSFULLY')
+          history.push('/groupbooking')
         } else {
           dispatch({ type: ActionType.GROUPBOOKING_UPDATE_FAIL })
         }

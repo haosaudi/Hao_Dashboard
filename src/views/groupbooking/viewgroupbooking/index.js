@@ -29,6 +29,7 @@ import { missingFieldsCheckOut } from "src/utils/globalFunction";
 import { toast } from "react-toastify";
 import moment from "moment";
 const Category = (props) => {
+  const rejected = props?.groupbooking?.status === "Rejected" ? true : false
   const statusApproved = props?.groupbooking?.status === "Approved" ? true : props?.groupbooking?.status === "Rejected" ? true : false
   const [state, setState] = useState({
     // loading: false,
@@ -43,16 +44,19 @@ const Category = (props) => {
       }
     }
   }, []);
-  // useEffect(() => {
-  //   // if (props.booking) {
-  //   // let { request } = props;
-  //   // document.getElementById("done").value = request.req_status;
-  //   setState({
-  //     ...state,
-  //     payment_method: props.groupBooking?.admin_note,
-  //   });
-  //   // }
-  // }, [props.groupBooking?.admin_note]);
+  useEffect(() => {
+
+    // if (props.booking) {
+    // let { request } = props;
+    // console.log("props.groupBooking?.payment_method==", props.groupbooking?.payment_method?.toLowerCase())
+    rejected ? null :
+      document.getElementById("done").value = props.groupbooking?.payment_method?.toLowerCase();
+    // setState({
+    //   ...state,
+    //   payment_method: props.groupBooking?.admin_note,
+    // });
+    // }
+  }, [props.groupbooking?.payment_method]);
   // const imageUpload = async (file) => {
   //   setState({ ...state, loading: true });
   //   let data = new FormData();
@@ -475,39 +479,40 @@ const Category = (props) => {
 
             </CRow>
 
-
-            <CRow className="mb-3">
-              <CFormLabel
-                htmlFor="inputPassword3"
-                className="col-sm-2 col-form-label"
-              >
-                Status
-              </CFormLabel>
-              <CCol
-                sm="4"
-                style={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                <CFormSelect
-                  // disabled
-                  id="done"
-                  disabled={statusApproved}
-                  onChange={(e) => {
-                    setState({ ...state, status: e.target.value });
-                  }}
-                  defaultValue={props.groupBooking?.payment_method}
-                  aria-label="Default select example"
+            {props?.groupbooking?.status === "Rejected" ? null :
+              <CRow className="mb-3">
+                <CFormLabel
+                  htmlFor="inputPassword3"
+                  className="col-sm-2 col-form-label"
                 >
-                  <option value="Requested">cash</option>
-                  <option value="Approved">card </option>
-                  <option value="Approved">transfer </option>
-                </CFormSelect>
-              </CCol>
+                  Status
+                </CFormLabel>
+                <CCol
+                  sm="4"
+                  style={{
+                    alignItems: "center",
+                    display: "flex",
+                  }}
+                >
+                  <CFormSelect
+                    // disabled
+                    id="done"
+                    disabled={statusApproved}
+                    onChange={(e) => {
+                      setState({ ...state, status: e.target.value });
+                    }}
+                    defaultValue={"transfer"}
+                  // value=
+                  // aria-label="Default select example"
+                  >
+                    <option value="card">card </option>
+                    <option value="cash">cash</option>
+                    <option value="transfer">transfer </option>
+                  </CFormSelect>
+                </CCol>
 
-            </CRow>
-            {console.log("props?.groupbooking?.status", statusApproved)}
+              </CRow>
+            }
             {
               statusApproved ? <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
 
