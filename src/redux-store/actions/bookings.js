@@ -40,12 +40,13 @@ export default class BookingAction {
           console.log('UPDATE THE BOOKING', data)
           toast('BOOKING UPDATED SUCCESSFULLY')
           dispatch({ type: ActionType.BOOKING_UPDATE_SUCCESS })
-          history.push('/booking')
+          history.push('/bookings')
         } else {
           dispatch({ type: ActionType.BOOKING_UPDATE_FAIL })
         }
       })
     }
   }
+
 
 }

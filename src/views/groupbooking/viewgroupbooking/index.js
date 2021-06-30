@@ -17,12 +17,11 @@ import {
   CFormSelect,
   CSpinner,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
-import { DocsLink } from "src/reusable";
+
 import {
   CategoryAction,
   CityAction,
-  ProviderApprovalAction, BookingAction
+  ProviderApprovalAction, BookingAction, GroupBookingAction
 } from "src/redux-store/actions";
 import { connect } from "react-redux";
 import { ImageUpload } from "src/utils/api_calls";
@@ -30,30 +29,30 @@ import { missingFieldsCheckOut } from "src/utils/globalFunction";
 import { toast } from "react-toastify";
 import moment from "moment";
 const Category = (props) => {
+  const statusApproved = props?.groupbooking?.status === "Approved" ? true : props?.groupbooking?.status === "Rejected" ? true : false
   const [state, setState] = useState({
-    newDateTime: 'sssss',
     // loading: false,
-    admin_note: 'sadda'
+    payment_method: 'TRANSFER'
   });
   useEffect(() => {
     if (props.token) {
       if (props.match?.params?.id) {
         props.GetBookingById(props.match?.params?.id, props.token);
       } else {
-        props.history.push("/bookings");
+        props.history.push("/groupbooking");
       }
     }
   }, []);
-  useEffect(() => {
-    // if (props.booking) {
-    // let { request } = props;
-    // document.getElementById("done").value = request.req_status;
-    setState({
-      ...state,
-      admin_note: props.booking?.admin_note,
-    });
-    // }
-  }, [props.booking?.admin_note]);
+  // useEffect(() => {
+  //   // if (props.booking) {
+  //   // let { request } = props;
+  //   // document.getElementById("done").value = request.req_status;
+  //   setState({
+  //     ...state,
+  //     payment_method: props.groupBooking?.admin_note,
+  //   });
+  //   // }
+  // }, [props.groupBooking?.admin_note]);
   // const imageUpload = async (file) => {
   //   setState({ ...state, loading: true });
   //   let data = new FormData();
@@ -67,9 +66,9 @@ const Category = (props) => {
   //   // setState({ ...state, loading: false })
   //   console.log("imageData", imageData);
   // };
-  const UpdateBookings = async () => {
+  const ApprovedGroupBooking = async () => {
     let data = state;
-    delete data.newDateTime
+
     let message = missingFieldsCheckOut(data);
     let isMissed = message?.length > 0;
     if (isMissed) {
@@ -81,10 +80,10 @@ const Category = (props) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-      }); bo
+      });
     } else {
-
-      props.UpdateBooking(
+      // console.log("=======DATA====", data)
+      props.ApprovedGroupBooking(
         props.match?.params?.id,
         { ...data },
         props.token,
@@ -104,18 +103,18 @@ const Category = (props) => {
               Edit Category
             </CCol>
             <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
-              <CButton
-                onClick={UpdateBookings}
+              {/* <CButton
+                onClick={ApprovedGroupBookings}
                 disabled={state.loading || props.isLoading}
                 style={{ color: "white", fontSize: 12 }}
                 color={"info"}
                 shape="rounded-0"
               >
                 Edit
-              </CButton>
+              </CButton> */}
               &nbsp; &nbsp;
               <CButton
-                onClick={() => props.history.push("/bookings")}
+                onClick={() => props.history.push("/groupBookings")}
                 style={{ color: "grey", fontSize: 12 }}
                 color={"light"}
                 shape="rounded-0"
@@ -126,29 +125,7 @@ const Category = (props) => {
           </CRow>
         </CCardHeader>
         <CCardBody>
-          {/* {console.log("booking", props.booking)} */}
-          {/*           
-          <CRow>
-            <CCol>Category Name</CCol>
-            <CCol>
-              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-            </CCol>
-            <CCol></CCol>
-          </CRow>
-          <CRow>
-            <CCol>Category Description</CCol>
-            <CCol>
-              <CFormControl
-                component="textarea"
-                id="validationTextarea"
-                placeholder="Required example textarea"
-                // invalid
-                // required
-              ></CFormControl>
-            </CCol>
-            <CCol></CCol>
-          </CRow>
-        */}
+
           <CForm>
             <CRow className="mb-3">
               <CFormLabel
@@ -164,8 +141,8 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.booking?.order_id}
-                {/* {props?.booking?.user_add_fname + " " + props?.booking?.user_add_lname ||
+                {props?.groupbooking?.id}
+                {/* {props?.groupbooking?.user_add_fname + " " + props?.groupbooking?.user_add_lname ||
                   "no entered"} */}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
@@ -175,7 +152,7 @@ const Category = (props) => {
                 htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
               >
-                Booking By
+                email
               </CFormLabel>
               <CCol
                 sm="4"
@@ -184,7 +161,7 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.booking?.user_add_fname + " " + props?.booking?.user_add_lname ||
+                {props?.groupbooking?.email ||
                   "no entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
@@ -194,7 +171,7 @@ const Category = (props) => {
                 htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
               >
-                Booking Date
+                phone
               </CFormLabel>
               <CCol
                 sm="4"
@@ -203,7 +180,8 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {moment(props?.booking?.created_at).format("DD-MM-YY") || ""}
+                {props?.groupbooking?.mobile ||
+                  "no entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -212,7 +190,7 @@ const Category = (props) => {
                 htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
               >
-                Attendance Name
+                organization
               </CFormLabel>
               <CCol
                 sm="4"
@@ -221,7 +199,133 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.booking?.user_add_fname + " " + props?.booking?.user_add_lname ||
+                {props?.groupbooking?.organisation ||
+                  "no entered"}
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                proposed date
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {moment(props?.groupbooking?.proposed_date).format("DD-MM-YY") || ""}
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                proposed Time
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.groupbooking?.proposed_time || "not entered"}
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                Qauntity
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.groupbooking?.qty || ""}
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                Gender
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.groupbooking?.gender || ""}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                Location
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.groupbooking?.location || "no entered"}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                note
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.groupbooking?.note ||
+                  "no entered"}
+              </CCol>
+            </CRow>
+
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                experience
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.groupbooking?.title_ar ||
                   "no entered"}
               </CCol>
             </CRow>
@@ -230,7 +334,7 @@ const Category = (props) => {
                 htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
               >
-                Experience
+                Description
               </CFormLabel>
               <CCol
                 sm="4"
@@ -239,7 +343,7 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.booking?.title_ar || "not entered"}
+                {props?.groupbooking?.description_ar || "not entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -248,7 +352,7 @@ const Category = (props) => {
                 htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
               >
-                Session Date
+                Hour
               </CFormLabel>
               <CCol
                 sm="4"
@@ -257,8 +361,7 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {moment(props?.booking?.start_date).format("yy-MM-DD") || "no entered"}
-                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+                {props?.groupbooking?.time}
               </CCol>
             </CRow>
             <CRow className="mb-3">
@@ -266,7 +369,7 @@ const Category = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
-                Session Time
+                Price
               </CFormLabel>
               <CCol
                 sm="4"
@@ -275,8 +378,41 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.booking?.start_time || "Not Entered"}
-                {/* {moment(props?.booking?.start_time).format("yy-MM-DD") || "not entered"} */}
+                {props?.groupbooking?.price || "Not Entered"}
+                {/* {moment(props?.groupbooking?.start_time).format("yy-MM-DD") || "not entered"} */}
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+              {/* <CCol sm="4">
+                <CFormSelect
+                  id="done"
+                  onChange={(e) => {
+                    setState({ ...state, req_status: e.target.value });
+                  }}
+                  defaultValue={state.req_status}
+                  aria-label="Default select example"
+                >
+                  <option value="Requested">Requested</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                </CFormSelect>
+              </CCol> */}
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputPassword3"
+                className="col-sm-2 col-form-label"
+              >
+                Price
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.groupbooking?.price || "Not Entered"}
+                {/* {moment(props?.groupbooking?.start_time).format("yy-MM-DD") || "not entered"} */}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
               {/* <CCol sm="4">
@@ -309,7 +445,7 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.booking?.price || "not entered"}
+                {props?.groupbooking?.price || "not entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
 
@@ -355,44 +491,62 @@ const Category = (props) => {
                 }}
               >
                 <CFormSelect
+                  // disabled
                   id="done"
+                  disabled={statusApproved}
                   onChange={(e) => {
                     setState({ ...state, status: e.target.value });
                   }}
-                  defaultValue={state.status}
+                  defaultValue={props.groupBooking?.payment_method}
                   aria-label="Default select example"
                 >
-                  <option value="Requested">under process</option>
-                  <option value="Approved">Approved</option>
+                  <option value="Requested">cash</option>
+                  <option value="Approved">card </option>
+                  <option value="Approved">transfer </option>
                 </CFormSelect>
               </CCol>
 
             </CRow>
+            {console.log("props?.groupbooking?.status", statusApproved)}
+            {
+              statusApproved ? <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
 
-            <CRow className="mb-3">
-              <CFormLabel
-                htmlFor="inputPassword3"
-                className="col-sm-2 col-form-label"
-              >
-                Admin Note
-              </CFormLabel>
-              <CCol
-                sm="4"
-                style={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                <input
-                  value={state.admin_note}
-                  // style={{ background: 'red' }}
-                  onChange={(text) => setState({
-                    admin_note: text.target.value
-                  })}
-                />
+                <CButton
+                  // onClick={ApprovedGroupBookings}
+                  disabled={state.loading || props.isLoading}
+                  style={{ color: "white", fontSize: 12, backgroundColor: 'green' }}
+                  color={"green"}
+                  shape="rounded-0"
+                  disabled
+                >
+                  {
+                    props?.groupbooking?.status
+                  }
+
+                </CButton>
               </CCol>
-
-            </CRow>
+                :
+                <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <CButton
+                    onClick={ApprovedGroupBooking}
+                    disabled={state.loading || props.isLoading}
+                    style={{ color: "white", fontSize: 12, backgroundColor: 'green' }}
+                    color={"green"}
+                    shape="rounded-0"
+                  >
+                    Approved
+                  </CButton>
+                  &nbsp; &nbsp;
+                  <CButton
+                    onClick={() => props.RejectGroupBooking(props.match?.params?.id, props.token, props.history)}
+                    style={{ color: "white", fontSize: 12, backgroundColor: 'red' }}
+                    color={"red"}
+                    shape="rounded-0"
+                  >
+                    Reject
+                  </CButton>
+                </CCol>
+            }
 
           </CForm>
         </CCardBody>
@@ -412,15 +566,17 @@ Category.propTypes = {
 };
 
 const mapStateToProp = (state) => ({
-  isLoading: state.BookingsReducer.isLoading,
+  isLoading: state.GroupBookingsReducer.isLoading,
   token: state.AuthReducer.token,
-  request: state.BookingsReducer.request,
-  booking: state.BookingsReducer.booking,
+  request: state.GroupBookingsReducer.request,
+  groupbooking: state.GroupBookingsReducer.groupbooking,
 });
 
 const mapDispatchToProps = {
-  GetBookingById: BookingAction.GetBookingById,
-  UpdateBooking: BookingAction.UpdateBooking,
+  GetBookingById: GroupBookingAction.GetBookingById,
+  UpdateBooking: GroupBookingAction.UpdateBooking,
+  RejectGroupBooking: GroupBookingAction.RejectGroupBooking,
+  ApprovedGroupBooking: GroupBookingAction.ApprovedGroupBooking,
 };
 
 export default connect(mapStateToProp, mapDispatchToProps)(Category);

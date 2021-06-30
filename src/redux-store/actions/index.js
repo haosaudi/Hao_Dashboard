@@ -6,6 +6,7 @@ import CouponAction from "./coupon";
 import ProviderApprovalAction from "./providerApproval";
 import ReviewsAction from "./reviews";
 import BookingAction from "./bookings";
+import GroupBookingAction from "./groupbooking";
 
 export {
   ActionType,
@@ -15,6 +16,6 @@ export {
   CouponAction,
   ProviderApprovalAction,
   ReviewsAction,
-  BookingAction
+  BookingAction, GroupBookingAction
 };
 

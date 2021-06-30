@@ -10,6 +10,9 @@ import managereviews from "./views/managereviews";
 import editReviews from "./views/managereviews/editReviews";
 import bookings from "./views/bookings";
 import editBookings from "./views/bookings/editBookings";
+import viewalllbookings from "./views/groupbooking";
+// import creategroupbooking from "./views/groupbooking/creategroupbooking";
+import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
 
 // examples
 
@@ -137,7 +140,24 @@ const routes = [
     path: "/bookings",
     name: "Bookings",
     component: bookings,
+    // exact: true,
+
   },
+  {
+    path: "/groupbooking",
+    name: "viewalllbookings",
+    component: viewalllbookings,
+    exact: true,
+
+  },
+
+  {
+    path: "/groupbooking/approvedgroupbooking/:id",
+    name: "approvedgroupbooking",
+    component: approvedgroupbooking,
+
+  },
+
   {
     path: "/bookingdetails/edit/:id",
     name: "editBookings",
