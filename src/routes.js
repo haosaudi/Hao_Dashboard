@@ -12,6 +12,9 @@ import bookings from "./views/bookings";
 import editBookings from "./views/bookings/editBookings";
 import viewalllbookings from "./views/groupbooking";
 import creategroupbooking from "./views/groupbooking/creategroupbooking";
+import UserManagement from "./views/userManagement";
+import EditUserManagement from "./views/userManagement/editUsers";
+// import creategroupbooking from "./views/groupbooking/creategroupbooking";
 import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
 
 // examples
@@ -130,6 +133,12 @@ const routes = [
   { path: "/", exact: true, name: "Home" },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
   { path: "/category", name: "Category", component: Category, exact: true },
+  {
+    path: "/userManagement",
+    name: "User Management",
+    component: UserManagement,
+    exact: true,
+  },
   { path: "/category/add", name: "Add Category", component: AddCategory },
   {
     path: "/category/edit/:id",
@@ -137,25 +146,27 @@ const routes = [
     component: EditCategory,
   },
   {
+    path: "/userManagement/edit/:id",
+    name: "Edit User Management",
+    component: EditUserManagement,
+  },
+  {
     path: "/bookings",
     name: "Bookings",
     component: bookings,
     // exact: true,
-
   },
   {
     path: "/groupbooking",
     name: "viewalllbookings",
     component: viewalllbookings,
     exact: true,
-
   },
 
   {
     path: "/groupbooking/approvedgroupbooking/:id",
     name: "approvedgroupbooking",
     component: approvedgroupbooking,
-
   },
   {
     path: "/groupbooking/creategroupbooking",

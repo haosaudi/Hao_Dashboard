@@ -25,6 +25,26 @@ export default class ActionType {
   static CATEGORY_DELETE = "CATEGORY_DELETE";
   static CATEGORY_DELETE_SUCCESS = "CATEGORY_DELETE_SUCCESS";
   static CATEGORY_DELETE_FAIL = "CATEGORY_DELETE_FAIL";
+  // !! Category Action !!
+  static GET_ALL_USERS = "GET_ALL_USERS";
+  static GET_ALL_USERS_SUCCESS = "GET_ALL_USERS_SUCCESS";
+  static GET_ALL_USERS_FAIL = "GET_ALL_USERS_FAIL";
+
+  static GET_USER = "GET_USER";
+  static GET_USER_SUCCESS = "GET_USER_SUCCESS";
+  static GET_USER_FAIL = "GET_USER_FAIL";
+
+  static USER_ADD = "USER_ADD";
+  static USER_ADD_SUCCESS = "USER_ADD_SUCCESS";
+  static USER_ADD_FAIL = "USER_ADD_FAIL";
+
+  static USER_UPDATE = "USER_UPDATE";
+  static USER_UPDATE_SUCCESS = "USER_UPDATE_SUCCESS";
+  static USER_UPDATE_FAIL = "USER_UPDATE_FAIL";
+
+  static USER_DELETE = "USER_DELETE";
+  static USER_DELETE_SUCCESS = "USER_DELETE_SUCCESS";
+  static USER_DELETE_FAIL = "USER_DELETE_FAIL";
 
   // !! Category Action !!
   static GET_ALL_CITIES = "GET_ALL_CITIES";
@@ -90,10 +110,6 @@ export default class ActionType {
   static REQUEST_DELETE_FAIL = "REQUEST_DELETE_FAIL";
 
   // !! Request Action !!
-
-
-
-
 
   static GET_ALL_REVIEWS = "GET_ALL_REVIEWS";
   static GET_ALL_REVIEWS_SUCCESS = "GET_ALL_REVIEWS_SUCCESS";
