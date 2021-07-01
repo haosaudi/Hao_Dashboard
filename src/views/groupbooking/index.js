@@ -110,18 +110,18 @@ const Category = (props) => {
       >
         <CCardHeader >
           Group Bookings{' '}
-          {/* <span
-            onClick={() => props.history.push('/groupbooking/createbooking')}
+          <span
+            onClick={() => props.history.push('/groupbooking/creategroupbooking')}
             style={{
               fontSize: 12,
               fontWeight: '400',
               color: '#309CE4',
               textDecorationLine: 'underline',
-              cursor: 'pointer',
+              cursor: 'pointer', marginLeft: 16
             }}
           >
             Add New Group Booking
-          </span> */}
+          </span>
         </CCardHeader>
         <Sortedtable
           dataArray={state.groupbookings}

@@ -63,6 +63,25 @@ export default class BookingAction {
       })
     }
   }
+  static CreateGroupBooking = (id, data, token, history) => {
+    return async (dispatch) => {
+
+      // console.log('update RejectGroupBooking data in Action', data)
+      dispatch({ type: ActionType.GROUPBOOKING_CREATE })
+      await POST(`groupBooking`, data, token).then((data) => {
+        if (data) {
+          console.log('UPDATE THE BOOKING', data)
+          toast('CREATED  SUCCESSFULLY')
+          dispatch({ type: ActionType.GROUPBOOKING_CREATE_SUCCESS })
+
+          history.push('/groupbooking')
+        } else {
+          dispatch({ type: ActionType.GROUPBOOKING_CREATE_FAIL })
+        }
+      })
+    }
+  }
+
 
   static UpdateBooking = (id, data, token, history) => {
     return async (dispatch) => {

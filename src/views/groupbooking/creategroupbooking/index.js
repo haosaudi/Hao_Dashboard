@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useEffect, useState, createRef } from 'react'
 import classNames from 'classnames'
 import DatePicker from 'react-datepicker'
-
+import TimePicker from 'react-time-picker';
 import 'react-datepicker/dist/react-datepicker.css'
 import {
   CCard,
@@ -18,8 +18,7 @@ import {
   CSpinner,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { DocsLink } from 'src/reusable'
-import { CategoryAction } from 'src/redux-store/actions'
+import { CategoryAction, GroupBookingAction } from 'src/redux-store/actions'
 import { connect } from 'react-redux'
 import { ImageUpload } from 'src/utils/api_calls'
 import { missingFieldsCheckOut } from 'src/utils/globalFunction'
@@ -27,10 +26,21 @@ import { toast } from 'react-toastify'
 
 const Category = (props) => {
   const [state, setState] = useState({
-    name_ar: '',
-    description_ar: '',
-    img: '',
-    loading: false,
+    // name_ar: '',
+    // description_ar: '',
+    // img: '',
+    // loading: false,
+    name: "AbdulMoiz",
+    mobile: "03172874198 ",
+    email: "moiz@gmail.com",
+    organisation: "Oraganized",
+    course_id: 18,
+    proposed_date: '',
+    proposed_time: "",
+    qty: "1",
+    gender: "Male",
+    location: "it is min",
+    note: "i will be always in your heart"
   })
   const [status, setStatus] = useState(false)
   // useEffect(() => {
@@ -38,20 +48,8 @@ const Category = (props) => {
   //     props.GetCategories(props.token)
   //   }
   // }, [])
-  const imageUpload = async (file) => {
-    setState({ ...state, loading: true })
-    let data = new FormData()
-    data.append('photo', file)
-    let imageData = await ImageUpload(data, props.token)
-    if (imageData.success) {
-      setState({ ...state, img: imageData?.data?.location, loading: false })
-    } else {
-      setState({ ...state, loading: false })
-    }
-    // setState({ ...state, loading: false })
-    console.log('imageData', imageData)
-  }
-  const AddCategory = async () => {
+
+  const CreateGroupBooking = async () => {
     let data = state
     delete data.loading
     let message = missingFieldsCheckOut(data)
@@ -67,11 +65,12 @@ const Category = (props) => {
         progress: undefined,
       })
     } else {
-      props.AddCategory(
-        { ...data, slug: state.name_ar, status: status ? 1 : 0 },
-        props.token,
-        props.history,
-      )
+      console.log("check values", data)
+      // props.CreateGroupBooking(
+      //   { ...data, slug: state.name_ar, status: status ? 1 : 0 },
+      //   props.token,
+      //   props.history,
+      // )
     }
   }
   return (
@@ -89,7 +88,7 @@ const Category = (props) => {
             <CCol style={{ alignItems: 'center', display: 'flex' }}>Add Category</CCol>
             <CCol style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <CButton
-                onClick={AddCategory}
+                onClick={CreateGroupBooking}
                 disabled={state.loading || props.isLoading}
                 style={{ color: 'white', fontSize: 12 }}
                 color={'info'}
@@ -110,36 +109,48 @@ const Category = (props) => {
           </CRow>
         </CCardHeader>
         <CCardBody>
-          {/*           
+
           <CRow>
-            <CCol>Category Name</CCol>
+            <CCol >proposed date  </CCol>
             <CCol>
-              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+              <DatePicker selected={state?.proposed_date} onChange={(date) => setState({ ...state, proposed_date: date })} />
             </CCol>
             <CCol></CCol>
           </CRow>
           <CRow>
-            <CCol>Category Description</CCol>
+            <CCol >proposed Time  </CCol>
+            <CCol>
+              <TimePicker
+                onChange={(date) => setState({ ...state, proposed_time: date })}
+              // value={value}
+              />
+
+            </CCol>
+            <CCol></CCol>
+          </CRow>
+          <CRow>
+            <CCol>  organisation  </CCol>
             <CCol>
               <CFormControl
+                onChange={(text) => setState({ ...state, organisation: text })}
                 component="textarea"
                 id="validationTextarea"
                 placeholder="Required example textarea"
-                // invalid
-                // required
+              // invalid
+              // required
               ></CFormControl>
             </CCol>
             <CCol></CCol>
           </CRow>
-        */}
+
           <CForm>
             <CRow className="mb-3">
               <CFormLabel htmlFor="inputEmail3" className="col-sm-2 col-form-label">
-                Category Name
+                Name
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
-                  onChange={(e) => setState({ ...state, name_ar: e.target.value })}
+                  onChange={(e) => setState({ ...state, name: e.target.value })}
                   placeholder="Category Name"
                   type="email"
                   id="inputEmail3"
@@ -149,20 +160,80 @@ const Category = (props) => {
             </CRow>
             <CRow className="mb-3">
               <CFormLabel htmlFor="inputPassword3" className="col-sm-2 col-form-label">
-                Category Description
+                course_id
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
-                  onChange={(e) => setState({ ...state, description_ar: e.target.value })}
+                  onChange={(e) => setState({ ...state, course_id: e.target.value })}
                   component="textarea"
                   id="validationTextarea"
-                  // placeholder="Required example textarea"
-                  // invalid
-                  // required
+                // placeholder="Required example textarea"
+                // invalid
+                // required
                 ></CFormControl>
               </CCol>
             </CRow>
             <CRow className="mb-3">
+              <CFormLabel htmlFor="inputPassword3" className="col-sm-2 col-form-label">
+                qty
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  onChange={(e) => setState({ ...state, qty: e.target.value })}
+                  component="textarea"
+                  id="validationTextarea"
+                // placeholder="Required example textarea"
+                // invalid
+                // required
+                ></CFormControl>
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel htmlFor="inputPassword3" className="col-sm-2 col-form-label">
+                gender
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  onChange={(e) => setState({ ...state, gender: e.target.value })}
+                  component="textarea"
+                  id="validationTextarea"
+                // placeholder="Required example textarea"
+                // invalid
+                // required
+                ></CFormControl>
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel htmlFor="inputPassword3" className="col-sm-2 col-form-label">
+                location
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  onChange={(e) => setState({ ...state, location: e.target.value })}
+                  component="textarea"
+                  id="validationTextarea"
+                // placeholder="Required example textarea"
+                // invalid
+                // required
+                ></CFormControl>
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel htmlFor="inputPassword3" className="col-sm-2 col-form-label">
+                note
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  onChange={(e) => setState({ ...state, note: e.target.value })}
+                  component="textarea"
+                  id="validationTextarea"
+                // placeholder="Required example textarea"
+                // invalid
+                // required
+                ></CFormControl>
+              </CCol>
+            </CRow>
+            {/* <CRow className="mb-3">
               <CFormLabel htmlFor="inputPassword3" className="col-sm-2 col-form-label">
                 Enabled
               </CFormLabel>
@@ -176,32 +247,14 @@ const Category = (props) => {
                   label=""
                 />
               </CCol>
-              {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
+              <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" />
             </CRow>
-            <CRow className="mb-3">
-              <CFormLabel htmlFor="inputPassword3" className="col-sm-2 col-form-label">
-                Category Image
-              </CFormLabel>
-              <CCol sm="4">
-                <CFormControl
-                  onChange={(e) => {
-                    imageUpload(e.target.files[0])
-                  }}
-                  type="file"
-                  id="formFile"
-                />
-              </CCol>
-              {state.loading ? (
-                <CCol sm="2">
-                  <CSpinner style={{ height: 25, width: 25 }} />
-                </CCol>
-              ) : state.img?.length > 0 ? (
-                <CCol sm="2">Uploaded</CCol>
-              ) : null}
+            */}
 
-              {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
-            </CRow>
+
           </CForm>
+
+
         </CCardBody>
       </CCard>
     </>
@@ -209,7 +262,7 @@ const Category = (props) => {
 }
 
 Category.propTypes = {
-  AddCategory: PropTypes.func,
+  CreateGroupBooking: PropTypes.func,
   token: PropTypes.string,
   isLoading: PropTypes.bool,
   history: PropTypes.object,
@@ -224,8 +277,8 @@ const mapStateToProp = (state) => ({
 })
 
 const mapDispatchToProps = {
-  GetCategories: CategoryAction.GetAllCategories,
-  AddCategory: CategoryAction.AddCategory,
+  // GetCategories: GroupBookingAction.GetAllCategories,
+  CreateGroupBooking: GroupBookingAction.CreateGroupBooking,
 }
 
 export default connect(mapStateToProp, mapDispatchToProps)(Category)
