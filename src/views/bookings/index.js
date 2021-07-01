@@ -22,6 +22,7 @@ import swal from 'sweetalert'
 import Sortedtable from '../../components/sortedtables'
 import moment from 'moment'
 
+
 const Category = (props) => {
   const categoryTableHeading = [
     'Category Image',

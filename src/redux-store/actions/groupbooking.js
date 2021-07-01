@@ -16,6 +16,21 @@ export default class BookingAction {
       })
     }
   }
+  static GetAllGroupBookingStats = (token) => {
+    return async (dispatch) => {
+      console.log('get GetAllGroupBookingStats data in Action', token)
+      dispatch({ type: ActionType.GROUPBOOKINGSTATS_CREATE })
+      await GET('booking/details', token).then((data) => {
+        if (data) {
+          // console.log('GOT THE GetAllGroupBookingStats ALL!!', data)
+
+          // dispatch({ type: ActionType.GROUPBOOKINGSTATS_CREATE_SUCCESS, payload: data.data })
+        } else {
+          // dispatch({ type: ActionType.GROUPBOOKINGSTATS_CREATE_FAIL })
+        }
+      })
+    }
+  }
   static GetBookingById = (id, token) => {
     return async (dispatch) => {
       console.log('get Booking by id data in Action', token)
@@ -63,7 +78,7 @@ export default class BookingAction {
       })
     }
   }
-  static CreateGroupBooking = (id, data, token, history) => {
+  static CreateGroupBooking = (data, token, history) => {
     return async (dispatch) => {
 
       // console.log('update RejectGroupBooking data in Action', data)

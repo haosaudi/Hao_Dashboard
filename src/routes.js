@@ -14,8 +14,8 @@ import viewalllbookings from "./views/groupbooking";
 import creategroupbooking from "./views/groupbooking/creategroupbooking";
 import UserManagement from "./views/userManagement";
 import EditUserManagement from "./views/userManagement/editUsers";
-// import creategroupbooking from "./views/groupbooking/creategroupbooking";
 import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
+import viewbookingstatistics from "./views/groupbooking/viewbookingstatistics";
 
 // examples
 
@@ -156,6 +156,7 @@ const routes = [
     component: bookings,
     // exact: true,
   },
+
   {
     path: "/groupbooking",
     name: "viewalllbookings",
@@ -167,6 +168,12 @@ const routes = [
     path: "/groupbooking/approvedgroupbooking/:id",
     name: "approvedgroupbooking",
     component: approvedgroupbooking,
+  },
+  {
+    path: "/groupbooking/viewbookingstatistics",
+    name: "viewbookingstatistics",
+    component: viewbookingstatistics,
+    // exact: true,
   },
   {
     path: "/groupbooking/creategroupbooking",

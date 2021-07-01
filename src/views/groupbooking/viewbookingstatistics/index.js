@@ -19,7 +19,7 @@ import {
 import { CategoryAction, BookingAction, GroupBookingAction } from 'src/redux-store/actions'
 import { connect } from 'react-redux'
 import swal from 'sweetalert'
-import Sortedtable from '../../components/sortedtables'
+import Sortedtable from '../../../components/sortedtables'
 import moment from 'moment'
 
 const Category = (props) => {
@@ -38,7 +38,7 @@ const Category = (props) => {
 
   useEffect(() => {
     if (props.token) {
-      props.GetAllGroupBooking(props.token)
+      props.GetAllGroupBookingStats(props.token)
     }
   }, [])
   useEffect(() => {
@@ -46,7 +46,7 @@ const Category = (props) => {
     // console.log("itemmmmm")
 
     setState({
-      ...state, groupbookings: props.groupbookings && props.groupbookings.map((item, i) => {
+      ...state, groupbookings: props.groupbookingStats && props.groupbookingStats.map((item, i) => {
         // console.log("itemmmmm", item)
         return {
           ...item,
@@ -58,29 +58,14 @@ const Category = (props) => {
           >
             View
           </span></div>
-          // name: item.user_add_fname,
-          // orderId: item.order_id,
-          // AttendeeBy: '2011/04/25',
-          // bookedBy: '$320',
-          // email: item.email,
-          // experience: item.title_ar,
-          // sessionsDate: item.start_date,
-          // sessionTime: item.start_time,
-          // priceItem: '$320',
-          // coupon: '2011/04/25',
-          // status: '$320',
-          // registerationDate: '$320',
-          // totalPrice: '2011/04/25',
-          // Actions: '$320',
+
         }
 
 
       })
     })
-  }, [props.groupbookings])
-  const EditBooking = (i, id) => {
-    //  ہب
-  }
+  }, [props.groupbookingStats])
+
   // const EditBooking = (i, id) => {
   //   swal({
   //     title: 'Are you sure?',
@@ -109,32 +94,9 @@ const Category = (props) => {
         style={{ fontWeight: 'bold', overflowY: 'scroll', background: 'white', width: '100%' }}
       >
         <CCardHeader >
-          Group Bookings{' '}
-          <span
-            onClick={() => props.history.push('/groupbooking/creategroupbooking')}
-            style={{
-              fontSize: 12,
-              fontWeight: '400',
-              color: '#309CE4',
-              textDecorationLine: 'underline',
-              cursor: 'pointer', marginLeft: 16
-            }}
+          Group Bookings Stats {' '}
 
-          >
-            Add New Group Booking
-          </span>
-          <span
-            onClick={() => props.history.push('groupbooking/viewbookingstatistics')}
-            style={{
-              fontSize: 12,
-              fontWeight: '400',
-              color: '#309CE4',
-              textDecorationLine: 'underline',
-              cursor: 'pointer', marginLeft: 16
-            }}
-          >
-            ‎View Booking Statisticsss
-          </span>
+
         </CCardHeader>
         <Sortedtable
           dataArray={state.groupbookings}
@@ -176,24 +138,7 @@ const Category = (props) => {
               sort: 'asc',
               width: 100
             },
-            {
-              label: 'Sessions Date',
-              field: 'start_date',
-              sort: 'asc',
-              width: 100
-            },
-            {
-              label: 'Sessions Time',
-              field: 'start_time',
-              sort: 'asc',
-              width: 100
-            },
-            {
-              label: 'Price Items',
-              field: 'coursePrice',
-              sort: 'asc',
-              width: 100
-            },
+
             {
               label: 'Coupon',
               field: 'coupon_code',
@@ -242,19 +187,19 @@ Category.propTypes = {
   token: PropTypes.string,
   isLoading: PropTypes.bool,
   history: PropTypes.object,
-  groupbookings: PropTypes.array,
+  groupbookingStats: PropTypes.array,
 }
 
 const mapStateToProp = (state) => ({
   isLoading: state.GroupBookingsReducer.isLoading,
   token: state.AuthReducer.token,
-  groupbookings: state.GroupBookingsReducer.groupbookings,
+  groupbookingStats: state.GroupBookingsReducer.groupbookingStats,
 
   // userData: state.AuthReducer.userData,
 })
 
 const mapDispatchToProps = {
-  GetAllGroupBooking: GroupBookingAction.GetAllGroupBooking,
+  GetAllGroupBookingStats: GroupBookingAction.GetAllGroupBookingStats,
   // DeleteBooking: GroupBookingAction.DeleteBooking,
 }
 

@@ -3,7 +3,7 @@ import { ActionType } from '../actions'
 const initialState = {
   isLoading: false,
   groupbookings: [],
-  groupbooking: {},
+  groupbookingStats: [],
 }
 
 export default (state = initialState, action) => {
@@ -23,6 +23,8 @@ export default (state = initialState, action) => {
       }
     case ActionType.GET_GROUPBOOKING:
       return { ...state, isLoading: true, groupbooking: {} }
+    case ActionType.GROUPBOOKINGSTATS_CREATE:
+      return { ...state, isLoading: true, groupbookingStats: action.payload }
     case ActionType.GET_GROUPBOOKING_SUCCESS:
       return {
         ...state,

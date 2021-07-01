@@ -2,8 +2,10 @@ import PropTypes from 'prop-types'
 import React, { useEffect, useState, createRef } from 'react'
 import classNames from 'classnames'
 import DatePicker from 'react-datepicker'
-import TimePicker from 'react-time-picker';
+// import TimePicker from 'react-time-picker';
 import 'react-datepicker/dist/react-datepicker.css'
+import { TimePicker } from 'antd';
+import moment from 'moment';
 import {
   CCard,
   CCardBody,
@@ -17,12 +19,14 @@ import {
   CFormCheck,
   CSpinner,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+// import CIcon from '@coreui/icons-react'
 import { CategoryAction, GroupBookingAction } from 'src/redux-store/actions'
 import { connect } from 'react-redux'
 import { ImageUpload } from 'src/utils/api_calls'
 import { missingFieldsCheckOut } from 'src/utils/globalFunction'
 import { toast } from 'react-toastify'
+// import TimePicker from 'react-bootstrap-time-picker';
+
 
 const Category = (props) => {
   const [state, setState] = useState({
@@ -30,17 +34,17 @@ const Category = (props) => {
     // description_ar: '',
     // img: '',
     // loading: false,
-    name: "AbdulMoiz",
-    mobile: "03172874198 ",
-    email: "moiz@gmail.com",
-    organisation: "Oraganized",
+    name: "",
+    mobile: "",
+    email: "",
+    organisation: "",
     course_id: 18,
-    proposed_date: '',
+    proposed_date: "",
     proposed_time: "",
-    qty: "1",
-    gender: "Male",
-    location: "it is min",
-    note: "i will be always in your heart"
+    qty: "",
+    gender: "",
+    location: "",
+    note: ""
   })
   const [status, setStatus] = useState(false)
   // useEffect(() => {
@@ -66,11 +70,11 @@ const Category = (props) => {
       })
     } else {
       console.log("check values", data)
-      // props.CreateGroupBooking(
-      //   { ...data, slug: state.name_ar, status: status ? 1 : 0 },
-      //   props.token,
-      //   props.history,
-      // )
+      props.CreateGroupBooking(
+        { ...data },
+        props.token,
+        props.history,
+      )
     }
   }
   return (
@@ -98,7 +102,7 @@ const Category = (props) => {
               </CButton>
               &nbsp; &nbsp;
               <CButton
-                onClick={() => props.history.push('/category')}
+                onClick={() => props.history.push('/groupbooking')}
                 style={{ color: 'grey', fontSize: 12 }}
                 color={'light'}
                 shape="rounded-0"
@@ -110,38 +114,9 @@ const Category = (props) => {
         </CCardHeader>
         <CCardBody>
 
-          <CRow>
-            <CCol >proposed date  </CCol>
-            <CCol>
-              <DatePicker selected={state?.proposed_date} onChange={(date) => setState({ ...state, proposed_date: date })} />
-            </CCol>
-            <CCol></CCol>
-          </CRow>
-          <CRow>
-            <CCol >proposed Time  </CCol>
-            <CCol>
-              <TimePicker
-                onChange={(date) => setState({ ...state, proposed_time: date })}
-              // value={value}
-              />
 
-            </CCol>
-            <CCol></CCol>
-          </CRow>
-          <CRow>
-            <CCol>  organisation  </CCol>
-            <CCol>
-              <CFormControl
-                onChange={(text) => setState({ ...state, organisation: text })}
-                component="textarea"
-                id="validationTextarea"
-                placeholder="Required example textarea"
-              // invalid
-              // required
-              ></CFormControl>
-            </CCol>
-            <CCol></CCol>
-          </CRow>
+
+
 
           <CForm>
             <CRow className="mb-3">
@@ -152,6 +127,49 @@ const Category = (props) => {
                 <CFormControl
                   onChange={(e) => setState({ ...state, name: e.target.value })}
                   placeholder="Category Name"
+                  type="email"
+                  id="inputEmail3"
+                />
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel htmlFor="inputEmail3" className="col-sm-2 col-form-label">
+                organisation
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  onChange={(text) => setState({ ...state, organisation: text.target.value })}
+
+                  placeholder="organization"
+                  type="email"
+                  id="inputEmail3"
+                />
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel htmlFor="inputEmail3" className="col-sm-2 col-form-label">
+                Email
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  onChange={(e) => setState({ ...state, email: e.target.value })}
+                  placeholder="Email"
+                  type="email"
+                  id="inputEmail3"
+                />
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel htmlFor="inputEmail3" className="col-sm-2 col-form-label">
+                mobile
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  onChange={(e) => setState({ ...state, mobile: e.target.value })}
+                  placeholder="Email"
                   type="email"
                   id="inputEmail3"
                 />
@@ -233,23 +251,35 @@ const Category = (props) => {
                 ></CFormControl>
               </CCol>
             </CRow>
-            {/* <CRow className="mb-3">
+            <CRow
+              className="mb-3"
+            >
               <CFormLabel htmlFor="inputPassword3" className="col-sm-2 col-form-label">
-                Enabled
+                note
               </CFormLabel>
-              <CCol sm="4">
-                <CFormCheck
-                  onChange={(e) => {
-                    setStatus(e.target.checked)
-                  }}
-                  type="checkbox"
-                  id="gridCheck1"
-                  label=""
-                />
+              <CCol>
+                <DatePicker
+                  selected={state?.proposed_date}
+                  onChange={(date) => setState({ ...state, proposed_date: date })} />
               </CCol>
-              <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" />
+              <CCol></CCol>
             </CRow>
-            */}
+            <CRow
+              className="mb-3"
+
+            >
+              <CFormLabel htmlFor="inputPassword3" className="col-sm-2 col-form-label">
+                proposed Time
+              </CFormLabel>
+              <CCol>
+                {/* <TimePicker start="10:00" end="21:00" step={30} /> */}
+                <TimePicker
+                  //  onChange={onChange}
+                  defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
+              </CCol>
+              <CCol></CCol>
+            </CRow>
+
 
 
           </CForm>

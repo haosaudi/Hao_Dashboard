@@ -2,8 +2,8 @@ import { ActionType } from '../actions'
 
 const initialState = {
   isLoading: false,
-  bookings: [],
-  booking: {},
+  bookingsStats: [],
+  bookingStats: {},
 }
 
 export default (state = initialState, action) => {
@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        bookings: action.payload,
+        bookingsStats: action.payload,
       }
     case ActionType.GET_ALL_BOOKING_FAIL:
       return {
@@ -22,12 +22,12 @@ export default (state = initialState, action) => {
         isLoading: false,
       }
     case ActionType.GET_BOOKING:
-      return { ...state, isLoading: true, booking: {} }
+      return { ...state, isLoading: true, bookingStats: {} }
     case ActionType.GET_BOOKING_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        booking: action.payload,
+        bookingsStats: action.payload,
       }
     case ActionType.GET_BOOKING_FAIL:
       return {
