@@ -41,30 +41,30 @@ const Category = (props) => {
       props.GetAllGroupBookingStats(props.token)
     }
   }, [])
-  useEffect(() => {
-    // setCategories(props.categories)
-    // console.log("itemmmmm")
+  // useEffect(() => {
+  //   // setCategories(props.categories)
+  //   // console.log("itemmmmm")
 
-    setState({
-      ...state, groupbookings: props.groupbookingStats && props.groupbookingStats.map((item, i) => {
-        // console.log("itemmmmm", item)
-        return {
-          ...item,
-          start_date: moment(item.start_date).format("yy-MM-DD"),
-          created_at: moment(item.created_at).format("yy-MM-DD"),
-          action: <div>  <span
-            onClick={() => props.history.push(`/groupbooking/approvedgroupbooking/${item.id}`)}
-            style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
-          >
-            View
-          </span></div>
+  //   setState({
+  //     ...state, groupbookings: props.groupbookingStats && props.groupbookingStats.map((item, i) => {
+  //       // console.log("itemmmmm", item)
+  //       return {
+  //         ...item,
+  //         start_date: moment(item.start_date).format("yy-MM-DD"),
+  //         created_at: moment(item.created_at).format("yy-MM-DD"),
+  //         action: <div>  <span
+  //           onClick={() => props.history.push(`/groupbooking/approvedgroupbooking/${item.id}`)}
+  //           style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
+  //         >
+  //           View
+  //         </span></div>
 
-        }
+  //       }
 
 
-      })
-    })
-  }, [props.groupbookingStats])
+  //     })
+  //   })
+  // }, [props.groupbookingStats])
 
   // const EditBooking = (i, id) => {
   //   swal({

@@ -133,7 +133,7 @@ const Category = (props) => {
               cursor: 'pointer', marginLeft: 16
             }}
           >
-            ‎View Booking Statisticsss
+            ‎View Booking Statistics
           </span>
         </CCardHeader>
         <Sortedtable
