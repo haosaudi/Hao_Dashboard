@@ -14,8 +14,9 @@ import {
   CFormControl,
   CForm,
   CFormLabel,
-  CFormCheck,
+  CInputGroupText,
   CSpinner,
+  CInputGroup,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { DocsLink } from "src/reusable";
@@ -31,18 +32,19 @@ import { ImageUpload } from "src/utils/api_calls";
 import { missingFieldsCheckOut } from "src/utils/globalFunction";
 import { toast } from "react-toastify";
 import moment from "moment";
-const Category = (props) => {
+const EditProviderManagement = (props) => {
   const [state, setState] = useState({
-    isSiteAdmin: false,
+    loading: false,
     mobile: "",
-    password: "",
+    profile_img: "",
+    percentage: "",
   });
   useEffect(() => {
     if (props.token) {
       if (props.match?.params?.id) {
         props.GetUserById(props.match?.params?.id, props.token);
       } else {
-        props.history.push("/bookings");
+        props.history.push("/providerManagement");
       }
     }
   }, []);
@@ -53,18 +55,15 @@ const Category = (props) => {
     setState({
       ...state,
       mobile: user?.mobile,
-      isSiteAdmin: user?.role == "SiteAdmin",
+      profile_img: user?.profile_img,
+      percentage: user?.percentage,
     });
     // }
   }, [props.user]);
 
   const UpdateUsers = async () => {
     let data = state;
-    let { isSiteAdmin } = state;
-    delete data.isSiteAdmin;
-    if (data?.password?.length == 0) {
-      delete data.password;
-    }
+    delete data.loading;
     let message = missingFieldsCheckOut(data);
     let isMissed = message?.length > 0;
     if (isMissed) {
@@ -78,33 +77,33 @@ const Category = (props) => {
         progress: undefined,
       });
     } else {
-      console.log("LETS GO SHAPATAR!!", isSiteAdmin);
       props.UpdateUser(
         {
           ...data,
-          role: isSiteAdmin ? "SiteAdmin" : "User",
           id: props.match?.params?.id,
         },
         props.token,
-        props.history
+        props.history,
+        true
       );
     }
   };
-
-  const CheckBox = () => {
-    return (
-      <CFormCheck
-        style={{ marginLeft: 0 }}
-        id="enabled"
-        defaultChecked={state.isSiteAdmin}
-        onChange={(e) => {
-          setState({ ...state, isSiteAdmin: e.target.checked });
-        }}
-        type="checkbox"
-        id="gridCheck1"
-        label=""
-      />
-    );
+  const imageUpload = async (file) => {
+    setState({ ...state, loading: true });
+    let data = new FormData();
+    data.append("photo", file);
+    let imageData = await ImageUpload(data, props.token);
+    if (imageData.success) {
+      setState({
+        ...state,
+        profile_img: imageData?.data?.location,
+        loading: false,
+      });
+    } else {
+      setState({ ...state, loading: false });
+    }
+    // setState({ ...state, loading: false })
+    console.log("imageData", imageData);
   };
   return (
     <>
@@ -127,7 +126,7 @@ const Category = (props) => {
               </CButton>
               &nbsp; &nbsp;
               <CButton
-                onClick={() => props.history.push("/userManagement")}
+                onClick={() => props.history.push("/providerManagement")}
                 style={{ color: "grey", fontSize: 12 }}
                 color={"light"}
                 shape="rounded-0"
@@ -144,11 +143,26 @@ const Category = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
-                Site Admin?
+                Category Image
               </CFormLabel>
               <CCol sm="4">
-                <CheckBox />
+                <CFormControl
+                  onChange={(e) => {
+                    imageUpload(e.target.files[0]);
+                  }}
+                  type="file"
+                  id="formFile"
+                />
               </CCol>
+              {state.loading ? (
+                <CCol sm="2">
+                  <CSpinner style={{ height: 25, width: 25 }} />
+                </CCol>
+              ) : state.profile_img?.length > 0 ? (
+                <CCol sm="2">Uploaded</CCol>
+              ) : null}
+
+              {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
             </CRow>
             <CRow className="mb-3">
               <CFormLabel
@@ -175,17 +189,29 @@ const Category = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
-                Password
+                Percentage
               </CFormLabel>
               <CCol sm="4">
-                <CFormControl
+                {/* <CFormControl
                   onChange={(e) =>
-                    setState({ ...state, password: e.target.value })
+                    setState({ ...state, percentage: e.target.value })
                   }
-                  placeholder="Password"
-                  value={state.password}
+                  placeholder="Percentage"
+                  value={state.percentage}
                   id="inputEmail3"
-                />
+                /> */}
+                <CInputGroup>
+                  <CFormControl
+                    onChange={(e) =>
+                      setState({ ...state, percentage: e.target.value })
+                    }
+                    placeholder="Percentage"
+                    value={state.percentage}
+                    aria-label="Recipient's username"
+                    aria-describedby="button-addon2"
+                  />
+                  <CInputGroupText id="basic-addon1">%</CInputGroupText>
+                </CInputGroup>
               </CCol>
             </CRow>
           </CForm>
@@ -195,7 +221,7 @@ const Category = (props) => {
   );
 };
 
-Category.propTypes = {
+EditProviderManagement.propTypes = {
   UpdateUser: PropTypes.func,
   GetUserById: PropTypes.func,
   token: PropTypes.string,
@@ -216,4 +242,7 @@ const mapDispatchToProps = {
   UpdateUser: UserAction.UpdateUser,
 };
 
-export default connect(mapStateToProp, mapDispatchToProps)(Category);
+export default connect(
+  mapStateToProp,
+  mapDispatchToProps
+)(EditProviderManagement);

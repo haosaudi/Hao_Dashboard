@@ -6,7 +6,7 @@ export default class CategoryAction {
     return async (dispatch) => {
       console.log("get category data in Action", token);
       dispatch({ type: ActionType.GET_ALL_USERS });
-      await GET("user?limit=20", token).then((data) => {
+      await GET("user?limit=50", token).then((data) => {
         if (data) {
           console.log("GOT THE USERS ALL!!", data);
           dispatch({
@@ -15,6 +15,23 @@ export default class CategoryAction {
           });
         } else {
           dispatch({ type: ActionType.GET_ALL_USERS_FAIL });
+        }
+      });
+    };
+  };
+  static GetAllProviders = (token) => {
+    return async (dispatch) => {
+      console.log("get category data in Action", token);
+      dispatch({ type: ActionType.GET_ALL_PROVIDERS });
+      await GET("user/providers?limit=50", token).then((data) => {
+        if (data) {
+          console.log("GOT THE PROVIDERS ALL!!", data);
+          dispatch({
+            type: ActionType.GET_ALL_PROVIDERS_SUCCESS,
+            payload: data.data,
+          });
+        } else {
+          dispatch({ type: ActionType.GET_ALL_PROVIDERS_FAIL });
         }
       });
     };
@@ -49,7 +66,7 @@ export default class CategoryAction {
       });
     };
   };
-  static UpdateUser = (data, token, history) => {
+  static UpdateUser = (data, token, history, isProvider) => {
     return async (dispatch) => {
       console.log("update user data in Action", data);
       dispatch({ type: ActionType.USER_UPDATE });
@@ -58,7 +75,7 @@ export default class CategoryAction {
           console.log("UPDATE THE USER", data);
           toast("USER UPDATED SUCCESSFULLY");
           dispatch({ type: ActionType.USER_UPDATE_SUCCESS });
-          history.push("/userManagement");
+          history.push(isProvider ? "/providerManagement" : "/userManagement");
         } else {
           dispatch({ type: ActionType.USER_UPDATE_FAIL });
         }

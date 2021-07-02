@@ -14,11 +14,14 @@ import viewalllbookings from "./views/groupbooking";
 import creategroupbooking from "./views/groupbooking/creategroupbooking";
 import UserManagement from "./views/userManagement";
 import EditUserManagement from "./views/userManagement/editUsers";
+import ProviderManagement from "./views/providerManagement";
+// import EditProviderManagement from "./views/ProviderManagement/editProvider";
 // import creategroupbooking from "./views/groupbooking/creategroupbooking";
 import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
+import ExperienceAvailibilty from "./views/viewExperienceAvailibilityReminder";
+import editProvider from "./views/providerManagement/editProvider";
 
 // examples
-
 const Colors = React.lazy(() => import("./views/theme/colors/Colors"));
 const Category = React.lazy(() => import("./views/category"));
 const ProviderApproval = React.lazy(() => import("./views/providerApproval"));
@@ -139,6 +142,18 @@ const routes = [
     component: UserManagement,
     exact: true,
   },
+  {
+    path: "/experienceAvailibilty",
+    name: "Experience Availibilty Reminder",
+    component: ExperienceAvailibilty,
+    exact: true,
+  },
+  {
+    path: "/providerManagement",
+    name: "Provider Management",
+    component: ProviderManagement,
+    exact: true,
+  },
   { path: "/category/add", name: "Add Category", component: AddCategory },
   {
     path: "/category/edit/:id",
@@ -149,6 +164,11 @@ const routes = [
     path: "/userManagement/edit/:id",
     name: "Edit User Management",
     component: EditUserManagement,
+  },
+  {
+    path: "/providerManagement/edit/:id",
+    name: "Edit Provider Management",
+    component: editProvider,
   },
   {
     path: "/bookings",
@@ -172,7 +192,6 @@ const routes = [
     path: "/groupbooking/creategroupbooking",
     name: "creategroupbooking",
     component: creategroupbooking,
-
   },
 
   {
