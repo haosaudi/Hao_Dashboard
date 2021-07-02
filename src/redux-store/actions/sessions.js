@@ -2,47 +2,31 @@ import { POST, GET, DELETE, PUT } from 'src/utils/api_calls'
 import { ActionType } from '.'
 import { toast } from 'react-toastify'
 export default class BookingAction {
-  static GetAllGroupBooking = (token) => {
+  static GetAllSessions = (token) => {
     return async (dispatch) => {
       console.log('get GetAllGroupBooking data in Action', token)
-      dispatch({ type: ActionType.GET_ALL_GROUPBOOKING })
-      await GET('groupBooking', token).then((data) => {
+      dispatch({ type: ActionType.GET_ALL_SESSIONS })
+      await GET('session?limit=50', token).then((data) => {
         if (data) {
           console.log('GOT THE GetAllGroupGROUPBooking ALL!!', data)
-          dispatch({ type: ActionType.GET_ALL_GROUPBOOKING_SUCCESS, payload: data.data })
+          dispatch({ type: ActionType.GET_ALL_SESSIONS_SUCCESS, payload: data.data })
         } else {
-          dispatch({ type: ActionType.GET_ALL_GROUPBOOKING_FAIL })
+          dispatch({ type: ActionType.GET_ALL_SESSIONS_FAIL })
         }
       })
     }
   }
-  static GetAllGroupBookingStats = (token) => {
+
+  static GetSessionsById = (id, token) => {
     return async (dispatch) => {
-      console.log('get GetAllGroupBookingStats data in Action')
-      dispatch({ type: ActionType.GROUPBOOKINGSTATS_CREATE })
-
-      await GET('booking/details', token).then((data) => {
-        if (data) {
-
-          console.log('GOT THE GetAllGroupBookingStats ALL!!', data.data)
-
-          dispatch({ type: ActionType.GROUPBOOKINGSTATS_CREATE_SUCCESS, payload: data.data })
-        } else {
-          // dispatch({ type: ActionType.GROUPBOOKINGSTATS_CREATE_FAIL })
-        }
-      })
-    }
-  }
-  static GetBookingById = (id, token) => {
-    return async (dispatch) => {
-      console.log('get Booking by id data in Action', token)
-      dispatch({ type: ActionType.GET_GROUPBOOKING })
-      await GET(`groupBooking/detail/${id}`, token).then((data) => {
+      console.log('get Sessions by id data in Action=p==', token)
+      dispatch({ type: ActionType.GET_SESSIONS })
+      await GET(`session/detail/${id}`, token).then((data) => {
         if (data) {
           console.log('GOT THE GROUPBOOKING ID!!', data)
-          dispatch({ type: ActionType.GET_GROUPBOOKING_SUCCESS, payload: data?.data })
+          dispatch({ type: ActionType.GET_SESSIONS_SUCCESS, payload: data?.data })
         } else {
-          dispatch({ type: ActionType.GET_GROUPBOOKING_FAIL })
+          dispatch({ type: ActionType.GET_SESSIONS_FAIL })
         }
       })
     }

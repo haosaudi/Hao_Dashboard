@@ -22,9 +22,12 @@ export default (state = initialState, action) => {
         isLoading: false,
       }
     case ActionType.GET_GROUPBOOKING:
+
       return { ...state, isLoading: true, groupbooking: {} }
     case ActionType.GROUPBOOKINGSTATS_CREATE:
-      return { ...state, isLoading: true, groupbookingStats: action.payload }
+      return { ...state, isLoading: true }
+    case ActionType.GROUPBOOKINGSTATS_CREATE_SUCCESS:
+      return { ...state, isLoading: false, groupbookingStats: action.payload }
     case ActionType.GET_GROUPBOOKING_SUCCESS:
       return {
         ...state,

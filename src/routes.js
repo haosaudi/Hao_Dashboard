@@ -17,9 +17,12 @@ import EditUserManagement from "./views/userManagement/editUsers";
 import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
 import viewbookingstatistics from "./views/groupbooking/viewbookingstatistics";
 import ProviderManagement from "./views/providerManagement";
+import Sessions from "./views/sessions";
+import editsessions from "./views/sessions/editsessions";
+
 // import EditProviderManagement from "./views/ProviderManagement/editProvider";
 // import creategroupbooking from "./views/groupbooking/creategroupbooking";
-import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
+// import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
 import ExperienceAvailibilty from "./views/viewExperienceAvailibilityReminder";
 import editProvider from "./views/providerManagement/editProvider";
 
@@ -143,6 +146,18 @@ const routes = [
     name: "User Management",
     component: UserManagement,
     exact: true,
+  },
+  {
+    path: "/Sessions",
+    name: "User Management", // bread but now off
+    component: Sessions,
+    exact: true,
+  },
+  {
+    path: "/Sessions/editsessions/:id",
+    name: "User Management", // bread but now off
+    component: editsessions,
+    // exact: true,
   },
   {
     path: "/experienceAvailibilty",

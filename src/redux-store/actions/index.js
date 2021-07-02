@@ -9,6 +9,7 @@ import BookingAction from "./bookings";
 import GroupBookingAction from "./groupbooking";
 import UserAction from "./users";
 import ExperienceAvailibilityAction from "./experienceAvailibility";
+import SessionsAction from "./sessions";
 
 export {
   ActionType,
@@ -22,4 +23,5 @@ export {
   GroupBookingAction,
   UserAction,
   ExperienceAvailibilityAction,
+  SessionsAction,
 };

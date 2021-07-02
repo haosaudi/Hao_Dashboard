@@ -73,6 +73,17 @@ const _nav = [
   {
     _component: "CNavItem",
     as: NavLink,
+    anchor: "Sessions",
+    to: "/Sessions",
+    // icon: <CIcon name="cil-speedometer" customClasses="nav-icon" />,
+    badge: {
+      color: "info",
+      text: "NEW",
+    },
+  },
+  {
+    _component: "CNavItem",
+    as: NavLink,
     anchor: "Bookings",
     to: "/Bookings",
     // icon: <CIcon name="cil-speedometer" customClasses="nav-icon" />,
