@@ -104,6 +104,28 @@ const _nav = [
     },
   },
   {
+    _component: "CNavItem",
+    as: NavLink,
+    anchor: "Provider Management",
+    to: "/providerManagement",
+    // icon: <CIcon name="cil-speedometer" customClasses="nav-icon" />,
+    badge: {
+      color: "info",
+      text: "NEW",
+    },
+  },
+  {
+    _component: "CNavItem",
+    as: NavLink,
+    anchor: "View Exp Availibility Request",
+    to: "/experienceAvailibilty",
+    // icon: <CIcon name="cil-speedometer" customClasses="nav-icon" />,
+    badge: {
+      color: "info",
+      text: "NEW",
+    },
+  },
+  {
     _component: "CNavTitle",
     anchor: "Theme",
   },

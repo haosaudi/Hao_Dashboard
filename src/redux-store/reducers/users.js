@@ -3,6 +3,7 @@ import { ActionType } from "../actions";
 const initialState = {
   isLoading: false,
   users: [],
+  providers: [],
   user: {},
 };
 
@@ -17,6 +18,19 @@ export default (state = initialState, action) => {
         users: action.payload,
       };
     case ActionType.GET_ALL_USERS_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case ActionType.GET_ALL_PROVIDERS:
+      return { ...state, isLoading: true };
+    case ActionType.GET_ALL_PROVIDERS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        providers: action.payload,
+      };
+    case ActionType.GET_ALL_PROVIDERS_FAIL:
       return {
         ...state,
         isLoading: false,
