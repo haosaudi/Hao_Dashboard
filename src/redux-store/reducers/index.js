@@ -8,6 +8,7 @@ import BookingsReducer from "./bookings";
 import GroupBookingsReducer from "./groupbookings";
 import UserReducer from "./users";
 import ExperienceAvailibilityReducer from "./experienceAvailibility";
+import ExperienceReducer from "./experience";
 
 export default {
   AuthReducer,
@@ -19,5 +20,6 @@ export default {
   UserReducer,
   BookingsReducer,
   GroupBookingsReducer,
+  ExperienceReducer,
   ExperienceAvailibilityReducer,
 };

@@ -14,7 +14,11 @@ import viewalllbookings from "./views/groupbooking";
 import creategroupbooking from "./views/groupbooking/creategroupbooking";
 import UserManagement from "./views/userManagement";
 import EditUserManagement from "./views/userManagement/editUsers";
-import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
+import Experience from "./views/manageExperience";
+import EditExperience from "./views/manageExperience/editExperience";
+import AddExperience from "./views/manageExperience/addExperience";
+import ViewExperience from "./views/manageExperience/viewExperience";
+// import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
 import viewbookingstatistics from "./views/groupbooking/viewbookingstatistics";
 import ProviderManagement from "./views/providerManagement";
 // import EditProviderManagement from "./views/ProviderManagement/editProvider";
@@ -139,6 +143,12 @@ const routes = [
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
   { path: "/category", name: "Category", component: Category, exact: true },
   {
+    path: "/experience",
+    name: "Experience",
+    component: Experience,
+    exact: true,
+  },
+  {
     path: "/userManagement",
     name: "User Management",
     component: UserManagement,
@@ -161,6 +171,17 @@ const routes = [
     path: "/category/edit/:id",
     name: "Edit Category",
     component: EditCategory,
+  },
+  { path: "/experience/add", name: "Add Experience", component: AddExperience },
+  {
+    path: "/experience/edit/:id",
+    name: "Edit Experience",
+    component: EditExperience,
+  },
+  {
+    path: "/experience/view/:id",
+    name: "View Experience",
+    component: ViewExperience,
   },
   {
     path: "/userManagement/edit/:id",
