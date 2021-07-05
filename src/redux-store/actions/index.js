@@ -11,6 +11,7 @@ import UserAction from "./users";
 import ExperienceAvailibilityAction from "./experienceAvailibility";
 import ExperienceAction from "./experience";
 import SessionsAction from "./sessions";
+import GiftsAction from "./gifts";
 
 export {
   ActionType,
@@ -23,6 +24,7 @@ export {
   BookingAction,
   GroupBookingAction,
   UserAction,
+  GiftsAction,
   ExperienceAction,
   ExperienceAvailibilityAction,
   SessionsAction,

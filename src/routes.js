@@ -18,7 +18,9 @@ import Experience from "./views/manageExperience";
 import EditExperience from "./views/manageExperience/editExperience";
 import AddExperience from "./views/manageExperience/addExperience";
 import ViewExperience from "./views/manageExperience/viewExperience";
-// import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
+import ManageGifts from "./views/manageGifts";
+import ViewExperienceFiles from "./views/manageExperience/viewExperienceFiles";
+import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
 import viewbookingstatistics from "./views/groupbooking/viewbookingstatistics";
 import ProviderManagement from "./views/providerManagement";
 import Sessions from "./views/sessions";
@@ -188,6 +190,7 @@ const routes = [
     component: EditCategory,
   },
   { path: "/experience/add", name: "Add Experience", component: AddExperience },
+  { path: "/gifts", name: "Manage Gifts", component: ManageGifts },
   {
     path: "/experience/edit/:id",
     name: "Edit Experience",
@@ -197,6 +200,12 @@ const routes = [
     path: "/experience/view/:id",
     name: "View Experience",
     component: ViewExperience,
+    exact: true,
+  },
+  {
+    path: "/experience/view/files/:id",
+    name: "View Experience Files",
+    component: ViewExperienceFiles,
   },
   {
     path: "/userManagement/edit/:id",

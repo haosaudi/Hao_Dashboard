@@ -136,19 +136,19 @@ const Category = (props) => {
     }
   };
 
-  const CheckBox = () => (
-    <CFormCheck
-      id="enabled"
-      defaultChecked={state.online}
-      style={{ marginLeft: 0 }}
-      onChange={(e) => {
-        setState({ ...state, online: e.target.checked });
-      }}
-      type="checkbox"
-      id="gridCheck1"
-      label=""
-    />
-  );
+    const CheckBox = () => (
+      <CFormCheck
+        id="enabled"
+        defaultChecked={state.online}
+        style={{ marginLeft: 0 }}
+        onChange={(e) => {
+          setState({ ...state, online: e.target.checked });
+        }}
+        type="checkbox"
+        id="gridCheck1"
+        label=""
+      />
+    );
 
   return (
     <>
@@ -496,7 +496,7 @@ const Category = (props) => {
                 <CRow className="mb-3">
                   <CFormLabel
                     htmlFor="inputPassword3"
-                    className="col-sm-3 col-form-label"
+                    className="col-sm-4 col-form-label"
                   >
                     Lat:
                   </CFormLabel>
@@ -518,7 +518,7 @@ const Category = (props) => {
                 <CRow className="mb-3">
                   <CFormLabel
                     htmlFor="inputPassword3"
-                    className="col-sm-3 col-form-label"
+                    className="col-sm-4 col-form-label"
                   >
                     Lng:
                   </CFormLabel>

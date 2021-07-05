@@ -93,7 +93,7 @@ const Category = (props) => {
                 </span>
                 <span
                   onClick={() =>
-                    props.history.push(`/userManagement/edit/${item.id}`)
+                    props.history.push(`/experience/view/files/${item.id}`)
                   }
                   style={{
                     color: "#309C2E",
@@ -106,7 +106,7 @@ const Category = (props) => {
                 </span>
                 <span
                   onClick={() =>
-                    props.history.push(`/userManagement/edit/${item.id}`)
+                    props.history.push(`/experience/view/files/${item.id}`)
                   }
                   style={{
                     color: "red",
@@ -149,9 +149,23 @@ const Category = (props) => {
           width: "100%",
         }}
       >
-        <CCardHeader>Experience Management</CCardHeader>
+        <CCardHeader>
+          Experience Management{" "}
+          <span
+            onClick={() => props.history.push("/experience/add")}
+            style={{
+              fontSize: 12,
+              fontWeight: "400",
+              color: "#309CE4",
+              textDecorationLine: "underline",
+              cursor: "pointer",
+            }}
+          >
+            Add New Expereince
+          </span>
+        </CCardHeader>
         <Sortedtable
-          dataArray={state.experiences}
+          dataArray={state.experiences.reverse()}
           columns={[
             {
               label: "Experience Image",

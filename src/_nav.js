@@ -148,6 +148,17 @@ const _nav = [
     },
   },
   {
+    _component: "CNavItem",
+    as: NavLink,
+    anchor: "Manage Gifts",
+    to: "/gifts",
+    // icon: <CIcon name="cil-speedometer" customClasses="nav-icon" />,
+    badge: {
+      color: "info",
+      text: "NEW",
+    },
+  },
+  {
     _component: "CNavTitle",
     anchor: "Theme",
   },

@@ -10,6 +10,7 @@ import UserReducer from "./users";
 import SessionsReducer from "./sessions";
 import ExperienceAvailibilityReducer from "./experienceAvailibility";
 import ExperienceReducer from "./experience";
+import GiftsReducer from "./gifts";
 
 export default {
   AuthReducer,
@@ -21,6 +22,7 @@ export default {
   UserReducer,
   BookingsReducer,
   GroupBookingsReducer,
+  GiftsReducer,
   ExperienceReducer,
   ExperienceAvailibilityReducer,
   SessionsReducer,

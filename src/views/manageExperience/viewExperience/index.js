@@ -55,8 +55,6 @@ const Category = (props) => {
     if (props.token) {
       if (props.match?.params?.id) {
         props.GetExperienceById(props.match?.params?.id, props.token);
-        props.GetCategories(props.token);
-        props.GetCities(props.token);
       } else {
         props.history.push("/experience");
       }
@@ -65,6 +63,7 @@ const Category = (props) => {
   useEffect(() => {
     if (props.experience) {
       let { experience } = props;
+      console.log("EXPERIENCE!!", experience);
       setState({
         ...state,
         title_ar: experience.title_ar,
@@ -83,52 +82,8 @@ const Category = (props) => {
         latitude: experience.latitude,
         img_background: experience.img_background,
       });
-      console.log(experience.status == 1);
-
-      setStatus(experience.status == 1);
     }
   }, [props.experience]);
-  const imageUpload = async (file) => {
-    setState({ ...state, loading: true });
-    let data = new FormData();
-    data.append("photo", file);
-    let imageData = await ImageUpload(data, props.token);
-    if (imageData.success) {
-      setState({
-        ...state,
-        img_background: imageData?.data?.location,
-        loading: false,
-      });
-    } else {
-      setState({ ...state, loading: false });
-    }
-    // setState({ ...state, loading: false })
-    console.log("imageData", imageData);
-  };
-  const EditExperience = async () => {
-    let data = state;
-    delete data.loading;
-    let message = missingFieldsCheckOut(data);
-    let isMissed = message.length > 0;
-    if (isMissed) {
-      toast.warn(`Please fill all Fields ${message}`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    } else {
-      props.UpdateExperience(
-        props.match?.params?.id,
-        { ...data, slug: state.name_ar, status: status ? 1 : 0 },
-        props.token,
-        props.history
-      );
-    }
-  };
 
   const CheckBox = () => (
     <CFormCheck
@@ -319,10 +274,10 @@ const Category = (props) => {
                 Location
               </CFormLabel>
               <CCol sm="3">
-                <CRow style={{}} className="mb-3">
+                <CRow style={{}} className="mb-5">
                   <CFormLabel
                     htmlFor="inputPassword3"
-                    className="col-sm-3 col-form-label"
+                    className="col-sm-4 col-form-label"
                   >
                     Lat:
                   </CFormLabel>
@@ -335,10 +290,10 @@ const Category = (props) => {
                 </CRow>
               </CCol>
               <CCol sm="3">
-                <CRow className="mb-3">
+                <CRow className="mb-5">
                   <CFormLabel
                     htmlFor="inputPassword3"
-                    className="col-sm-3 col-form-label"
+                    className="col-sm-4 col-form-label"
                   >
                     Lng:
                   </CFormLabel>
