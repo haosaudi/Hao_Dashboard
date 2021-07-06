@@ -67,7 +67,39 @@ const Category = (props) => {
   useEffect(() => {
     _setFinances();
   }, [props.finances]);
-
+  const onDone = (item) => {
+    setState({
+      ...state,
+      invoiceDetail: item,
+      finances: props.finances
+        ? props.finances.map((item, i) => {
+            console.log("itemmmmm", item);
+            let { start_date, email, first_name, last_name } = item;
+            return {
+              ...item,
+              no: String(i + 1).length == 1 ? `0${i + 1}` : i + 1,
+              full_name: first_name + " " + last_name,
+              start_date: moment(start_date).format("yy-MM-DD"),
+              email: <p style={{ color: "#309CE4" }}>{email}</p>,
+              action: (
+                <div>
+                  <span
+                    onClick={() => onDone(item)}
+                    style={{
+                      color: "#309CE4",
+                      fontSize: 12,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Create Invoice
+                  </span>
+                </div>
+              ),
+            };
+          })
+        : [],
+    });
+  };
   const _setFinances = () => {
     setState({
       ...state,
@@ -84,7 +116,7 @@ const Category = (props) => {
               action: (
                 <div>
                   <span
-                    onClick={() => setState({ ...state, invoiceDetail: item })}
+                    onClick={() => onDone(item)}
                     style={{
                       color: "#309CE4",
                       fontSize: 12,
