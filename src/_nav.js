@@ -95,6 +95,28 @@ const _nav = [
   {
     _component: "CNavItem",
     as: NavLink,
+    anchor: "Finance",
+    to: "/finance",
+    // icon: <CIcon name="cil-speedometer" customClasses="nav-icon" />,
+    badge: {
+      color: "info",
+      text: "NEW",
+    },
+  },
+  {
+    _component: "CNavItem",
+    as: NavLink,
+    anchor: "View Refunds",
+    to: "/refunds",
+    // icon: <CIcon name="cil-speedometer" customClasses="nav-icon" />,
+    badge: {
+      color: "info",
+      text: "NEW",
+    },
+  },
+  {
+    _component: "CNavItem",
+    as: NavLink,
     anchor: "Bookings",
     to: "/Bookings",
     // icon: <CIcon name="cil-speedometer" customClasses="nav-icon" />,

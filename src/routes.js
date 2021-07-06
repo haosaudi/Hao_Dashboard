@@ -24,6 +24,8 @@ import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
 import viewbookingstatistics from "./views/groupbooking/viewbookingstatistics";
 import ProviderManagement from "./views/providerManagement";
 import Sessions from "./views/sessions";
+import Finance from "./views/finance";
+import ViewRefunds from "./views/refunds";
 import editsessions from "./views/sessions/editsessions";
 
 // import EditProviderManagement from "./views/ProviderManagement/editProvider";
@@ -157,6 +159,18 @@ const routes = [
     path: "/userManagement",
     name: "User Management",
     component: UserManagement,
+    exact: true,
+  },
+  {
+    path: "/finance",
+    name: "Finance",
+    component: Finance,
+    exact: true,
+  },
+  {
+    path: "/refunds",
+    name: "View Refunds",
+    component: ViewRefunds,
     exact: true,
   },
   {
