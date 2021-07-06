@@ -154,7 +154,7 @@ const Category = (props) => {
               Select Date Range
             </CFormLabel>
             <CCol sm="8">
-              <RangePicker onChange={onChange} />
+              <RangePicker onChange={onChange} />  
             </CCol>
           </CRow>
           <CRow className="mb-3 col-sm-12">
