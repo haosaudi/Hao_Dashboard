@@ -12,6 +12,7 @@ import ExperienceAvailibilityAction from "./experienceAvailibility";
 import ExperienceAction from "./experience";
 import SessionsAction from "./sessions";
 import GiftsAction from "./gifts";
+import ProviderMessagesAction from "./providermessages";
 
 export {
   ActionType,
@@ -28,4 +29,5 @@ export {
   ExperienceAction,
   ExperienceAvailibilityAction,
   SessionsAction,
+  ProviderMessagesAction
 };

@@ -11,6 +11,7 @@ import SessionsReducer from "./sessions";
 import ExperienceAvailibilityReducer from "./experienceAvailibility";
 import ExperienceReducer from "./experience";
 import GiftsReducer from "./gifts";
+import ProviderMessagesReducer from "./providermessages";
 
 export default {
   AuthReducer,
@@ -26,4 +27,5 @@ export default {
   ExperienceReducer,
   ExperienceAvailibilityReducer,
   SessionsReducer,
+  ProviderMessagesReducer
 };

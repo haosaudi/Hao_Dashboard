@@ -9,7 +9,7 @@ export default class AuthAction {
       await POST('login', data).then((data) => {
         if (data) {
           console.log('Signin Response data', data)
-          if (data.data.role == 'SiteAdmin') {
+          if (data.data.role == 'SiteAdmin' || data.data.role == "Provider") {
             dispatch({ type: ActionType.SIGNIN_SUCCESS, payload: data })
             toast('LOGIN SUCCESSFULLY')
           } else {
