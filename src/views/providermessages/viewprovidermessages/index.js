@@ -7,6 +7,8 @@ import DatePicker from 'react-datepicker'
 import GiftedChat from 'reactjs-simple-gifted-chat';
 // import { GiftedChat } from 'react-web-gifted-chat';
 import { Chat } from "@progress/kendo-react-conversational-ui";
+import socket from '../../../components/socket'
+
 
 
 //  
@@ -88,7 +90,7 @@ const Category = (props) => {
   };
 
   useEffect(() => {
-    console.log("USER", props.userData)
+    // console.log("USER========", getSocket)
     if (props.token) {
       if (props.match?.params?.id) {
         props.GetMessageDetails(props.match?.params?.id, props.token)
@@ -96,9 +98,35 @@ const Category = (props) => {
         // props.history.push('/providerMessagesDetails')
       }
     }
+
+    ////SOCKETTTTTTTT
+    // _GetMessage();
+    socket.connect(props.userData?.id);
+    socket.getSocket().on('messages', (data) => {
+      console.log('data===', data);
+      onReceived(data);
+    });
+    // socket.getSocket().on('display', (data) => {
+    //   setType(data.typing);
+    // });
+    return () => {
+      socket.getSocket().close();
+    };
+
+
   }, [])
 
+  const onReceived = (data) => {
 
+    setState({
+      ...state, providerMessageDetails: [...state.providerMessageDetails, {
+        author: { id: String(data.message_by), name: data.first_name, avatarUrl: data.profile_img },
+        // selectionIndex: i,
+        text: data.message,
+        timestamp: new Date(data.created_at)
+      }]
+    })
+  }
   useEffect(() => {
     if (props.providerMessagesDetails) {
       let { providerMessagesDetails } = props
@@ -124,7 +152,7 @@ const Category = (props) => {
     <>
       <Chat
         user={user}
-        messages={state.providerMessageDetails}
+        messages={state.providerMessageDetails.reverse()}
         onMessageSend={addNewMessage}
         width={'100%'}
 

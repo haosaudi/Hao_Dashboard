@@ -25,14 +25,6 @@ import Sortedtable from '../../components/sortedtables'
 
 
 const Category = (props) => {
-  const categoryTableHeading = [
-    "Images",
-
-    "From",
-    "Experience",
-    "Date",
-    "Action",
-  ];
 
   const [providerMessages, setProviderMessages] = useState([]);
 
@@ -44,7 +36,7 @@ const Category = (props) => {
   useEffect(() => {
     setProviderMessages(props.providerMessages.map((item, i) => {
       return {
-        ...item,
+        // ...item,
         profileImage: <img
           style={{
             width: 40,
@@ -86,10 +78,10 @@ const Category = (props) => {
 
   return (
     <>
-      {console.log("I GOT THE CATEGORIES", props.providerMessages)}
+      {console.log("I GOT THE CATEGORIES", providerMessages)}
       <CCard className="mb-4">
         <CCardHeader style={{ fontWeight: "bold" }}>
-          Provider Messages{" "}
+          Provider Messagess{" "}
           {/* <span
             onClick={() => props.history.push("/city/add")}
             style={{
@@ -131,24 +123,18 @@ const Category = (props) => {
               sort: 'asc',
               width: 200
             },
-
-
-
             {
               label: ' Date',
               field: 'Date',
               sort: 'asc',
               width: 100
             },
-
-
             {
               label: 'Action',
               field: 'action',
               sort: 'asc',
               width: 100
             },
-
           ]}
         />
       </CCard>
