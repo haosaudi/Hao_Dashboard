@@ -30,6 +30,20 @@ export default class CategoryAction {
       })
     }
   }
+  static SendMessages = (_data, token) => {
+    return async (dispatch) => {
+      console.log('get city by id data in Action', token)
+      dispatch({ type: ActionType.SENDPROVIDERMESSAGES })
+      await POST(`messages`, _data, token).then((data) => {
+        if (data) {
+          console.log('send message!', data)
+          dispatch({ type: ActionType.SENDPROVIDERMESSAGES_SUCCESS, payload: data.data })
+        } else {
+          dispatch({ type: ActionType.SENDPROVIDERMESSAGES_FAIL })
+        }
+      })
+    }
+  }
 
 
 }

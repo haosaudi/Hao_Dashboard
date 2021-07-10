@@ -1,8 +1,18 @@
+
+
 import PropTypes from 'prop-types'
 import React, { useEffect, useState, createRef } from 'react'
 import classNames from 'classnames'
 import DatePicker from 'react-datepicker'
 import GiftedChat from 'reactjs-simple-gifted-chat';
+// import { GiftedChat } from 'react-web-gifted-chat';
+import { Chat } from "@progress/kendo-react-conversational-ui";
+
+
+//  
+
+
+
 
 import 'react-datepicker/dist/react-datepicker.css'
 import {
@@ -36,8 +46,49 @@ const Category = (props) => {
     isFetching: false
   })
   const [status, setStatus] = useState(false)
+  const [messages, setMessages] = React.useState([]);
+
+  const addNewMessage = (event) => {
+    // console.log("Event============", event,props.)
+
+
+    setState({ ...state, providerMessageDetails: [...state.providerMessageDetails, event.message] });
+    _ApiCallSendMessage(event)
+
+
+
+  };
+
+  const _ApiCallSendMessage = (event) => {
+    console.log("Event============", event)
+    let data = {
+      chat_id: props.match?.params?.id,
+      message: event?.message?.text,
+    }
+    props.SendMessages(data, props.token)
+    console.log("Event============data", data)
+
+
+  }
+
+
+  const MessageTemplate = (props) => {
+    return (
+      <div className="k-bubble">
+        <div>{props.item.text}</div>
+      </div>
+    );
+  };
+
+
+  const user = {
+    id: String(props.userData.id),
+    name: props.userData.first_name,
+    avatarUrl: props.userData.profile_img,
+  };
+
   useEffect(() => {
-    // signup()
+    console.log("USER", props.userData)
     if (props.token) {
       if (props.match?.params?.id) {
         props.GetMessageDetails(props.match?.params?.id, props.token)
@@ -53,112 +104,35 @@ const Category = (props) => {
       let { providerMessagesDetails } = props
       setState({
         ...state,
-        // providerMessageDetails: providerMessagesDetails,
-
         providerMessageDetails: providerMessagesDetails.map((item, i) => {
           return {
-            _id: 1,
-            content: { text: 'Hello developer' },
-            createdAt: new Date(),
-            user: {
-              _id: 30,
-              name: 'React',
-              avatar: 'https://facebook.github.io/react/img/logo_og.png',
-            }
+            author: { id: item.message_by, name: item.first_name, avatarUrl: item.profile_img },
+            // selectionIndex: i,
+            text: item.message,
+            timestamp: new Date(item.created_at)
           }
         })
-        // name_ar: providerMessagesDetails.name_ar,
-        // img: providerMessagesDetails.img,
+
       })
-      // console.log(providerMessagesDetails.status == 1)
-      // setStatus(providerMessagesDetails.status == 1)
+
+
     }
   }, [props.providerMessagesDetails])
 
-  const onSend = (message) => {
-    const messages = state.mesages.slice(0)
-    messages.splice(0, 0, { _id: 100, content: { text: message }, user: { _id: 1 }, displayTime: 'Now', createdAt: new Date() })
-    setState({ messages });
-  }
+
   return (
     <>
-      <CCard className="mb-4">
-        <CCardHeader
-        // style={{
-        //   fontWeight: 'bold',
-        //   display: 'flex',
-        //   flexWrap: 'wrap',
-        //   justifyContent: 'space-between',
-        // }}
-        >
-          <CRow>
+      <Chat
+        user={user}
+        messages={state.providerMessageDetails}
+        onMessageSend={addNewMessage}
+        width={'100%'}
 
-            {/* <CCol style={{ alignItems: 'center', display: 'flex' }}>Edit Category</CCol> */}
-            <CCol style={{ display: 'flex', justifyContent: 'flex-start' }}>
-              <CButton
-                // onClick={EditCity}
-                onClick={() => props.history.goBack()}
-                disabled={state.loading || props.isLoading}
-                style={{ color: 'white', fontSize: 12 }}
-                color={'info'}
-                shape="rounded-0"
-              >
-                Go Back
-              </CButton>
-              &nbsp; &nbsp;
-
-            </CCol>
-          </CRow>
-        </CCardHeader>
-        {
-          console.log("hello details====", state.providerMessageDetails)
-        }
-        <GiftedChat
-          messages={state.providerMessageDetails}
-          messages={[]}
-          onSend={onSend}
-          user={{
-            _id: 1,
-            name: 'User'
-          }}
-          hasInputField
-          loadEarlier={true}
-          // onLoadEarlier={() => onLoadEarlier()}
-          // isLoadingEarlier={state.isFetching}
-          inverted={true}
-          isTyping
-          // alwaysShowSend
-          sendButtonText="Send"
-          placeholder="Type your message"
-          renderAvatarOnTop
-          showAvatarForEveryMessage={false}
-          showUserAvatar
-          showReceipientAvatar={false}
-          avatarSize={70}
-          // messageIdGenerator={uuidv3}
-          renderAccessory={null}
-          timezone="America/Los_Angeles"
-          timeFormat="HH:mm"
-          dateFormat="YYYY/MM/DD"
-          maxInputLength="400"
-          renderTextInput={props => {
-            // By default GiftedChat uses textarea, override that here using react-textarea-autosize
-            return <input {...props} minRows={1} maxRows={5} />
-          }}
-          textInputStyle={{ margin: 10 }}
-          textStyle={{ fontSize: 15 }}
-          imageStyle={{ width: 500 }}
-          timeStyle={{ fontSize: 12 }}
-          dateStyle={{ fontSize: 18 }}
-          sendButtonStyle={{ backgroundColor: 'blue', fontSize: 16 }}
-          sendButtonDisabledStyle={{ backgrounColor: 'gray' }}
-          renderChatEmpty={() => <div>No Messages</div>}
-        />
-
-
-      </CCard>
+        messageTemplate={MessageTemplate}
+      />
     </>
   )
+
 }
 
 Category.propTypes = {
@@ -174,11 +148,13 @@ Category.propTypes = {
 const mapStateToProp = (state) => ({
   isLoading: state.ProviderMessagesReducer.isLoading,
   token: state.AuthReducer.token,
+  userData: state.AuthReducer.userData,
   providerMessagesDetails: state.ProviderMessagesReducer.providerMessagesDetails,
 })
 
 const mapDispatchToProps = {
   GetMessageDetails: ProviderMessagesAction.GetMessageDetails,
+  SendMessages: ProviderMessagesAction.SendMessages,
   // UpdateCity: ProviderMessagesAction.UpdateCity,
 }
 

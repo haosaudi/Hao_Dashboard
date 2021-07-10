@@ -5,6 +5,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'; import
   'bootstrap-css-only/css/bootstrap.min.css'; import
   'mdbreact/dist/css/mdb.css';
 import { ToastContainer, toast } from 'react-toastify'
+import '@progress/kendo-theme-default/dist/all.css';
 import 'react-toastify/dist/ReactToastify.css'
 import 'antd/dist/antd.css';
 const loading = (
