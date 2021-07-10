@@ -11,6 +11,7 @@ import SessionsReducer from "./sessions";
 import ExperienceAvailibilityReducer from "./experienceAvailibility";
 import ExperienceReducer from "./experience";
 import GiftsReducer from "./gifts";
+import EmailReducer from "./email";
 
 export default {
   AuthReducer,
@@ -26,4 +27,5 @@ export default {
   ExperienceReducer,
   ExperienceAvailibilityReducer,
   SessionsReducer,
+  EmailReducer,
 };

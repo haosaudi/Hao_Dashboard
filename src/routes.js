@@ -33,6 +33,8 @@ import editsessions from "./views/sessions/editsessions";
 // import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
 import ExperienceAvailibilty from "./views/viewExperienceAvailibilityReminder";
 import editProvider from "./views/providerManagement/editProvider";
+import emailManagement from "./views/emailManagement";
+import addEmailDesign from "./views/emailManagement/addEmailDesign";
 
 // examples
 const Colors = React.lazy(() => import("./views/theme/colors/Colors"));
@@ -171,6 +173,18 @@ const routes = [
     path: "/refunds",
     name: "View Refunds",
     component: ViewRefunds,
+    exact: true,
+  },
+  {
+    path: "/email",
+    name: "Email Management",
+    component: emailManagement,
+    exact: true,
+  },
+  {
+    path: "/email/add",
+    name: "Email Management",
+    component: addEmailDesign,
     exact: true,
   },
   {
