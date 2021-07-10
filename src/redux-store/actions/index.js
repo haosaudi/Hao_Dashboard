@@ -13,6 +13,7 @@ import ExperienceAction from "./experience";
 import SessionsAction from "./sessions";
 import GiftsAction from "./gifts";
 import EmailAction from "./email";
+import ProviderMessagesAction from "./providermessages";
 
 export {
   ActionType,
@@ -30,4 +31,5 @@ export {
   ExperienceAvailibilityAction,
   SessionsAction,
   EmailAction,
+  ProviderMessagesAction,
 };

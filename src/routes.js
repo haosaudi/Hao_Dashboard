@@ -27,6 +27,8 @@ import Sessions from "./views/sessions";
 import Finance from "./views/finance";
 import ViewRefunds from "./views/refunds";
 import editsessions from "./views/sessions/editsessions";
+import providermessages from "./views/providermessages";
+import viewprovidermessages from "./views/providermessages/viewprovidermessages";
 
 // import EditProviderManagement from "./views/ProviderManagement/editProvider";
 // import creategroupbooking from "./views/groupbooking/creategroupbooking";
@@ -203,6 +205,18 @@ const routes = [
     path: "/experienceAvailibilty",
     name: "Experience Availibilty Reminder",
     component: ExperienceAvailibilty,
+    exact: true,
+  },
+  {
+    path: "/providermessages",
+    name: "providermessages",
+    component: providermessages,
+    exact: true,
+  },
+  {
+    path: "/providermessages/viewprovidermessages/:id",
+    name: "viewprovidermessages",
+    component: viewprovidermessages,
     exact: true,
   },
   {
