@@ -65,14 +65,14 @@ const Category = (props) => {
               <div>
                 {" "}
                 <span
-                  onClick={() => props.history.push(`/category/edit/${val.id}`)}
+                  onClick={() => props.history.push(`/email/edit/${item.id}`)}
                   style={{ color: "#309CE4", fontSize: 12, cursor: "pointer" }}
                 >
                   Edit
                 </span>
                 <span
                   onClick={() => {
-                    // deleteCategory(index, val.id);
+                    deleteEmailDesign(i, item.id);
                   }}
                   style={{
                     color: "red",
@@ -97,6 +97,29 @@ const Category = (props) => {
             ),
           };
         }),
+    });
+  };
+
+  const deleteEmailDesign = (i, id) => {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this Email!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! Your email has been deleted!", {
+          icon: "success",
+        });
+        props.DeleteEmailDesign(id, props.token);
+        setState({
+          ...state,
+          designs: state.designs.filter((item, ind) => ind !== i),
+        });
+      } else {
+        swal("Your email is safe!");
+      }
     });
   };
 
@@ -165,6 +188,19 @@ const Category = (props) => {
               width: 270,
             },
             {
+              label: "Email Type",
+              field: "email_type",
+              sort: "asc",
+              width: 270,
+            },
+
+            {
+              label: "Status",
+              field: "status",
+              sort: "asc",
+              width: 270,
+            },
+            {
               label: "Created At",
               field: "created_at",
               sort: "asc",
@@ -197,12 +233,11 @@ const mapStateToProp = (state) => ({
   isLoading: state.BookingsReducer.isLoading,
   token: state.AuthReducer.token,
   designs: state.EmailReducer.designs,
-
-  // userData: state.AuthReducer.userData,
 });
 
 const mapDispatchToProps = {
   GetAllEmailDesigns: EmailAction.GetAllEmailDesigns,
+  DeleteEmailDesign: EmailAction.DeleteEmailDesign,
   // DeleteBooking: BookingAction.DeleteBooking,
 };
 

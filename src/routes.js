@@ -37,6 +37,7 @@ import ExperienceAvailibilty from "./views/viewExperienceAvailibilityReminder";
 import editProvider from "./views/providerManagement/editProvider";
 import emailManagement from "./views/emailManagement";
 import addEmailDesign from "./views/emailManagement/addEmailDesign";
+import editEmailDesign from "./views/emailManagement/editEmailDesign";
 
 // examples
 const Colors = React.lazy(() => import("./views/theme/colors/Colors"));
@@ -187,6 +188,12 @@ const routes = [
     path: "/email/add",
     name: "Email Management",
     component: addEmailDesign,
+    exact: true,
+  },
+  {
+    path: "/email/edit/:id",
+    name: "Email Management",
+    component: editEmailDesign,
     exact: true,
   },
   {

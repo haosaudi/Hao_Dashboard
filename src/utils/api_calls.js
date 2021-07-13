@@ -3,8 +3,6 @@ import CONSTANTS from "./constants";
 import { HANDLING, SUCCESS_HANDLING } from "./error_handling";
 const instance = axios.create({
   baseURL: CONSTANTS.API_URL,
-  //   timeout: 1000,
-  //   headers: { 'X-Custom-Header': 'foobar' },
 });
 const getHeader = (token, contentType) => {
   let header = {};

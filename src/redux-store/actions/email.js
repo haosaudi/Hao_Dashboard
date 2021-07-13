@@ -23,7 +23,7 @@ export default class BookingAction {
     return async (dispatch) => {
       console.log("get EMAIL DESIGN by id data in Action", token);
       dispatch({ type: ActionType.GET_EMAIL_DESIGN });
-      await GET(`email/design/detail/${id}`, token).then((data) => {
+      await GET(`email/design/${id}`, token).then((data) => {
         if (data) {
           console.log("GOT THE EMAIL DESIGN ID!!", data);
           dispatch({
