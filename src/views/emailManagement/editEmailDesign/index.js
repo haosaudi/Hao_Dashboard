@@ -63,7 +63,7 @@ const Category = (props) => {
   useLayoutEffect(() => {
     if (props.design) {
       let { design } = props;
-      if (design) {
+      if (design.body && design.counters) {
         setState({
           ...state,
           status: design?.status,
