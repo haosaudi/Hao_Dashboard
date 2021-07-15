@@ -82,6 +82,7 @@ const Category = (props) => {
     3: "Experience Review",
     4: "Slot Availibility",
     5: "Received Gift",
+    6: "Session Availibility",
   };
 
   return (
@@ -155,6 +156,17 @@ const Category = (props) => {
                   value="5"
                 >
                   Received Gift
+                </option>
+                <option
+                  onClick={() => {
+                    setState({
+                      ...state,
+                      email_type: "Session Availibility",
+                    });
+                  }}
+                  value="6"
+                >
+                  Session Availibility
                 </option>
               </CFormSelect>
               {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
