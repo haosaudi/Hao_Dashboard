@@ -215,9 +215,9 @@ const Category = (props) => {
                   component="textarea"
                   value={state.description_ar}
                   id="validationTextarea"
-                  // placeholder="Required example textarea"
-                  // invalid
-                  // required
+                // placeholder="Required example textarea"
+                // invalid
+                // required
                 ></CFormControl>
               </CCol>
             </CRow>
@@ -374,9 +374,9 @@ const Category = (props) => {
                   component="textarea"
                   value={state.tools_ar}
                   id="validationTextarea"
-                  // placeholder="Required example textarea"
-                  // invalid
-                  // required
+                // placeholder="Required example textarea"
+                // invalid
+                // required
                 ></CFormControl>
               </CCol>
             </CRow>
@@ -395,9 +395,9 @@ const Category = (props) => {
                   component="textarea"
                   value={state.pre_requisition_ar}
                   id="validationTextarea"
-                  // placeholder="Required example textarea"
-                  // invalid
-                  // required
+                // placeholder="Required example textarea"
+                // invalid
+                // required
                 ></CFormControl>
               </CCol>
             </CRow>
@@ -416,9 +416,9 @@ const Category = (props) => {
                   component="textarea"
                   value={state.location_desc_ar}
                   id="validationTextarea"
-                  // placeholder="Required example textarea"
-                  // invalid
-                  // required
+                // placeholder="Required example textarea"
+                // invalid
+                // required
                 ></CFormControl>
               </CCol>
             </CRow>
@@ -484,9 +484,9 @@ const Category = (props) => {
                     // component="textarea"
                     value={state.latitude}
                     id="validationTextarea"
-                    // placeholder="Required example textarea"
-                    // invalid
-                    // required
+                  // placeholder="Required example textarea"
+                  // invalid
+                  // required
                   ></CFormControl>
                 </CRow>
               </CCol>
@@ -506,9 +506,9 @@ const Category = (props) => {
                     // component="textarea"
                     value={state.longitude}
                     id="validationTextarea"
-                    // placeholder="Required example textarea"
-                    // invalid
-                    // required
+                  // placeholder="Required example textarea"
+                  // invalid
+                  // required
                   ></CFormControl>
                 </CRow>
               </CCol>

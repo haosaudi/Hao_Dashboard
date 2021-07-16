@@ -39,6 +39,12 @@ import emailManagement from "./views/emailManagement";
 import addEmailDesign from "./views/emailManagement/addEmailDesign";
 import editEmailDesign from "./views/emailManagement/editEmailDesign";
 
+//______PROVIDER SCREEENS _____//
+
+import Myexperience from './views/providerscreens/myexperience'
+import createexperience from './views/providerscreens/createexperience'
+import editexpeirence from './views/providerscreens/editexpeirence'
+
 // examples
 const Colors = React.lazy(() => import("./views/theme/colors/Colors"));
 const Category = React.lazy(() => import("./views/category"));
@@ -151,8 +157,30 @@ const Charts = React.lazy(() => import("./views/components/charts/Charts"));
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 
 const routes = [
+
+
   { path: "/", exact: true, name: "Home" },
+
+
+  /// PROVIDER SCREENS
+
+
+  {
+    path: "/myexperience", name: "Dashboard", component: Myexperience,
+    exact: true,
+  },
+  { path: "/myexperience/createexperience", name: "Dashboard", component: createexperience },
+
+  {
+    path: "/myexperience/edit/:id",
+    name: "Edit Experience",
+    component: editexpeirence,
+  },
+
+  //=======end===== //
+
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
+
   { path: "/category", name: "Category", component: Category, exact: true },
   {
     path: "/experience",

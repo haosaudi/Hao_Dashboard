@@ -8,6 +8,8 @@ import {
   CSidebarToggler,
   CCreateNavItem,
 } from '@coreui/react'
+import { connect } from 'react-redux'
+import { AuthAction } from '../redux-store/actions'
 
 import CIcon from '@coreui/icons-react'
 
@@ -15,12 +17,74 @@ import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
 
 // sidebar nav config
-import navigation from '../_nav'
+import { _nav, Provider } from '../_nav'
+import { array } from 'prop-types'
 
-const AppSidebar = () => {
+
+const AppSidebar = (props) => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
+  let navigation = props.role == "Provider" ? Provider : _nav
+  console.log("rolerole==========", props.role)
+
+
+
+
+
+
+
+
+  //1
+  //javascritp
+  //react
+  //react native 
+  //axios
+
+  ///promises
+
+
+
+
+  // Q1
+  // let a = 10
+  // console.log(a + "1")
+  // // 11
+  // let b = 10
+  // console.log(b - "1")
+  // 9
+
+
+  // Q2
+
+  // var array = [1, 2, 3, 5, 7]
+
+  // var array2 = array
+  // array2.push(2)
+  // console.log("array", array)
+
+
+
+
+
+
+  // Q3
+
+
+  // for (i = 0; i < 10; i++) {
+
+
+  //   setTimeout(() => {
+  //     console.log("count", i)
+
+  //   }, 1000);
+  // }
+
+
+
+
+
+
 
   return (
     <CSidebar
@@ -41,6 +105,7 @@ const AppSidebar = () => {
       <CSidebarNav>
         <SimpleBar>
           <CCreateNavItem items={navigation} />
+          {/* {console.log("CAHTHIGN", navigation())} */}
         </SimpleBar>
       </CSidebarNav>
       <CSidebarToggler
@@ -51,4 +116,17 @@ const AppSidebar = () => {
   )
 }
 
-export default React.memo(AppSidebar)
+// export default React.memo(AppSidebar)
+
+const mapStateToProp = (state) => ({
+  isLoading: state.AuthReducer.isLoading,
+  token: state.AuthReducer.token,
+  role: state.AuthReducer.role,
+  // userData: state.AuthReducer.userData,
+});
+
+const mapDispatchToProps = {
+  SignIn: AuthAction.Signin,
+};
+
+export default connect(mapStateToProp, mapDispatchToProps)(AppSidebar);
