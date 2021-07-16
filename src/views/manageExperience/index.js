@@ -105,9 +105,17 @@ const Category = (props) => {
                   Experience Files
                 </span>
                 <span
-                  onClick={() =>
-                    props.history.push(`/experience/view/files/${item.id}`)
-                  }
+                  onClick={() => {
+                    props.ShowMySessions(
+                      item?.totalSession?.map((val) => {
+                        return {
+                          ...val,
+                          title_ar: item?.title_ar || "",
+                        };
+                      }) || []
+                    );
+                    props.history.push(`/experience/session/view`);
+                  }}
                   style={{
                     color: "red",
                     fontSize: 12,
@@ -268,6 +276,7 @@ const mapStateToProp = (state) => ({
 
 const mapDispatchToProps = {
   GetAllExperiences: ExperienceAction.GetAllExperiences,
+  ShowMySessions: ExperienceAction.ShowMySessions,
   // DeleteBooking: BookingAction.DeleteBooking,
 };
 

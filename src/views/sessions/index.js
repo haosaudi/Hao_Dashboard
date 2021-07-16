@@ -146,7 +146,7 @@ const Category = (props) => {
             }}
 
           >
-            Add New Group Booking
+            Add New Session
           </span>
           {/* <span
             onClick={() => props.history.push('groupbooking/viewbookingstatistics')}

@@ -38,6 +38,7 @@ import editProvider from "./views/providerManagement/editProvider";
 import emailManagement from "./views/emailManagement";
 import addEmailDesign from "./views/emailManagement/addEmailDesign";
 import editEmailDesign from "./views/emailManagement/editEmailDesign";
+import viewSessionExperience from "./views/manageExperience/viewSession";
 
 // examples
 const Colors = React.lazy(() => import("./views/theme/colors/Colors"));
@@ -239,6 +240,11 @@ const routes = [
     component: EditCategory,
   },
   { path: "/experience/add", name: "Add Experience", component: AddExperience },
+  {
+    path: "/experience/session/view",
+    name: "Experience Session",
+    component: viewSessionExperience,
+  },
   { path: "/gifts", name: "Manage Gifts", component: ManageGifts },
   {
     path: "/experience/edit/:id",
