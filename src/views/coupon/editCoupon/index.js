@@ -15,59 +15,58 @@ import {
   CForm,
   CFormLabel,
   CFormCheck,
-  CSpinner,
+  CFormSelect,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { DocsLink } from "src/reusable";
-import { CategoryAction, CityAction } from "src/redux-store/actions";
+import {
+  CategoryAction,
+  couponAction,
+  CouponAction,
+} from "src/redux-store/actions";
 import { connect } from "react-redux";
 import { ImageUpload } from "src/utils/api_calls";
 import { missingFieldsCheckOut } from "src/utils/globalFunction";
 import { toast } from "react-toastify";
+import moment from "moment-timezone";
 const Category = (props) => {
   const [state, setState] = useState({
-    name_ar: "",
-    img: "",
-    loading: false,
+    coupon_code: "",
+    coupon_type: "",
+    amount: "",
+    amount_type: "",
+    expiry_date: new Date(),
+    balance_note: "",
   });
   const [status, setStatus] = useState(false);
   useEffect(() => {
     if (props.token) {
       if (props.match?.params?.id) {
-        props.GetCityById(props.match?.params?.id, props.token);
+        props.GetCouponById(props.match?.params?.id, props.token);
       } else {
-        props.history.push("/city");
+        props.history.push("/coupon");
       }
     }
   }, []);
   useEffect(() => {
-    if (props.city) {
-      let { city } = props;
+    if (props.coupon) {
+      let { coupon } = props;
       setState({
         ...state,
-        name_ar: city.name_ar,
-        img: city.img,
+        coupon_code: coupon.coupon_code,
+        coupon_type: coupon.coupon_type,
+        amount: coupon.amount,
+        amount_type: coupon.amount_type,
+        expiry_date: new Date(coupon.expiry_date),
+        balance_note: coupon.balance_note,
       });
-      console.log(city.status == 1);
-      setStatus(city.status == 1);
+      document.getElementById("amount_type").value = coupon.amount_type;
+      document.getElementById("coupon_type").value = coupon.coupon_type;
     }
-  }, [props.city]);
-  const imageUpload = async (file) => {
-    setState({ ...state, loading: true });
-    let data = new FormData();
-    data.append("photo", file);
-    let imageData = await ImageUpload(data, props.token);
-    if (imageData.success) {
-      setState({ ...state, img: imageData?.data?.location, loading: false });
-    } else {
-      setState({ ...state, loading: false });
-    }
-    // setState({ ...state, loading: false })
-    console.log("imageData", imageData);
-  };
-  const EditCity = async () => {
-    let data = state;
-    delete data.loading;
+  }, [props.coupon]);
+
+  const EditCoupon = async () => {
+    let data = { ...state };
     let message = missingFieldsCheckOut(data);
     let isMissed = message.length > 0;
     if (isMissed) {
@@ -81,9 +80,9 @@ const Category = (props) => {
         progress: undefined,
       });
     } else {
-      props.UpdateCity(
+      props.UpdateCoupon(
         props.match?.params?.id,
-        { ...data, status: status ? 1 : 0 },
+        { ...data, expiry_date: moment(data.expiry_date).format("yy-MM-DD") },
         props.token,
         props.history
       );
@@ -107,7 +106,7 @@ const Category = (props) => {
             </CCol>
             <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
               <CButton
-                onClick={EditCity}
+                onClick={EditCoupon}
                 disabled={state.loading || props.isLoading}
                 style={{ color: "white", fontSize: 12 }}
                 color={"info"}
@@ -156,34 +155,117 @@ const Category = (props) => {
                 htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
               >
-                City Name
+                Coupon Code
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
                   onChange={(e) =>
-                    setState({ ...state, name_ar: e.target.value })
+                    setState({ ...state, coupon_code: e.target.value })
                   }
-                  placeholder="Category Name"
+                  placeholder="Coupon Code"
+                  value={state.coupon_code}
                   type="email"
-                  value={state.name_ar}
                   id="inputEmail3"
                 />
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
+
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                Coupon Level
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormSelect
+                  id="coupon_type"
+                  onChange={(e) => {
+                    setState({ ...state, coupon_type: e.target.value });
+                  }}
+                  aria-label="Default select example"
+                >
+                  <option>Coupon Level</option>
+                  <option value="Website">Website</option>
+                  <option value="Experience">Experience</option>
+                  <option value="UserExp">UserExp</option>
+                </CFormSelect>
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                Amount
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  value={state.amount}
+                  onChange={(e) =>
+                    setState({ ...state, amount: e.target.value })
+                  }
+                  placeholder="Amount"
+                  type="number"
+                  id="inputEmail3"
+                />
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                Amount Type
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormSelect
+                  id="amount_type"
+                  onChange={(e) => {
+                    setState({ ...state, amount_type: e.target.value });
+                  }}
+                  aria-label="Default select example"
+                >
+                  <option>Amount Type</option>
+                  <option value="Fixed">Fixed</option>
+                  <option value="Percentage">Percentage</option>
+                </CFormSelect>
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                Expiry Date
+              </CFormLabel>
+              <CCol sm="4">
+                <DatePicker
+                  selected={state.expiry_date}
+                  onChange={(date) => setState({ ...state, expiry_date: date })}
+                />
+              </CCol>
+            </CRow>
+
             <CRow className="mb-3">
               <CFormLabel
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
-                Enabled
+                Single Use?
               </CFormLabel>
               <CCol sm="4">
                 <CFormCheck
-                  defaultChecked={status}
-                  onChange={(e) => {
-                    setStatus(e.target.checked);
-                  }}
+                  // onChange={(e) => {
+                  //   setStatus(e.target.checked);
+                  // }}
                   type="checkbox"
                   id="gridCheck1"
                   label=""
@@ -191,43 +273,28 @@ const Category = (props) => {
               </CCol>
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
             </CRow>
+
             <CRow className="mb-3">
               <CFormLabel
-                htmlFor="inputPassword3"
+                htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
               >
-                Category Image
+                Note
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
-                  onChange={(e) => {
-                    imageUpload(e.target.files[0]);
-                  }}
-                  type="file"
-                  id="formFile"
-                />
+                  onChange={(e) =>
+                    setState({ ...state, balance_note: e.target.value })
+                  }
+                  component="textarea"
+                  id="validationTextarea"
+                  value={state.balance_note}
+                  // placeholder="Required example textarea"
+                  // invalid
+                  // required
+                ></CFormControl>
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
-              {state.loading ? (
-                <CCol sm="2">
-                  <CSpinner style={{ height: 25, width: 25 }} />
-                </CCol>
-              ) : state.img?.length > 0 ? (
-                <>
-                  <CCol sm="2">Uploaded</CCol>
-                  <img
-                    style={{ width: 150 }}
-                    src={
-                      state.img?.search("amazonaws") !== -1
-                        ? state.img
-                        : `http://18.217.187.206/img/category_img/${
-                            state.img ? state.img.toLowerCase() : ""
-                          }`
-                    }
-                  />
-                </>
-              ) : null}
-
-              {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
             </CRow>
           </CForm>
         </CCardBody>
@@ -237,25 +304,25 @@ const Category = (props) => {
 };
 
 Category.propTypes = {
-  UpdateCity: PropTypes.func,
-  GetCityById: PropTypes.func,
+  UpdateCoupon: PropTypes.func,
+  GetCouponById: PropTypes.func,
   token: PropTypes.string,
   isLoading: PropTypes.bool,
   history: PropTypes.object,
   match: PropTypes.object,
-  city: PropTypes.object,
+  coupon: PropTypes.object,
 };
 
 const mapStateToProp = (state) => ({
   isLoading: state.AuthReducer.isLoading,
   token: state.AuthReducer.token,
-  city: state.CityReducer.city,
+  coupon: state.CouponReducer.coupon,
   // userData: state.AuthReducer.userData,
 });
 
 const mapDispatchToProps = {
-  GetCityById: CityAction.GetCityById,
-  UpdateCity: CityAction.UpdateCity,
+  GetCouponById: CouponAction.GetCouponById,
+  UpdateCoupon: CouponAction.UpdateCoupon,
 };
 
 export default connect(mapStateToProp, mapDispatchToProps)(Category);

@@ -49,19 +49,28 @@ const Category = (props) => {
           expiry_date: moment(val.expiry_date).format("DD-MM-yy"),
           status: val.status == 1 ? "Enabled" : "Disabled",
           action: (
-            <span
-              onClick={() => {
-                DeleteCoupon(index, val.id);
-              }}
-              style={{
-                color: "red",
-                fontSize: 12,
-                cursor: "pointer",
-                paddingLeft: 5,
-              }}
-            >
-              Delete
-            </span>
+            <>
+              <span
+                onClick={() => {
+                  DeleteCoupon(index, val.id);
+                }}
+                style={{
+                  color: "red",
+                  fontSize: 12,
+                  cursor: "pointer",
+                  paddingLeft: 5,
+                }}
+              >
+                Delete
+              </span>
+              &nbsp;
+              <span
+                onClick={() => props.history.push(`/coupon/edit/${val.id}`)}
+                style={{ color: "#309CE4", fontSize: 12, cursor: "pointer" }}
+              >
+                Edit
+              </span>
+            </>
           ),
         };
       })

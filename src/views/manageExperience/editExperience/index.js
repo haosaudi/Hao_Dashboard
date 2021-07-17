@@ -485,10 +485,12 @@ const Category = (props) => {
                   <img
                     style={{ width: 150 }}
                     src={
-                      state.img?.search("amazonaws") !== -1
-                        ? state.img
-                        : `http://18.217.187.206/img/category_img/${
-                            state.img ? state.img.toLowerCase() : ""
+                      state.img_background?.search("amazonaws") !== -1
+                        ? state.img_background
+                        : `http://18.217.187.206/img/course_img/${
+                            state.img_background
+                              ? state.img_background.toLowerCase()
+                              : ""
                           }`
                     }
                   />
