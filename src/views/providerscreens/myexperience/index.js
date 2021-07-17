@@ -169,7 +169,7 @@ const Category = (props) => {
                         Create New  Expereince
                     </span>
                     <span
-                        onClick={() => props.history.push("/myexperience/createexperience")}
+                        onClick={() => props.history.push("/myexperience/createsessions")}
                         style={{
                             fontSize: 12,
                             fontWeight: "400",

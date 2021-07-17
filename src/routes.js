@@ -44,6 +44,7 @@ import editEmailDesign from "./views/emailManagement/editEmailDesign";
 import Myexperience from './views/providerscreens/myexperience'
 import createexperience from './views/providerscreens/createexperience'
 import editexpeirence from './views/providerscreens/editexpeirence'
+import createsessions from './views/providerscreens/createsessions'
 
 // examples
 const Colors = React.lazy(() => import("./views/theme/colors/Colors"));
@@ -170,6 +171,7 @@ const routes = [
     exact: true,
   },
   { path: "/myexperience/createexperience", name: "Dashboard", component: createexperience },
+  { path: "/myexperience/createsessions", name: "Dashboard", component: createsessions },
 
   {
     path: "/myexperience/edit/:id",
