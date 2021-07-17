@@ -189,7 +189,19 @@ const City = (props) => {
                   <CSpinner style={{ height: 25, width: 25 }} />
                 </CCol>
               ) : state.img?.length > 0 ? (
-                <CCol sm="2">Uploaded</CCol>
+                <>
+                  <CCol sm="2">Uploaded</CCol>
+                  <img
+                    style={{ width: 150 }}
+                    src={
+                      state.img?.search("amazonaws") !== -1
+                        ? state.img
+                        : `http://18.217.187.206/img/category_img/${
+                            state.img ? state.img.toLowerCase() : ""
+                          }`
+                    }
+                  />
+                </>
               ) : null}
 
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}

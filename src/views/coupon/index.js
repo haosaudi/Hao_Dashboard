@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 import swal from "sweetalert";
 import CouponAction from "src/redux-store/actions/coupon";
 import moment from "moment";
-
+import Sortedtable from "../../components/sortedtables";
 const Category = (props) => {
   const categoryTableHeading = [
     "Booked By",
@@ -42,7 +42,30 @@ const Category = (props) => {
     }
   }, []);
   useEffect(() => {
-    setCoupons(props.coupons);
+    setCoupons(
+      props.coupons.map((val, index) => {
+        return {
+          ...val,
+          expiry_date: moment(val.expiry_date).format("DD-MM-yy"),
+          status: val.status == 1 ? "Enabled" : "Disabled",
+          action: (
+            <span
+              onClick={() => {
+                DeleteCoupon(index, val.id);
+              }}
+              style={{
+                color: "red",
+                fontSize: 12,
+                cursor: "pointer",
+                paddingLeft: 5,
+              }}
+            >
+              Delete
+            </span>
+          ),
+        };
+      })
+    );
   }, [props.coupons]);
   const DeleteCoupon = (i, id) => {
     swal({
@@ -83,7 +106,7 @@ const Category = (props) => {
           </span>
         </CCardHeader>
         <CCardBody>
-          <CTable caption="top">
+          {/* <CTable caption="top">
             <CTableCaption>List of Coupons</CTableCaption>
             <CTableHead>
               <CTableRow>
@@ -92,34 +115,24 @@ const Category = (props) => {
                     {val}
                   </CTableHeaderCell>
                 ))}
-                {/* <CTableHeaderCell scope="col">Class</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Heading</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Heading</CTableHeaderCell> */}
               </CTableRow>
             </CTableHead>
-            <CTableBody>
-              {coupons?.length > 0
+            <CTableBody> */}
+          {/* {coupons?.length > 0
                 ? coupons?.map((val, index) => (
                     <CTableRow key={index}>
                       <CTableHeaderCell scope="row">
                         {val.coupon_code}
                       </CTableHeaderCell>
                       <CTableDataCell>{val.coupon_type}</CTableDataCell>
-                      {/* <CTableDataCell>{val.description_ar}</CTableDataCell> */}
                       <CTableDataCell>{val.amount}</CTableDataCell>
                       <CTableDataCell>{val.amount_type}</CTableDataCell>
                       <CTableDataCell>
                         {moment(val.expiry_date).format("DD-MM-yy")}
                       </CTableDataCell>
                       <CTableDataCell>{val.status}</CTableDataCell>
-                      <CTableDataCell
-                      // style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
-                      >
-                        {val.status}
-                      </CTableDataCell>
-                      <CTableDataCell
-                      // style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
-                      >
+                      <CTableDataCell>{val.status}</CTableDataCell>
+                      <CTableDataCell>
                         <span
                           onClick={() => {
                             DeleteCoupon(index, val.id);
@@ -136,9 +149,65 @@ const Category = (props) => {
                       </CTableDataCell>
                     </CTableRow>
                   ))
-                : null}
-            </CTableBody>
-          </CTable>
+                : null} */}
+          {/* </CTableBody>
+          </CTable> */}
+          {/* "Booked By",
+    "Coupon Level",
+    "Amount",
+    "Amount Type",
+    "Expire Date",
+    "Single Use?",
+    "Enabled",
+    "Action", */}
+          <Sortedtable
+            dataArray={coupons}
+            columns={[
+              {
+                label: "Booked By",
+                field: "coupon_code",
+                sort: "asc",
+                width: 150,
+              },
+              {
+                label: "Amount",
+                field: "amount",
+                sort: "asc",
+                width: 270,
+              },
+              {
+                label: "Amount Type",
+                field: "amount_type",
+                sort: "asc",
+                width: 270,
+              },
+              {
+                label: "Expire Date",
+                field: "expiry_date",
+                sort: "asc",
+                width: 270,
+              },
+              {
+                label: "Single Use?",
+                field: "status",
+                sort: "asc",
+                width: 270,
+              },
+              {
+                label: "Status",
+                field: "status",
+                sort: "asc",
+                width: 270,
+              },
+
+              {
+                label: "Action",
+                field: "action",
+                sort: "asc",
+                width: 100,
+              },
+            ]}
+          />
         </CCardBody>
       </CCard>
     </>

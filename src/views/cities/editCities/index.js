@@ -68,7 +68,7 @@ const Category = (props) => {
     console.log("imageData", imageData);
   };
   const CheckBox = () => {
-    console.log("WHAT I GOT!!", state.status)
+    console.log("WHAT I GOT!!", state.status);
     return (
       <CFormCheck
         defaultChecked={state.status}
@@ -196,7 +196,10 @@ const Category = (props) => {
               >
                 Enabled
               </CFormLabel>
-              <CCol sm="4"> <CheckBox /></CCol>
+              <CCol sm="4">
+                {" "}
+                <CheckBox />
+              </CCol>
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
             </CRow>
             <CRow className="mb-3">
@@ -220,7 +223,19 @@ const Category = (props) => {
                   <CSpinner style={{ height: 25, width: 25 }} />
                 </CCol>
               ) : state.img?.length > 0 ? (
-                <CCol sm="2">Uploaded</CCol>
+                <>
+                  <CCol sm="2">Uploaded</CCol>
+                  <img
+                    style={{ width: 150 }}
+                    src={
+                      state.img?.search("amazonaws") !== -1
+                        ? state.img
+                        : `http://18.217.187.206/img/city_img/${
+                            state.img ? state.img.toLowerCase() : ""
+                          }`
+                    }
+                  />
+                </>
               ) : null}
 
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}

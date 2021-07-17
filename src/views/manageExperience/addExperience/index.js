@@ -30,6 +30,7 @@ import {
 import { connect } from "react-redux";
 import { ImageUpload } from "src/utils/api_calls";
 import { missingFieldsCheckOut } from "src/utils/globalFunction";
+import GoogleMapReact from 'google-map-react';
 import { toast } from "react-toastify";
 
 const Category = (props) => {
@@ -456,7 +457,19 @@ const Category = (props) => {
                   <CSpinner style={{ height: 25, width: 25 }} />
                 </CCol>
               ) : state.img_background?.length > 0 ? (
-                <CCol sm="2">Uploaded</CCol>
+                <>
+                  <CCol sm="2">Uploaded</CCol>
+                  <img
+                    style={{ width: 150 }}
+                    src={
+                      state.img?.search("amazonaws") !== -1
+                        ? state.img
+                        : `http://18.217.187.206/img/category_img/${
+                            state.img ? state.img.toLowerCase() : ""
+                          }`
+                    }
+                  />
+                </>
               ) : null}
 
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
