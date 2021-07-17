@@ -3,6 +3,7 @@ import { ActionType } from "../actions";
 const initialState = {
   isLoading: false,
   experiences: [],
+  sessions: [],
   experience: {},
 };
 
@@ -20,6 +21,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+      };
+    case ActionType.GET_THIS_EXPERIENCE_SESSION:
+      return {
+        ...state,
+        sessions: action.payload,
       };
     case ActionType.GET_EXPERIENCE:
       return { ...state, isLoading: true, category: {} };

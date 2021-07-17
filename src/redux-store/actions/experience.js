@@ -36,6 +36,11 @@ export default class CategoryAction {
       });
     };
   };
+  static ShowMySessions = (data) => {
+    return async (dispatch) => {
+      dispatch({ type: ActionType.GET_THIS_EXPERIENCE_SESSION, payload: data });
+    };
+  };
   static AddExperience = (data, token, history) => {
     return async (dispatch) => {
       console.log("post experience data in Action", data);

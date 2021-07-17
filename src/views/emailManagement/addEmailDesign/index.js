@@ -77,12 +77,12 @@ const Category = (props) => {
   };
 
   let emailTypes = {
-    0: "Forgot Password",
     1: "Otp",
     2: "Booking 12 hour before",
     3: "Experience Review",
     4: "Slot Availibility",
     5: "Received Gift",
+    6: "Session Availibility",
   };
 
   return (
@@ -113,15 +113,7 @@ const Category = (props) => {
                 aria-label="Default select example"
               >
                 <option>Email Type</option>
-                <option
-                  onClick={() => {
-                    console.log("YUP!!");
-                    setState({ ...state, email_type: "Forgot Password" });
-                  }}
-                  value="0"
-                >
-                  Forgot Password
-                </option>
+
                 <option
                   onClick={() => {
                     setState({ ...state, email_type: "Otp" });
@@ -164,6 +156,17 @@ const Category = (props) => {
                   value="5"
                 >
                   Received Gift
+                </option>
+                <option
+                  onClick={() => {
+                    setState({
+                      ...state,
+                      email_type: "Session Availibility",
+                    });
+                  }}
+                  value="6"
+                >
+                  Session Availibility
                 </option>
               </CFormSelect>
               {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}

@@ -1,5 +1,11 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState, createRef, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  createRef,
+  useRef,
+  useLayoutEffect,
+} from "react";
 import classNames from "classnames";
 import DatePicker from "react-datepicker";
 
@@ -54,39 +60,43 @@ const Category = (props) => {
     // you can load your template here;
     const templateJson = {};
   };
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (props.design) {
       let { design } = props;
-      setState({
-        ...state,
-        status: design.status,
-        email_type_no: String(design.email_type_no),
-        design: {
-          body: JSON.parse(design.body),
-          counters: JSON.parse(design.counters),
-          schemaVersion: design.schema_version,
-        },
-        html: design.html,
-      });
-      document.getElementById(
-        "emailType"
-      ).value = design.email_type_no.toString();
-      emailEditorRef?.current?.editor?.loadDesign({
-        body: JSON.parse(design.body),
-        counters: JSON.parse(design.counters),
-        schemaVersion: design.schema_version,
-      });
+      if (design.body && design.counters) {
+        setState({
+          ...state,
+          status: design?.status,
+          email_type_no: String(design?.email_type_no),
+          design: {
+            body: JSON.parse(design.body),
+            counters: JSON.parse(design.counters),
+            schemaVersion: design.schema_version,
+          },
+          html: design.html,
+        });
+        document.getElementById(
+          "emailType"
+        ).value = design?.email_type_no?.toString();
+        if (design.body && design.counters) {
+          emailEditorRef?.current?.editor?.loadDesign({
+            body: JSON.parse(design.body),
+            counters: JSON.parse(design.counters),
+            schemaVersion: design.schema_version,
+          });
 
-      setStatus(design.status == 1);
+          setStatus(design.status == 1);
+        }
+      }
     }
   }, [props.design]);
   let emailTypes = {
-    0: "Forgot Password",
     1: "Otp",
     2: "Booking 12 hour before",
     3: "Experience Review",
     4: "Slot Availibility",
     5: "Received Gift",
+    6: "Session Availibility",
   };
   const EditDesign = async () => {
     emailEditorRef.current.editor.exportHtml((data) => {
@@ -182,14 +192,7 @@ const Category = (props) => {
                   aria-label="Default select example"
                 >
                   <option>Email Type</option>
-                  <option
-                    onClick={() => {
-                      setState({ ...state, email_type: "Forgot Password" });
-                    }}
-                    value="0"
-                  >
-                    Forgot Password
-                  </option>
+
                   <option
                     onClick={() => {
                       setState({ ...state, email_type: "Otp" });
@@ -232,6 +235,17 @@ const Category = (props) => {
                     value="5"
                   >
                     Received Gift
+                  </option>
+                  <option
+                    onClick={() => {
+                      setState({
+                        ...state,
+                        email_type: "Session Availibility",
+                      });
+                    }}
+                    value="6"
+                  >
+                    Session Availibility
                   </option>
                 </CFormSelect>
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}

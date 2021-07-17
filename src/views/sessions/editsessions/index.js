@@ -18,9 +18,7 @@ import {
   CSpinner,
 } from "@coreui/react";
 
-import {
-  SessionsAction
-} from "src/redux-store/actions";
+import { SessionsAction } from "src/redux-store/actions";
 import { connect } from "react-redux";
 
 import { missingFieldsCheckOut } from "src/utils/globalFunction";
@@ -28,14 +26,14 @@ import { toast } from "react-toastify";
 import moment from "moment";
 const Category = (props) => {
   const [state, setState] = useState({
-    newDateTime: 'sssss',
+    newDateTime: "sssss",
     // loading: false,
-    admin_note: 'sadda'
+    admin_note: "sadda",
   });
   useEffect(() => {
-    console.log("LIGHT AGYI", props.match?.params?.id)
+    console.log("LIGHT AGYI", props.match?.params?.id);
     if (props.match?.params?.id) {
-      console.log(" undar ari ha LIGHT AGYI", props.match?.params?.id)
+      console.log(" undar ari ha LIGHT AGYI", props.match?.params?.id);
 
       props.GetSessionsById(props.match?.params?.id, props.token);
     } else {
@@ -63,7 +61,7 @@ const Category = (props) => {
   // };
   const UpdateSessionss = async () => {
     let data = state;
-    delete data.newDateTime
+    delete data.newDateTime;
     let message = missingFieldsCheckOut(data);
     let isMissed = message?.length > 0;
     if (isMissed) {
@@ -75,24 +73,22 @@ const Category = (props) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-      }); bo
+      });
+      bo;
     } else {
-
-      props.UpdateSessions(
-        props.match?.params?.id,
-        { ...data },
-        props.token,
-        props.history
-      );
+      // props.UpdateSessions(
+      //   props.match?.params?.id,
+      //   { ...data },
+      //   props.token,
+      //   props.history
+      // );
     }
   };
   return (
     <>
       {/* {console.log('ME SB BADALTA DEKHIYA!!', props.match)} */}
       <CCard className="mb-4">
-        <CCardHeader
-
-        >
+        <CCardHeader>
           <CRow>
             <CCol style={{ alignItems: "center", display: "flex" }}>
               Edit Session
@@ -109,7 +105,7 @@ const Category = (props) => {
               </CButton>
               &nbsp; &nbsp;
               <CButton
-                onClick={() => props.history.push("/sessionDetailss")}
+                onClick={() => props.history.goBack()}
                 style={{ color: "grey", fontSize: 12 }}
                 color={"light"}
                 shape="rounded-0"
@@ -178,8 +174,9 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.sessionDetails?.user_add_fname + " " + props?.sessionDetails?.user_add_lname ||
-                  "no entered"}
+                {props?.sessionDetails?.user_add_fname +
+                  " " +
+                  props?.sessionDetails?.user_add_lname || "no entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -197,7 +194,8 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {moment(props?.sessionDetails?.created_at).format("DD-MM-YY") || ""}
+                {moment(props?.sessionDetails?.created_at).format("DD-MM-YY") ||
+                  ""}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -215,8 +213,9 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.sessionDetails?.user_add_fname + " " + props?.sessionDetails?.user_add_lname ||
-                  "no entered"}
+                {props?.sessionDetails?.user_add_fname +
+                  " " +
+                  props?.sessionDetails?.user_add_lname || "no entered"}
               </CCol>
             </CRow>
             <CRow className="mb-3">
@@ -251,7 +250,8 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {moment(props?.sessionDetails?.start_date).format("yy-MM-DD") || "no entered"}
+                {moment(props?.sessionDetails?.start_date).format("yy-MM-DD") ||
+                  "no entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -306,7 +306,6 @@ const Category = (props) => {
                 {props?.sessionDetails?.price || "not entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
-
             </CRow>
             <CRow className="mb-3">
               <CFormLabel
@@ -330,9 +329,7 @@ const Category = (props) => {
                   })}
                 /> */}
               </CCol>
-
             </CRow>
-
 
             <CRow className="mb-3">
               <CFormLabel
@@ -360,7 +357,6 @@ const Category = (props) => {
                   <option value="Approved">Approved</option>
                 </CFormSelect>
               </CCol>
-
             </CRow>
 
             <CRow className="mb-3">
@@ -380,14 +376,14 @@ const Category = (props) => {
                 <input
                   value={state.admin_note}
                   // style={{ background: 'red' }}
-                  onChange={(text) => setState({
-                    admin_note: text.target.value
-                  })}
+                  onChange={(text) =>
+                    setState({
+                      admin_note: text.target.value,
+                    })
+                  }
                 />
               </CCol>
-
             </CRow>
-
           </CForm>
         </CCardBody>
       </CCard>

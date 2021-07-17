@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
-import React, { useEffect, useState, createRef } from 'react'
-import classNames from 'classnames'
-import DatePicker from 'react-datepicker'
+import PropTypes from "prop-types";
+import React, { useEffect, useState, createRef } from "react";
+import classNames from "classnames";
+import DatePicker from "react-datepicker";
 
-import 'react-datepicker/dist/react-datepicker.css'
+import "react-datepicker/dist/react-datepicker.css";
 import {
   CCard,
   CCardBody,
@@ -16,79 +16,97 @@ import {
   CFormLabel,
   CFormCheck,
   CSpinner,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { DocsLink } from 'src/reusable'
-import { CategoryAction, CityAction } from 'src/redux-store/actions'
-import { connect } from 'react-redux'
-import { ImageUpload } from 'src/utils/api_calls'
-import { missingFieldsCheckOut } from 'src/utils/globalFunction'
-import { toast } from 'react-toastify'
+} from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import { DocsLink } from "src/reusable";
+import { CategoryAction, CityAction } from "src/redux-store/actions";
+import { connect } from "react-redux";
+import { ImageUpload } from "src/utils/api_calls";
+import { missingFieldsCheckOut } from "src/utils/globalFunction";
+import { toast } from "react-toastify";
+import Checkbox from "antd/lib/checkbox/Checkbox";
 const Category = (props) => {
   const [state, setState] = useState({
-    name_ar: '',
-    img: '',
+    name_ar: "",
+    img: "",
+    status: false,
     loading: false,
-  })
-  const [status, setStatus] = useState(false)
+  });
   useEffect(() => {
     if (props.token) {
       if (props.match?.params?.id) {
-        props.GetCityById(props.match?.params?.id, props.token)
+        props.GetCityById(props.match?.params?.id, props.token);
       } else {
-        props.history.push('/city')
+        props.history.push("/city");
       }
     }
-  }, [])
+  }, []);
   useEffect(() => {
     if (props.city) {
-      let { city } = props
+      let { city } = props;
       setState({
         ...state,
         name_ar: city.name_ar,
         img: city.img,
-      })
-      console.log(city.status == 1)
-      setStatus(city.status == 1)
+        status: city.status == 1 ? true : false,
+      });
+      // setStatus(city.status == 1);
+      console.log("mjhe ko btaa", typeof city.status, city.status == 1);
     }
-  }, [props.city])
+  }, [props.city]);
   const imageUpload = async (file) => {
-    setState({ ...state, loading: true })
-    let data = new FormData()
-    data.append('photo', file)
-    let imageData = await ImageUpload(data, props.token)
+    setState({ ...state, loading: true });
+    let data = new FormData();
+    data.append("photo", file);
+    let imageData = await ImageUpload(data, props.token);
     if (imageData.success) {
-      setState({ ...state, img: imageData?.data?.location, loading: false })
+      setState({ ...state, img: imageData?.data?.location, loading: false });
     } else {
-      setState({ ...state, loading: false })
+      setState({ ...state, loading: false });
     }
     // setState({ ...state, loading: false })
-    console.log('imageData', imageData)
-  }
+    console.log("imageData", imageData);
+  };
+  const CheckBox = () => {
+    console.log("WHAT I GOT!!", state.status)
+    return (
+      <CFormCheck
+        defaultChecked={state.status}
+        onChange={(e) => {
+          // setStatus(e.target.checked);
+          setState({ ...state, status: e.target.checked });
+        }}
+        type="checkbox"
+        id="gridCheck1"
+        label=""
+      />
+    );
+  };
   const EditCity = async () => {
-    let data = state
-    delete data.loading
-    let message = missingFieldsCheckOut(data)
-    let isMissed = message.length > 0
+    let data = { ...state };
+    delete data.loading;
+    delete data.status;
+    let message = missingFieldsCheckOut(data);
+    let isMissed = message.length > 0;
     if (isMissed) {
       toast.warn(`Please fill all Fields ${message}`, {
-        position: 'top-right',
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-      })
+      });
     } else {
       props.UpdateCity(
         props.match?.params?.id,
-        { ...data, status: status ? 1 : 0 },
+        { ...data, status: state.status ? 1 : 0 },
         props.token,
-        props.history,
-      )
+        props.history
+      );
     }
-  }
+  };
   return (
     <>
       {/* {console.log('ME SB BADALTA DEKHIYA!!', props.match)} */}
@@ -102,22 +120,24 @@ const Category = (props) => {
         // }}
         >
           <CRow>
-            <CCol style={{ alignItems: 'center', display: 'flex' }}>Edit Category</CCol>
-            <CCol style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <CCol style={{ alignItems: "center", display: "flex" }}>
+              Edit Category
+            </CCol>
+            <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
               <CButton
                 onClick={EditCity}
                 disabled={state.loading || props.isLoading}
-                style={{ color: 'white', fontSize: 12 }}
-                color={'info'}
+                style={{ color: "white", fontSize: 12 }}
+                color={"info"}
                 shape="rounded-0"
               >
                 Edit
               </CButton>
               &nbsp; &nbsp;
               <CButton
-                onClick={() => props.history.push('/city')}
-                style={{ color: 'grey', fontSize: 12 }}
-                color={'light'}
+                onClick={() => props.history.push("/city")}
+                style={{ color: "grey", fontSize: 12 }}
+                color={"light"}
                 shape="rounded-0"
               >
                 Cancel
@@ -150,12 +170,17 @@ const Category = (props) => {
         */}
           <CForm>
             <CRow className="mb-3">
-              <CFormLabel htmlFor="inputEmail3" className="col-sm-2 col-form-label">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
                 City Name
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
-                  onChange={(e) => setState({ ...state, name_ar: e.target.value })}
+                  onChange={(e) =>
+                    setState({ ...state, name_ar: e.target.value })
+                  }
                   placeholder="Category Name"
                   type="email"
                   value={state.name_ar}
@@ -165,30 +190,26 @@ const Category = (props) => {
               </CCol>
             </CRow>
             <CRow className="mb-3">
-              <CFormLabel htmlFor="inputPassword3" className="col-sm-2 col-form-label">
+              <CFormLabel
+                htmlFor="inputPassword3"
+                className="col-sm-2 col-form-label"
+              >
                 Enabled
               </CFormLabel>
-              <CCol sm="4">
-                <CFormCheck
-                  defaultChecked={status}
-                  onChange={(e) => {
-                    setStatus(e.target.checked)
-                  }}
-                  type="checkbox"
-                  id="gridCheck1"
-                  label=""
-                />
-              </CCol>
+              <CCol sm="4"> <CheckBox /></CCol>
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
             </CRow>
             <CRow className="mb-3">
-              <CFormLabel htmlFor="inputPassword3" className="col-sm-2 col-form-label">
+              <CFormLabel
+                htmlFor="inputPassword3"
+                className="col-sm-2 col-form-label"
+              >
                 Category Image
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
                   onChange={(e) => {
-                    imageUpload(e.target.files[0])
+                    imageUpload(e.target.files[0]);
                   }}
                   type="file"
                   id="formFile"
@@ -208,8 +229,8 @@ const Category = (props) => {
         </CCardBody>
       </CCard>
     </>
-  )
-}
+  );
+};
 
 Category.propTypes = {
   UpdateCity: PropTypes.func,
@@ -219,18 +240,18 @@ Category.propTypes = {
   history: PropTypes.object,
   match: PropTypes.object,
   city: PropTypes.object,
-}
+};
 
 const mapStateToProp = (state) => ({
   isLoading: state.AuthReducer.isLoading,
   token: state.AuthReducer.token,
   city: state.CityReducer.city,
   // userData: state.AuthReducer.userData,
-})
+});
 
 const mapDispatchToProps = {
   GetCityById: CityAction.GetCityById,
   UpdateCity: CityAction.UpdateCity,
-}
+};
 
-export default connect(mapStateToProp, mapDispatchToProps)(Category)
+export default connect(mapStateToProp, mapDispatchToProps)(Category);

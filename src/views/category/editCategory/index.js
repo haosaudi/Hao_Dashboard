@@ -30,8 +30,9 @@ const Category = (props) => {
     description_ar: "",
     img: "",
     loading: false,
+    status: false,
   });
-  const [status, setStatus] = useState(false);
+  // const [status, setStatus] = useState(false);
   useEffect(() => {
     if (props.token) {
       if (props.match?.params?.id) {
@@ -49,13 +50,13 @@ const Category = (props) => {
         name_ar: category.name_ar,
         description_ar: category.description_ar,
         img: category.img,
+        status: category.status == "1" ? true : false,
       });
-      console.log(category.status == 1);
+      console.log("TELL ME ABOUT STATUS!!", category.status);
+      // setStatus(category.status == 1);
       // if (document.getElementById("gridCheck1")) {
-      document.getElementById("gridCheck1").setAttribute("checked", true);
+      // document.getElementById("gridCheck1").setAttribute("checked", true);
       // }
-
-      setStatus(category.status == 1);
     }
   }, [props.category]);
   const imageUpload = async (file) => {
@@ -72,8 +73,10 @@ const Category = (props) => {
     console.log("imageData", imageData);
   };
   const EditCategory = async () => {
-    let data = state;
+    let data = { ...state };
     delete data.loading;
+    delete data.status;
+
     let message = missingFieldsCheckOut(data);
     let isMissed = message.length > 0;
     if (isMissed) {
@@ -89,12 +92,30 @@ const Category = (props) => {
     } else {
       props.UpdateCategory(
         props.match?.params?.id,
-        { ...data, slug: state.name_ar, status: status ? 1 : 0 },
+        { ...data, slug: state.name_ar, status: state.status ? 1 : 0 },
         props.token,
         props.history
       );
     }
   };
+
+  const CheckBox = () => {
+    return (
+      <CFormCheck
+        id="enabled"
+        s tyle={{ marginLeft: 0 }}
+        defaultChecked={state.status}
+        onChange={(e) => {
+          // setStatus(e.target.checked);
+          setState({ ...state, status: e.target.checked });
+        }}
+        type="checkbox"
+        id="gridCheck1"
+        label=""
+      />
+    );
+  };
+
   return (
     <>
       {/* {console.log('ME SB BADALTA DEKHIYA!!', props.match)} */}
@@ -206,16 +227,7 @@ const Category = (props) => {
                 Enabled
               </CFormLabel>
               <CCol sm="4">
-                <CFormCheck
-                  id="enabled"
-                  defaultChecked={status}
-                  onChange={(e) => {
-                    setStatus(e.target.checked);
-                  }}
-                  type="checkbox"
-                  id="gridCheck1"
-                  label=""
-                />
+                <CheckBox />
               </CCol>
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
             </CRow>
