@@ -45,15 +45,12 @@ const AppSidebar = (props) => {
 
 
 
-  //
 
   // Q1
   // let a = 10
   // console.log(a + "1")
-  // 101
   // let b = 10
   // console.log(b - "1")
-  // 9
 
 
 
@@ -64,7 +61,7 @@ const AppSidebar = (props) => {
   // var array2 = array
   // array2.push(2)
   // console.log("array", array)
-  // 1,2,3,5,7,2
+
 
 
 
@@ -78,15 +75,15 @@ const AppSidebar = (props) => {
 
 
   //   setTimeout(() => {
-  //     //9
+  //     console.log("print",i)
 
   //   }, 1000);
   // }
 
-  // let i;
+  // var i;
   // console.log(i)
 
-  // find second highest numbera
+  // find second highest number
 
   // const array = [1, 2, 3, 5, 6, 101, -101]
 

@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import '@progress/kendo-theme-default/dist/all.css';
 import 'react-toastify/dist/ReactToastify.css'
 import 'antd/dist/antd.css';
+
+// import 'bootstrap/dist/css/bootstrap.min.css';
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>

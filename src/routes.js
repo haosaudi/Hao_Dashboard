@@ -46,6 +46,8 @@ import Myexperience from './views/providerscreens/myexperience'
 import createexperience from './views/providerscreens/createexperience'
 import editexpeirence from './views/providerscreens/editexpeirence'
 import createsessions from './views/providerscreens/createsessions'
+import viewregisteredusers from './views/providerscreens/viewregisteredusers'
+import viewprovidersessions from './views/providerscreens/viewprovidersessions'
 
 // examples
 const Colors = React.lazy(() => import("./views/theme/colors/Colors"));
@@ -173,6 +175,8 @@ const routes = [
   },
   { path: "/myexperience/createexperience", name: "Dashboard", component: createexperience },
   { path: "/myexperience/createsessions", name: "Dashboard", component: createsessions },
+  { path: "/myexperience/viewregisteredusers", name: "Dashboard", component: viewregisteredusers },
+  { path: "/myexperience/viewprovidersessions/:id", name: "Dashboard", component: viewprovidersessions },
 
   {
     path: "/myexperience/edit/:id",
