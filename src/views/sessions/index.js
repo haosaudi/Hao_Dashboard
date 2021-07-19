@@ -104,7 +104,7 @@ const Category = (props) => {
                     // props.history.push(
                     //   `/groupbooking/approvedgroupbooking/${item.id}`
                     // )
-                    DeleteSession()
+                    DeleteSession(i, item.id)
                   }
                   style={{ color: "#309CE4", fontSize: 12, cursor: "pointer" }}
                 >
@@ -112,20 +112,6 @@ const Category = (props) => {
                 </span>
               </div>
             ),
-            // name: item.user_add_fname,
-            // orderId: item.order_id,
-            // AttendeeBy: '2011/04/25',
-            // bookedBy: '$320',
-            // email: item.email,
-            // experience: item.title_ar,
-            // sessionsDate: item.start_date,
-            // sessionTime: item.start_time,
-            // priceItem: '$320',
-            // coupon: '2011/04/25',
-            // status: '$320',
-            // registerationDate: '$320',
-            // totalPrice: '2011/04/25',
-            // Actions: '$320',
           };
         }),
     });
@@ -142,7 +128,7 @@ const Category = (props) => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        swal("Poof! Your category has been deleted!", {
+        swal("Poof! Your session has been deleted!", {
           icon: "success",
         });
         props.DeleteSession(id, props.token, props.history);
@@ -152,7 +138,7 @@ const Category = (props) => {
           sessions: state.sessions.filter((item, ind) => ind !== i),
         });
       } else {
-        swal("Your category is safe!");
+        swal("Your session is safe!");
       }
     });
   };

@@ -104,7 +104,22 @@ const Category = (props) => {
         }}
       >
         <CCardHeader>
-          Bookings{" "}
+          bookings
+          <span
+            onClick={() =>
+              props.history.push("groupbooking/viewbookingstatistics")
+            }
+            style={{
+              fontSize: 12,
+              fontWeight: "400",
+              color: "#309CE4",
+              textDecorationLine: "underline",
+              cursor: "pointer",
+              marginLeft: 16,
+            }}
+          >
+            ‎View Booking Statistics
+          </span>
           {/* <span
             onClick={() => props.history.push('/category/add')}
             style={{

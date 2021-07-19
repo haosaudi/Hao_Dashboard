@@ -21,7 +21,9 @@ import {
 import {
   CategoryAction,
   CityAction,
-  ProviderApprovalAction, BookingAction, GroupBookingAction
+  ProviderApprovalAction,
+  BookingAction,
+  GroupBookingAction,
 } from "src/redux-store/actions";
 import { connect } from "react-redux";
 import { ImageUpload } from "src/utils/api_calls";
@@ -29,11 +31,16 @@ import { missingFieldsCheckOut } from "src/utils/globalFunction";
 import { toast } from "react-toastify";
 import moment from "moment";
 const Category = (props) => {
-  const rejected = props?.groupbooking?.status === "Rejected" ? true : false
-  const statusApproved = props?.groupbooking?.status === "Approved" ? true : props?.groupbooking?.status === "Rejected" ? true : false
+  const rejected = props?.groupbooking?.status === "Rejected" ? true : false;
+  const statusApproved =
+    props?.groupbooking?.status === "Approved"
+      ? true
+      : props?.groupbooking?.status === "Rejected"
+      ? true
+      : false;
   const [state, setState] = useState({
     // loading: false,
-    payment_method: 'TRANSFER'
+    payment_method: "TRANSFER",
   });
   useEffect(() => {
     if (props.token) {
@@ -45,12 +52,14 @@ const Category = (props) => {
     }
   }, []);
   useEffect(() => {
-
     // if (props.booking) {
     // let { request } = props;
     // console.log("props.groupBooking?.payment_method==", props.groupbooking?.payment_method?.toLowerCase())
-    rejected ? null :
-      document.getElementById("done").value = props.groupbooking?.payment_method?.toLowerCase();
+    rejected
+      ? null
+      : (document.getElementById(
+          "done"
+        ).value = props.groupbooking?.payment_method?.toLowerCase());
     // setState({
     //   ...state,
     //   payment_method: props.groupBooking?.admin_note,
@@ -99,12 +108,10 @@ const Category = (props) => {
     <>
       {/* {console.log('ME SB BADALTA DEKHIYA!!', props.match)} */}
       <CCard className="mb-4">
-        <CCardHeader
-
-        >
+        <CCardHeader>
           <CRow>
             <CCol style={{ alignItems: "center", display: "flex" }}>
-              Edit Category
+              Edit Group Booking
             </CCol>
             <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
               {/* <CButton
@@ -118,7 +125,7 @@ const Category = (props) => {
               </CButton> */}
               &nbsp; &nbsp;
               <CButton
-                onClick={() => props.history.push("/groupBookings")}
+                onClick={() => props.history.goBack()}
                 style={{ color: "grey", fontSize: 12 }}
                 color={"light"}
                 shape="rounded-0"
@@ -129,7 +136,6 @@ const Category = (props) => {
           </CRow>
         </CCardHeader>
         <CCardBody>
-
           <CForm>
             <CRow className="mb-3">
               <CFormLabel
@@ -165,8 +171,7 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.groupbooking?.email ||
-                  "no entered"}
+                {props?.groupbooking?.email || "no entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -184,8 +189,7 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.groupbooking?.mobile ||
-                  "no entered"}
+                {props?.groupbooking?.mobile || "no entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -203,8 +207,7 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.groupbooking?.organisation ||
-                  "no entered"}
+                {props?.groupbooking?.organisation || "no entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -222,7 +225,9 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {moment(props?.groupbooking?.proposed_date).format("DD-MM-YY") || ""}
+                {moment(props?.groupbooking?.proposed_date).format(
+                  "DD-MM-YY"
+                ) || ""}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -310,8 +315,7 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.groupbooking?.note ||
-                  "no entered"}
+                {props?.groupbooking?.note || "no entered"}
               </CCol>
             </CRow>
 
@@ -329,8 +333,7 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.groupbooking?.title_ar ||
-                  "no entered"}
+                {props?.groupbooking?.title_ar || "no entered"}
               </CCol>
             </CRow>
             <CRow className="mb-3">
@@ -452,7 +455,6 @@ const Category = (props) => {
                 {props?.groupbooking?.price || "not entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
-
             </CRow>
             <CRow className="mb-3">
               <CFormLabel
@@ -476,10 +478,9 @@ const Category = (props) => {
                   })}
                 /> */}
               </CCol>
-
             </CRow>
 
-            {props?.groupbooking?.status === "Rejected" ? null :
+            {props?.groupbooking?.status === "Rejected" ? null : (
               <CRow className="mb-3">
                 <CFormLabel
                   htmlFor="inputPassword3"
@@ -502,57 +503,69 @@ const Category = (props) => {
                       setState({ ...state, status: e.target.value });
                     }}
                     defaultValue={"transfer"}
-                  // value=
-                  // aria-label="Default select example"
+                    // value=
+                    // aria-label="Default select example"
                   >
                     <option value="card">card </option>
                     <option value="cash">cash</option>
                     <option value="transfer">transfer </option>
                   </CFormSelect>
                 </CCol>
-
               </CRow>
-            }
-            {
-              statusApproved ? <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
-
+            )}
+            {statusApproved ? (
+              <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
                 <CButton
                   // onClick={ApprovedGroupBookings}
                   disabled={state.loading || props.isLoading}
-                  style={{ color: "white", fontSize: 12, backgroundColor: 'green' }}
+                  style={{
+                    color: "white",
+                    fontSize: 12,
+                    backgroundColor: "green",
+                  }}
                   color={"green"}
                   shape="rounded-0"
                   disabled
                 >
-                  {
-                    props?.groupbooking?.status
-                  }
-
+                  {props?.groupbooking?.status}
                 </CButton>
               </CCol>
-                :
-                <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <CButton
-                    onClick={ApprovedGroupBooking}
-                    disabled={state.loading || props.isLoading}
-                    style={{ color: "white", fontSize: 12, backgroundColor: 'green' }}
-                    color={"green"}
-                    shape="rounded-0"
-                  >
-                    Approved
-                  </CButton>
-                  &nbsp; &nbsp;
-                  <CButton
-                    onClick={() => props.RejectGroupBooking(props.match?.params?.id, props.token, props.history)}
-                    style={{ color: "white", fontSize: 12, backgroundColor: 'red' }}
-                    color={"red"}
-                    shape="rounded-0"
-                  >
-                    Reject
-                  </CButton>
-                </CCol>
-            }
-
+            ) : (
+              <CCol style={{ display: "flex", justifyContent: "flex-end" }}>
+                <CButton
+                  onClick={ApprovedGroupBooking}
+                  disabled={state.loading || props.isLoading}
+                  style={{
+                    color: "white",
+                    fontSize: 12,
+                    backgroundColor: "green",
+                  }}
+                  color={"green"}
+                  shape="rounded-0"
+                >
+                  Approved
+                </CButton>
+                &nbsp; &nbsp;
+                <CButton
+                  onClick={() =>
+                    props.RejectGroupBooking(
+                      props.match?.params?.id,
+                      props.token,
+                      props.history
+                    )
+                  }
+                  style={{
+                    color: "white",
+                    fontSize: 12,
+                    backgroundColor: "red",
+                  }}
+                  color={"red"}
+                  shape="rounded-0"
+                >
+                  Reject
+                </CButton>
+              </CCol>
+            )}
           </CForm>
         </CCardBody>
       </CCard>
