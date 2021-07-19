@@ -157,7 +157,7 @@ const Category = (props) => {
           All Session{" "}
           <span
             onClick={() =>
-              props.history.push("/groupbooking/creategroupbooking")
+              props.history.push("/session/add")
             }
             style={{
               fontSize: 12,

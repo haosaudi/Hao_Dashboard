@@ -120,18 +120,6 @@ const Category = (props) => {
           >
             ‎View Booking Statistics
           </span>
-          {/* <span
-            onClick={() => props.history.push('/category/add')}
-            style={{
-              fontSize: 12,
-              fontWeight: '400',
-              color: '#309CE4',
-              textDecorationLine: 'underline',
-              cursor: 'pointer',
-            }}
-          >
-            Add New Category
-          </span> */}
         </CCardHeader>
         <Sortedtable
           dataArray={state.bookings}
@@ -140,7 +128,6 @@ const Category = (props) => {
               label: "order#",
               field: "id",
               sort: "asc",
-              // width: 150
             },
             {
               label: "order Item",
@@ -223,9 +210,6 @@ const Category = (props) => {
               width: 100,
             },
           ]}
-
-          // actions ={()=>}
-          // delete={()=> EditBooking() }
         />
       </CCard>
     </>
@@ -245,8 +229,6 @@ const mapStateToProp = (state) => ({
   isLoading: state.BookingsReducer.isLoading,
   token: state.AuthReducer.token,
   bookings: state.BookingsReducer.bookingsStats,
-
-  // userData: state.AuthReducer.userData,
 });
 
 const mapDispatchToProps = {

@@ -164,29 +164,6 @@ const Category = (props) => {
           </CRow>
         </CCardHeader>
         <CCardBody>
-          {/* {console.log("sessionDetails", props.sessionDetails)} */}
-          {/*           
-          <CRow>
-            <CCol>Category Name</CCol>
-            <CCol>
-              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-            </CCol>
-            <CCol></CCol>
-          </CRow>
-          <CRow>
-            <CCol>Category Description</CCol>
-            <CCol>
-              <CFormControl
-                component="textarea"
-                id="validationTextarea"
-                placeholder="Required example textarea"
-                // invalid
-                // required
-              ></CFormControl>
-            </CCol>
-            <CCol></CCol>
-          </CRow>
-        */}
           <CForm>
             <CRow className="mb-3">
               <CFormLabel
