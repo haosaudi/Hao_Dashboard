@@ -14,7 +14,9 @@ import {
     CTableHead,
     CTableHeaderCell,
     CTableRow,
+    CButton
 } from "@coreui/react";
+import { Card, Avatar } from 'antd';
 import { DocsLink } from "src/reusable";
 import {
     CategoryAction,
@@ -26,7 +28,7 @@ import { connect } from "react-redux";
 import swal from "sweetalert";
 import Sortedtable from "../../../components/sortedtables";
 import moment from "moment";
-
+import { Row, Col } from 'antd';
 const Category = (props) => {
     const [catBooking, setCategories] = useState([]);
     const [state, setState] = useState({
@@ -54,7 +56,6 @@ const Category = (props) => {
             experiences:
                 props.experiences &&
                 props.experiences.map((item, i) => {
-                    console.log("itemmmmm", item);
                     let {
                         account_status,
                         img_background,
@@ -149,7 +150,63 @@ const Category = (props) => {
                 }),
         });
     };
-
+return(
+    <>
+    <h6>My Experience (08)</h6>
+    <Row>
+        {props.experiences && props.experiences.map(item => {
+            return (
+                <Col span={8} style={{ marginTop: 20,marginBottom:10 }} xs={24} xl={8} md={18} >
+                    <Card style={{width:"86%",borderRadius:"10px",  boxShadow: "5px 10px 15px #888888"}} >
+                        <Row >
+                        
+                            <Col span={12}>  <h4 style={{color:"#a1ccc4"}}>{item.category}</h4> </Col>
+                            <Col span={12}><img alt="example" src={
+                                item.img_background?.search("amazonaws") !== -1
+                                  ? item.img_background
+                                  : `http://18.217.187.206/img/course_img/${
+                                      item.img_background ? item.img_background.toLowerCase() : ""
+                                    }`
+                              } width="90" height="90" style={{borderRadius:"10px",float:"right"}}/></Col>
+                        </Row>
+                        <Row style={{marginTop:"10px"}}>
+                            <Col span={12} > <CButton color="primary" size="sm" color="danger"  onClick={() =>
+                                {
+                                    props.history.push(`/myexperience/viewprovidersessions/${item.id}`)
+                                    props.ShowMySessions(
+                                        item?.totalSession?.map((val) => {
+                                          return {
+                                            ...val,
+                                            title_ar: item?.title_ar || "",
+                                          };
+                                        }) || []
+                                      );
+                                }
+                            }>
+                                Sessions
+                            </CButton></Col>
+                            <Col span={12}> <CButton color="primary" size="sm" color="white" onClick={() =>
+                                props.history.push(`/experience/view/files/${item.id}`)
+                            }>
+                                Manage Files
+                            </CButton></Col>
+                        </Row>
+                        <Row type="flex" align="middle">
+                            <Col span={24} style={{textAlign:'center'}}> 
+                            <CButton color="primary" size="sm" onClick={() =>
+                                props.history.push(`/myexperience/edit/${item.id}`)
+                            } >
+                                Edit Experience
+                            </CButton>
+                            </Col>
+                        </Row>
+                    </Card>
+                </Col>
+            )
+        })}
+    </Row>
+    </>
+)
     return (
         <>
 

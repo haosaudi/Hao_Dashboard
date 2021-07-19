@@ -521,6 +521,17 @@ export const Provider = [
   {
     _component: "CNavItem",
     as: NavLink,
+    anchor: "test",
+    to: "/test",
+    // icon: <CIcon name="cil-speedometer" customClasses="nav-icon" />,
+    badge: {
+      color: "info",
+      text: "NEW",
+    },
+  },
+  {
+    _component: "CNavItem",
+    as: NavLink,
     anchor: "Manage Categories",
     to: "/category",
     // icon: <CIcon name="cil-speedometer" customClasses="nav-icon" />,
@@ -588,17 +599,7 @@ export const Provider = [
       text: "NEW",
     },
   },
-  {
-    _component: "CNavItem",
-    as: NavLink,
-    anchor: "test",
-    to: "/test",
-    // icon: <CIcon name="cil-speedometer" customClasses="nav-icon" />,
-    badge: {
-      color: "info",
-      text: "NEW",
-    },
-  },
+ 
   // {
   //   _component: "CNavItem",
   //   as: NavLink,
