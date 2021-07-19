@@ -33,82 +33,6 @@ import { ImageUpload } from "src/utils/api_calls";
 import { missingFieldsCheckOut } from "src/utils/globalFunction";
 import { toast } from "react-toastify";
 const Category = (props) => {
-<<<<<<< HEAD
-  const [state, setState] = useState({
-    title_ar: "",
-    description_ar: "",
-    img_background: "",
-    category_id: "",
-    gender: "",
-    time: "",
-    price: "",
-    language: "",
-    city_id: "",
-    pre_requisition_ar: "",
-    tools_ar: "",
-    location_desc_ar: "",
-    online: false,
-    status: 1,
-    longitude: "",
-    latitude: "",
-    loading: false,
-  });
-  const [status, setStatus] = useState(false);
-  useEffect(() => {
-    if (props.token) {
-      if (props.match?.params?.id) {
-        props.GetExperienceById(props.match?.params?.id, props.token);
-        props.GetCategories(props.token);
-        props.GetCities(props.token);
-      } else {
-        // props.history.push("/experience");
-      }
-    }
-  }, []);
-  useEffect(() => {
-    if (props.experience) {
-      let { experience } = props;
-      console.log("experience.online===", experience.status);
-      setState({
-        ...state,
-        title_ar: experience.title_ar,
-        description_ar: experience.description_ar,
-        category_id: experience.category_id,
-        city_id: experience.city_id,
-        gender: experience.gender,
-        time: experience.time,
-        price: experience.price,
-        language: experience.language,
-        pre_requisition_ar: experience.pre_requisition_ar,
-        tools_ar: experience.tools_ar,
-        location_desc_ar: experience.location_desc_ar,
-        online: experience.online,
-        longitude: experience.longitude,
-        latitude: experience.latitude,
-        img_background: experience.img_background,
-        status: experience.status,
-      });
-      // if (document.getElementById("gridCheck1")) {
-      document.getElementById("category").value = experience.category_id;
-      document.getElementById("city").value = experience.city_id;
-      document.getElementById("gender").value = experience.gender;
-      document.getElementById("language").value = experience.language;
-      // }
-
-      setStatus(experience.status == 1);
-    }
-  }, [props.experience]);
-  const imageUpload = async (file) => {
-    setState({ ...state, loading: true });
-    let data = new FormData();
-    data.append("photo", file);
-    let imageData = await ImageUpload(data, props.token);
-    console.log("imageeeedata", imageData);
-    if (imageData?.success) {
-      setState({
-        ...state,
-        img_background: imageData?.data?.location,
-=======
     const [state, setState] = useState({
         title_ar: "",
         description_ar: "",
@@ -125,7 +49,6 @@ const Category = (props) => {
         online: false,
         longitude: "",
         latitude: "",
->>>>>>> e06b2bf9769f465bb09bd35c4bb3fbcaca957767
         loading: false,
     });
     const [status, setStatus] = useState(false);
