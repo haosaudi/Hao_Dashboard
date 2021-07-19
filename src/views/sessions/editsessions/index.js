@@ -14,7 +14,7 @@ import {
   CFormControl,
   CForm,
   CFormLabel,
-  CFormSelect,
+  CFormCheck,
   CSpinner,
 } from "@coreui/react";
 
@@ -26,9 +26,10 @@ import { toast } from "react-toastify";
 import moment from "moment";
 const Category = (props) => {
   const [state, setState] = useState({
-    newDateTime: "sssss",
-    // loading: false,
-    admin_note: "sadda",
+    status: 1,
+    online: 0,
+    seats: 0,
+    note: "",
   });
   useEffect(() => {
     console.log("LIGHT AGYI", props.match?.params?.id);
@@ -43,7 +44,10 @@ const Category = (props) => {
   useEffect(() => {
     setState({
       ...state,
-      sessionDetails: props.sessionDetails,
+      status: props?.sessionDetails?.status,
+      note: props?.sessionDetails?.note,
+      online: props?.sessionDetails?.online,
+      seats: props?.sessionDetails?.seats,
     });
   }, [props.sessionDetails]);
   // const imageUpload = async (file) => {
@@ -76,13 +80,57 @@ const Category = (props) => {
       });
       bo;
     } else {
-      // props.UpdateSessions(
-      //   props.match?.params?.id,
-      //   { ...data },
-      //   props.token,
-      //   props.history
-      // );
+      props.UpdateSessions(
+        props.match?.params?.id,
+        { ...data },
+        props.token,
+        props.history
+      );
     }
+  };
+
+  const RadioButton = () => {
+    return (
+      <CCol sm="4">
+        <CFormCheck
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault1"
+          onChange={(e) => {
+            setState({ ...state, status: 1 });
+          }}
+          defaultChecked={state.status == 1}
+          label="Enabled"
+        />
+        <CFormCheck
+          type="radio"
+          name="flexRadioDefault"
+          onChange={(e) => {
+            setState({ ...state, status: 0 });
+          }}
+          defaultChecked={state.status == 0}
+          id="flexRadioDefault2"
+          label="Disabled"
+        />
+      </CCol>
+    );
+  };
+  const RadioButton1 = () => {
+    return (
+      <CCol sm="4">
+        <CFormCheck
+          type="radio"
+          name="flexRadioDefaultDone"
+          id="flexRadioDefaultDOne"
+          onChange={(e) => {
+            console.log("CHECKING CHEKED!!", e.target.checked);
+            setState({ ...state, online: e.target.checked ? 1 : 0 });
+          }}
+          defaultChecked={state.online == 1}
+          label="Online?"
+        />
+      </CCol>
+    );
   };
   return (
     <>
@@ -116,36 +164,13 @@ const Category = (props) => {
           </CRow>
         </CCardHeader>
         <CCardBody>
-          {/* {console.log("sessionDetails", props.sessionDetails)} */}
-          {/*           
-          <CRow>
-            <CCol>Category Name</CCol>
-            <CCol>
-              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-            </CCol>
-            <CCol></CCol>
-          </CRow>
-          <CRow>
-            <CCol>Category Description</CCol>
-            <CCol>
-              <CFormControl
-                component="textarea"
-                id="validationTextarea"
-                placeholder="Required example textarea"
-                // invalid
-                // required
-              ></CFormControl>
-            </CCol>
-            <CCol></CCol>
-          </CRow>
-        */}
           <CForm>
             <CRow className="mb-3">
               <CFormLabel
                 htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
               >
-                Sessions ID
+                Experience Name
               </CFormLabel>
               <CCol
                 sm="4"
@@ -154,9 +179,7 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.sessionDetails?.order_id}
-                {/* {props?.sessionDetails?.user_add_fname + " " + props?.sessionDetails?.user_add_lname ||
-                  "no entered"} */}
+                {props?.sessionDetails?.title_ar || "not entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -164,6 +187,45 @@ const Category = (props) => {
               <CFormLabel
                 htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
+              >
+                Start Date
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {moment(props?.sessionDetails?.start_date).format("DD-MM-YY") ||
+                  ""}
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
+                End Date
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {moment(props?.sessionDetails?.end_date).format("DD-MM-YY") ||
+                  ""}
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-fo  rm-label"
               >
                 Sessions By
               </CFormLabel>
@@ -174,65 +236,9 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                {props?.sessionDetails?.user_add_fname +
+                {props?.sessionDetails?.first_name +
                   " " +
-                  props?.sessionDetails?.user_add_lname || "no entered"}
-                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
-              </CCol>
-            </CRow>
-            <CRow className="mb-3">
-              <CFormLabel
-                htmlFor="inputEmail3"
-                className="col-sm-2 col-form-label"
-              >
-                Sessions Date
-              </CFormLabel>
-              <CCol
-                sm="4"
-                style={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                {moment(props?.sessionDetails?.created_at).format("DD-MM-YY") ||
-                  ""}
-                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
-              </CCol>
-            </CRow>
-            <CRow className="mb-3">
-              <CFormLabel
-                htmlFor="inputEmail3"
-                className="col-sm-2 col-form-label"
-              >
-                Attendance Name
-              </CFormLabel>
-              <CCol
-                sm="4"
-                style={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                {props?.sessionDetails?.user_add_fname +
-                  " " +
-                  props?.sessionDetails?.user_add_lname || "no entered"}
-              </CCol>
-            </CRow>
-            <CRow className="mb-3">
-              <CFormLabel
-                htmlFor="inputEmail3"
-                className="col-sm-2 col-form-label"
-              >
-                Experience
-              </CFormLabel>
-              <CCol
-                sm="4"
-                style={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                {props?.sessionDetails?.title_ar || "not entered"}
+                  props?.sessionDetails?.last_name || "no entered"}
                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
@@ -260,7 +266,7 @@ const Category = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
-                Session Time
+                Start Time
               </CFormLabel>
               <CCol
                 sm="4"
@@ -270,23 +276,24 @@ const Category = (props) => {
                 }}
               >
                 {props?.sessionDetails?.start_time || "Not Entered"}
-                {/* {moment(props?.sessionDetails?.start_time).format("yy-MM-DD") || "not entered"} */}
-                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
-              {/* <CCol sm="4">
-                <CFormSelect
-                  id="done"
-                  onChange={(e) => {
-                    setState({ ...state, req_status: e.target.value });
-                  }}
-                  defaultValue={state.req_status}
-                  aria-label="Default select example"
-                >
-                  <option value="Requested">Requested</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Rejected">Rejected</option>
-                </CFormSelect>
-              </CCol> */}
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputPassword3"
+                className="col-sm-2 col-form-label"
+              >
+                End Time
+              </CFormLabel>
+              <CCol
+                sm="4"
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {props?.sessionDetails?.end_time || "Not Entered"}
+              </CCol>
             </CRow>
 
             <CRow className="mb-3">
@@ -304,7 +311,6 @@ const Category = (props) => {
                 }}
               >
                 {props?.sessionDetails?.price || "not entered"}
-                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               </CCol>
             </CRow>
             <CRow className="mb-3">
@@ -312,7 +318,7 @@ const Category = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
-                New Session Date/Time
+                Number of Seats
               </CFormLabel>
               <CCol
                 sm="4"
@@ -321,16 +327,30 @@ const Category = (props) => {
                   display: "flex",
                 }}
               >
-                Not Clear
-                {/* <input
-                  // style={{ background: 'red' }}
-                  onChange={(text) => setState({
-                    newDateTime: text.target.value
-                  })}
-                /> */}
+                {/* {state.seats || "not entered"} */}
+                <CFormControl
+                  onChange={(e) => {
+                    if (e.target.value < 0) {
+                    } else {
+                      setState({ ...state, seats: e.target.value });
+                    }
+                  }}
+                  value={state.seats}
+                  id="validationTextarea"
+                  type="number"
+                ></CFormControl>
               </CCol>
             </CRow>
 
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputPassword4"
+                className="col-sm-2 col-form-label"
+              >
+                Online
+              </CFormLabel>
+              <RadioButton1 />
+            </CRow>
             <CRow className="mb-3">
               <CFormLabel
                 htmlFor="inputPassword3"
@@ -338,25 +358,7 @@ const Category = (props) => {
               >
                 Status
               </CFormLabel>
-              <CCol
-                sm="4"
-                style={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                <CFormSelect
-                  id="done"
-                  onChange={(e) => {
-                    setState({ ...state, status: e.target.value });
-                  }}
-                  defaultValue={state.status}
-                  aria-label="Default select example"
-                >
-                  <option value="Requested">under process</option>
-                  <option value="Approved">Approved</option>
-                </CFormSelect>
-              </CCol>
+              <RadioButton />
             </CRow>
 
             <CRow className="mb-3">
@@ -364,7 +366,7 @@ const Category = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
-                Admin Note
+                Note
               </CFormLabel>
               <CCol
                 sm="4"
@@ -374,11 +376,11 @@ const Category = (props) => {
                 }}
               >
                 <input
-                  value={state.admin_note}
-                  // style={{ background: 'red' }}
+                  value={state.note}
                   onChange={(text) =>
                     setState({
-                      admin_note: text.target.value,
+                      ...state,
+                      note: text.target.value,
                     })
                   }
                 />
@@ -398,7 +400,6 @@ Category.propTypes = {
   isLoading: PropTypes.bool,
   history: PropTypes.object,
   match: PropTypes.object,
-  // request: PropTypes.object,
   sessionDetails: PropTypes.object,
 };
 
@@ -411,6 +412,7 @@ const mapStateToProp = (state) => ({
 
 const mapDispatchToProps = {
   GetSessionsById: SessionsAction.GetSessionsById,
+  UpdateSessions: SessionsAction.UpdateSession,
   // UpdateBooking: SessionsAction.UpdateBooking,
 };
 

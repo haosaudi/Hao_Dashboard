@@ -29,6 +29,8 @@ import ViewRefunds from "./views/refunds";
 import editsessions from "./views/sessions/editsessions";
 import providermessages from "./views/providermessages";
 import viewprovidermessages from "./views/providermessages/viewprovidermessages";
+import editsession from "./views/providerscreens/editSession";
+import Test from "./views/providerscreens/test";
 
 // import EditProviderManagement from "./views/ProviderManagement/editProvider";
 // import creategroupbooking from "./views/groupbooking/creategroupbooking";
@@ -42,12 +44,13 @@ import viewSessionExperience from "./views/manageExperience/viewSession";
 
 //______PROVIDER SCREEENS _____//
 
-import Myexperience from './views/providerscreens/myexperience'
-import createexperience from './views/providerscreens/createexperience'
-import editexpeirence from './views/providerscreens/editexpeirence'
-import createsessions from './views/providerscreens/createsessions'
-import viewregisteredusers from './views/providerscreens/viewregisteredusers'
-import viewprovidersessions from './views/providerscreens/viewprovidersessions'
+import Myexperience from "./views/providerscreens/myexperience";
+import createexperience from "./views/providerscreens/createexperience";
+import editexpeirence from "./views/providerscreens/editexpeirence";
+import createsessions from "./views/providerscreens/createsessions";
+import viewregisteredusers from "./views/providerscreens/viewregisteredusers";
+import viewprovidersessions from "./views/providerscreens/viewprovidersessions";
+import addSession from "./views/sessions/addSession";
 
 // examples
 const Colors = React.lazy(() => import("./views/theme/colors/Colors"));
@@ -161,23 +164,48 @@ const Charts = React.lazy(() => import("./views/components/charts/Charts"));
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 
 const routes = [
-
-
   { path: "/", exact: true, name: "Home" },
-
 
   /// PROVIDER SCREENS
 
-
   {
-    path: "/myexperience", name: "Dashboard", component: Myexperience,
+    path: "/myexperience",
+    name: "Dashboard",
+    component: Myexperience,
     exact: true,
   },
-  { path: "/myexperience/createexperience", name: "Dashboard", component: createexperience },
-  { path: "/myexperience/createsessions", name: "Dashboard", component: createsessions },
-  { path: "/myexperience/viewregisteredusers", name: "Dashboard", component: viewregisteredusers },
-  { path: "/myexperience/viewprovidersessions/:id", name: "Dashboard", component: viewprovidersessions },
-
+  {
+    path: "/myexperience/createexperience",
+    name: "Dashboard",
+    component: createexperience,
+  },
+  {
+    path: "/myexperience/createsessions",
+    name: "Dashboard",
+    component: createsessions,
+  },
+  {
+    path: "/myexperience/viewregisteredusers",
+    name: "Dashboard",
+    component: viewregisteredusers,
+  },
+  {
+    path: "/myexperience/viewprovidersessions/:id",
+    name: "Dashboard",
+    component: viewprovidersessions,
+  },
+  {
+    path: "/Sessions/editsession/:id",
+    name: "User Management", // bread but now off
+    component: editsession,
+    // exact: true,
+  },
+  {
+    path: "/session/add",
+    name: "Session Create", // bread but now off
+    component: addSession,
+    // exact: true,
+  },
   {
     path: "/myexperience/edit/:id",
     name: "Edit Experience",
@@ -432,6 +460,7 @@ const routes = [
   // { path: '/404', name: '404', component: Page404 },
   // { path: '/500', name: '500', component: Page500 },
   { path: "/widgets", name: "Widgets", component: Widgets },
+  { path: "/test", name: "test", component: Test },
 ];
 
 export default routes;

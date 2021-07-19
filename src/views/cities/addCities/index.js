@@ -154,16 +154,28 @@ const City = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
-                Enabled
+                Status
               </CFormLabel>
               <CCol sm="4">
                 <CFormCheck
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
                   onChange={(e) => {
-                    setStatus(e.target.checked);
+                    setStatus(1);
                   }}
-                  type="checkbox"
-                  id="gridCheck1"
-                  label=""
+                  defaultChecked={status == 1}
+                  label="Enabled"
+                />
+                <CFormCheck
+                  type="radio"
+                  name="flexRadioDefault"
+                  onChange={(e) => {
+                    setStatus(0);
+                  }}
+                  defaultChecked={status == 0}
+                  id="flexRadioDefault2"
+                  label="Disabled"
                 />
               </CCol>
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}

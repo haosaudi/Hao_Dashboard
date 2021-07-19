@@ -36,6 +36,7 @@ const Category = (props) => {
     title_ar: "",
     description_ar: "",
     img_background: "",
+    entrance_img: "",
     category_id: "",
     gender: "",
     time: "",
@@ -48,6 +49,7 @@ const Category = (props) => {
     online: false,
     longitude: "",
     latitude: "",
+    status: 1,
     loading: false,
   });
   const [status, setStatus] = useState(false);
@@ -75,26 +77,26 @@ const Category = (props) => {
         time: experience.time,
         price: experience.price,
         language: experience.language,
+        entrance_img: experience.entrance_img,
+        experience_link: experience.experience_link,
         pre_requisition_ar: experience.pre_requisition_ar,
         tools_ar: experience.tools_ar,
         location_desc_ar: experience.location_desc_ar,
         online: experience.online,
+        status: experience.status,
         longitude: experience.longitude,
         latitude: experience.latitude,
         img_background: experience.img_background,
       });
-      console.log(experience.status == 1);
-      // if (document.getElementById("gridCheck1")) {
+
       document.getElementById("category").value = experience.category_id;
       document.getElementById("city").value = experience.city_id;
       document.getElementById("gender").value = experience.gender;
       document.getElementById("language").value = experience.language;
       // }
-
-      setStatus(experience.status == 1);
     }
   }, [props.experience]);
-  const imageUpload = async (file) => {
+  const imageUpload = async (file, key) => {
     setState({ ...state, loading: true });
     let data = new FormData();
     data.append("photo", file);
@@ -102,7 +104,7 @@ const Category = (props) => {
     if (imageData.success) {
       setState({
         ...state,
-        img_background: imageData?.data?.location,
+        [key ? key : "img_background"]: imageData?.data?.location,
         loading: false,
       });
     } else {
@@ -129,7 +131,7 @@ const Category = (props) => {
     } else {
       props.UpdateExperience(
         props.match?.params?.id,
-        { ...data, slug: state.name_ar, status: status ? 1 : 0 },
+        { ...data, slug: state.name_ar },
         props.token,
         props.history
       );
@@ -149,6 +151,33 @@ const Category = (props) => {
       label=""
     />
   );
+
+  const RadioButton = () => {
+    return (
+      <CCol sm="4">
+        <CFormCheck
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault1"
+          onChange={(e) => {
+            setState({ ...state, status: 1 });
+          }}
+          defaultChecked={state.status == 1}
+          label="Enabled"
+        />
+        <CFormCheck
+          type="radio"
+          name="flexRadioDefault"
+          onChange={(e) => {
+            setState({ ...state, status: 0 });
+          }}
+          defaultChecked={state.status == 0}
+          id="flexRadioDefault2"
+          label="Disabled"
+        />
+      </CCol>
+    );
+  };
 
   return (
     <>
@@ -340,6 +369,25 @@ const Category = (props) => {
                 htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
               >
+                Experience Link
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  onChange={(e) =>
+                    setState({ ...state, experience_link: e.target.value })
+                  }
+                  placeholder="Experience Link"
+                  value={state.experience_link}
+                  id="inputEmail3"
+                />
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
                 Duration
               </CFormLabel>
               <CCol sm="4">
@@ -464,6 +512,15 @@ const Category = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
+                Enabled
+              </CFormLabel>
+              <RadioButton />
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputPassword3"
+                className="col-sm-2 col-form-label"
+              >
                 Background Image
               </CFormLabel>
               <CCol sm="4">
@@ -490,6 +547,46 @@ const Category = (props) => {
                         : `http://18.217.187.206/img/course_img/${
                             state.img_background
                               ? state.img_background.toLowerCase()
+                              : ""
+                          }`
+                    }
+                  />
+                </>
+              ) : null}
+
+              {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputPassword3"
+                className="col-sm-2 col-form-label"
+              >
+                Entrance Image
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  onChange={(e) => {
+                    imageUpload(e.target.files[0], "entrance_img");
+                  }}
+                  type="file"
+                  id="formFile"
+                />
+              </CCol>
+              {state.loading ? (
+                <CCol sm="2">
+                  <CSpinner style={{ height: 25, width: 25 }} />
+                </CCol>
+              ) : state.entrance_img?.length > 0 ? (
+                <>
+                  <CCol sm="2">Uploaded</CCol>
+                  <img
+                    style={{ width: 150 }}
+                    src={
+                      state.entrance_img?.search("amazonaws") !== -1
+                        ? state.entrance_img
+                        : `http://18.217.187.206/img/course_img/${
+                            state.entrance_img
+                              ? state.entrance_img.toLowerCase()
                               : ""
                           }`
                     }
