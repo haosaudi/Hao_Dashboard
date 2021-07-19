@@ -4,7 +4,6 @@ import { toast } from 'react-toastify'
 export default class BookingAction {
   static GetAllSessions = (token) => {
     return async (dispatch) => {
-      console.log('get GetAllGroupBooking data in Action', token)
       dispatch({ type: ActionType.GET_ALL_SESSIONS })
       await GET('session?limit=50', token).then((data) => {
         if (data) {
@@ -19,11 +18,10 @@ export default class BookingAction {
 
   static GetSessionsById = (id, token) => {
     return async (dispatch) => {
-      console.log('get Sessions by id data in Action=p==', token)
       dispatch({ type: ActionType.GET_SESSIONS })
       await GET(`session/detail/${id}`, token).then((data) => {
         if (data) {
-          console.log('GOT THE GROUPBOOKING ID!!', data)
+          console.log('GOT THE GROUPBOOKING ID!!', data.data)
           dispatch({ type: ActionType.GET_SESSIONS_SUCCESS, payload: data?.data })
         } else {
           dispatch({ type: ActionType.GET_SESSIONS_FAIL })
@@ -31,6 +29,23 @@ export default class BookingAction {
       })
     }
   }
+
+
+  static Attendees = (id, token) => {
+    return async (dispatch) => {
+      dispatch({ type: ActionType.GET_ATTENDEES })
+      await GET(`session/detail/${id}`, token).then((data) => {
+        if (data) {
+          dispatch({ type: ActionType.GET_ATTENDEES_SUCCESS, payload: data?.data })
+        } else {
+          dispatch({ type: ActionType.GET_ATTENDEES_FAIL })
+        }
+      })
+    }
+  }
+
+
+
   static RejectGroupBooking = (id, token, history) => {
     return async (dispatch) => {
       // console.log('update RejectGroupBooking data in Action', data)

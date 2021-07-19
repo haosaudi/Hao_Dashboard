@@ -108,9 +108,17 @@ const Category = (props) => {
                                 </span>
                                 <span
                                     onClick={() =>
-                                        // props.history.push(`/experience/view/files/${item.id}`)
-                                        props.history.push(`/myexperience/viewprovidersessions/${item.id}`)
-
+                                        {
+                                            props.history.push(`/myexperience/viewprovidersessions/${item.id}`)
+                                            props.ShowMySessions(
+                                                item?.totalSession?.map((val) => {
+                                                  return {
+                                                    ...val,
+                                                    title_ar: item?.title_ar || "",
+                                                  };
+                                                }) || []
+                                              );
+                                        }
                                     }
                                     style={{
                                         color: "red",
@@ -298,6 +306,7 @@ const Category = (props) => {
 
 Category.propTypes = {
     GetProviderAllExperiences: PropTypes.func,
+    ShowMySessions: PropTypes.func,
     DeleteBooking: PropTypes.func,
     token: PropTypes.string,
     isLoading: PropTypes.bool,
@@ -316,6 +325,7 @@ const mapDispatchToProps = {
     GetProviderAllExperiences: MyexperienceAction.GetProviderAllExperiences,
     // DeleteBooking: BookingAction.DeleteBooking,
     CreateExpeirence: MyexperienceAction.CreateExpeirence,
+    ShowMySessions: MyexperienceAction.ShowMySessions,
 
 };
 

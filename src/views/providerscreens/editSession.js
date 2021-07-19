@@ -45,19 +45,14 @@ const Category = (props) => {
         sessions: [],
         loader: false,
     });
-
     useEffect(() => {
-        console.log("THIS IS SESSION SCREEN")
-        console.log(props.getExperienceById,"SHOW THIS")
         // console.log(props.token)
         // if (props.token) {
         //     props.GetSessionsById(425,props.token);
         // }
     }, [props.token]);
+ 
     useEffect(() => {
-        // setCategories(props.categories)
-        // console.log("itemmmmm")
-
         setState({
             ...state,
             sessions:
@@ -68,7 +63,8 @@ const Category = (props) => {
                         start_date: moment(item.start_date).format("yy-MM-DD"),
                         end_date: moment(item.end_date).format("yy-MM-DD"),
                         group_booking:item.booked_seats?item.booked_seats:0,
-                        online: (
+                        
+                        attendance: (
                             <div
                                 style={{
                                     alignItems: "center",
@@ -95,7 +91,7 @@ const Category = (props) => {
                                     }
                                     style={{ color: "#309CE4", fontSize: 12, cursor: "pointer" }}
                                 >
-                                    Edit Attendees
+                                    Edit
                                 </span>
                             </div>
                         ),
@@ -125,7 +121,7 @@ const Category = (props) => {
                                     }
                                     style={{ color: "#309CE4", fontSize: 12, cursor: "pointer" }}
                                 >
-                                    View Registered Users
+                                    View Registered Userssssss
                                 </span>
                             </div>
                         ),
@@ -153,90 +149,50 @@ const Category = (props) => {
                     dataArray={state.sessions}
                     columns={[
                         {
-                            label: "order#",
+                            label: "BookedBy#",
                             field: "id",
                             sort: "asc",
                             // width: 150
                         },
 
                         {
-                            label: "Experience Name",
-                            field: "title_ar",
+                            label: "Attendee Name",
+                            field: "attendee_name",
                             sort: "asc",
                             width: 200,
                         },
 
                         {
-                            label: "Sessions Date",
-                            field: "start_date",
+                            label: "Gender",
+                            field: "gender",
                             sort: "asc",
                             width: 100,
                         },
                         {
-                            label: "Sessions Time",
-                            field: "start_time",
+                            label: "Amount Paid",
+                            field: "amount_paid",
                             sort: "asc",
                             width: 100,
                         },
                         {
-                            label: "seats",
-                            field: "seats",
+                            label: "Booking Date",
+                            field: "booking_date",
                             sort: "asc",
                             width: 100,
                         },
                         {
-                            label: "Remaing Seats",
-                            field: "seats",
+                            label: "Booking Status",
+                            field: "booking_status",
                             sort: "asc",
                             width: 100,
                         },
                         {
-                            label: "Booked Seats",
-                            field: "group_booking",
-                            sort: "asc",
-                            width: 100,
-                        },
-                        {
-                            label: "online",
-                            field: "online",
-                            sort: "asc",
-                            width: 100,
-                        },
-
-                        {
-                            label: "Registeration Date",
-                            field: "created_at",
-                            sort: "asc",
-                            width: 100,
-                        },
-                        {
-                            label: "total Price ",
-                            field: "price",
-                            sort: "asc",
-                            width: 100,
-                        },
-                        {
-                            label: "Edit",
-                            field: "action",
-                            sort: "asc",
-                            width: 100,
-                        },
-                        {
-                            label: "delete",
-                            field: "action2",
-                            sort: "asc",
-                            width: 100,
-                        },
-                        {
-                            label: "delete",
-                            field: "action3",
+                            label: "Attendance",
+                            field: "attendance",
                             sort: "asc",
                             width: 100,
                         },
                     ]}
-
-                // actions ={()=>}
-                // delete={()=> EditBooking() }
                 />
             </CCard>
         </>
@@ -244,27 +200,18 @@ const Category = (props) => {
 };
 
 Category.propTypes = {
-    GetAllGroupBooking: PropTypes.func,
-    DeleteBooking: PropTypes.func,
-    token: PropTypes.string,
-    isLoading: PropTypes.bool,
-    history: PropTypes.object,
-    sessions: PropTypes.array,
-    GetSessionsById:PropTypes.func,
+    attendeesArray: PropTypes.array,
+    Attendees:PropTypes.func,
     getExperienceById:PropTypes.array
 };
 
 const mapStateToProp = (state) => ({
-    isLoading: state.GroupBookingsReducer.isLoading,
-    token: state.AuthReducer.token,
-    sessions: state.ExperienceReducer.sessions,
-    getExperienceById : state.GetAllProviderReducer.mySessions
-    // userData: state.AuthReducer.userData,
+    attendeesArray : state.GetAllProviderReducer.attendees,
+    getExperienceById:state.GetAllProviderReducer.mySessions
 });
 
 const mapDispatchToProps = {
-    GetSessionsById: SessionsAction.GetSessionsById,
-    // DeleteBooking: GroupBookingAction.DeleteBooking,
+    Attendees: SessionsAction.Attendees,
 };
 
 export default connect(mapStateToProp, mapDispatchToProps)(Category);

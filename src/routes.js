@@ -29,7 +29,10 @@ import ViewRefunds from "./views/refunds";
 import editsessions from "./views/sessions/editsessions";
 import providermessages from "./views/providermessages";
 import viewprovidermessages from "./views/providermessages/viewprovidermessages";
+import editsession from "./views/providerscreens/editSession";
+import Test from "./views/providerscreens/test";
 
+ 
 // import EditProviderManagement from "./views/ProviderManagement/editProvider";
 // import creategroupbooking from "./views/groupbooking/creategroupbooking";
 // import approvedgroupbooking from "./views/groupbooking/viewgroupbooking";
@@ -177,7 +180,12 @@ const routes = [
   { path: "/myexperience/createsessions", name: "Dashboard", component: createsessions },
   { path: "/myexperience/viewregisteredusers", name: "Dashboard", component: viewregisteredusers },
   { path: "/myexperience/viewprovidersessions/:id", name: "Dashboard", component: viewprovidersessions },
-
+  {
+    path: "/Sessions/editsession/:id",
+    name: "User Management", // bread but now off
+    component: editsession,
+    // exact: true,
+  },
   {
     path: "/myexperience/edit/:id",
     name: "Edit Experience",
@@ -432,6 +440,8 @@ const routes = [
   // { path: '/404', name: '404', component: Page404 },
   // { path: '/500', name: '500', component: Page500 },
   { path: "/widgets", name: "Widgets", component: Widgets },
+  { path: "/test", name: "test", component:Test  },
+
 ];
 
 export default routes;

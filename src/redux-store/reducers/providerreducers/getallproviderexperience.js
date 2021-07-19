@@ -4,6 +4,8 @@ const initialState = {
     isLoading: false,
     experiences: [],
     experience: {},
+    mySessions: [],
+    attendees:[],
 };
 
 export default (state = initialState, action) => {
@@ -16,6 +18,11 @@ export default (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 experiences: action.payload,
+            };
+        case ActionType.GET_MY_EXPERIENCE_SESSION:
+            return {
+                ...state,
+                mySessions: action.payload,
             };
         case ActionType.GET_ALL_EXPERIENCES_FAIL:
             return {
@@ -72,7 +79,24 @@ export default (state = initialState, action) => {
                 ...state,
                 isLoading: false,
             };
-
+    
+        case ActionType.GET_ATTENDEES:
+            return {
+                ...state,
+                isLoading:true
+            }
+        case ActionType.GET_ATTENDEES_SUCCESS:
+            return {
+                ...state,
+                attendees:action.payload,
+                isLoading:false
+            }
+        case ActionType.GET_ATTENDEES_FAIL:
+            return {
+                ...state,
+                attendees:action.payload,
+                isLoading:false
+            }
         default:
             return state;
     }
