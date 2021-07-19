@@ -30,7 +30,7 @@ const review = (props) => {
     description_ar: "",
     img: "",
     loading: false,
-    reviewStatus: false
+    reviewStatus: false,
   });
   const [status, setStatus] = useState(false);
   useEffect(() => {
@@ -45,11 +45,11 @@ const review = (props) => {
   useEffect(() => {
     if (props.review) {
       let { review } = props;
-      console.log("props.review", props?.review?.status)
+      console.log("props.review", props?.review?.status);
       setState({
         ...state,
 
-        reviewStatus: props.review.status
+        reviewStatus: props.review.status,
       });
       // console.log(review.status == 1);
       // // if (document.getElementById("gridCheck1")) {
@@ -68,36 +68,44 @@ const review = (props) => {
       props.history
     );
   };
+
   const CheckBox = () => {
-    return <CForm>
-
-      <CRow className="mb-3">
-        <CFormLabel
-          htmlFor="inputPassword3"
-          className="col-sm-2 col-form-label"
-        >
-          Enabled
-        </CFormLabel>
-        <CCol sm="4">
-          <CFormCheck
-            id="enabled"
-            defaultChecked={state.reviewStatus == 1 ? true : state.reviewStatus == 0 ? false : false}
-            onChange={(e) => {
-              // setStatus(e.target.checked);
-              setState({ ...state, reviewStatus: e.target.checked == true ? 1 : 0 })
-            }}
-            type="checkbox"
-            id="gridCheck1"
-            label=""
-          />
-        </CCol>
-        {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
-      </CRow>
-
-
-    </CForm>
-
-  }
+    return (
+      <CForm>
+        <CRow className="mb-3">
+          <CFormLabel
+            htmlFor="inputPassword3"
+            className="col-sm-2 col-form-label"
+          >
+            Status
+          </CFormLabel>
+          <CCol sm="4">
+            <CFormCheck
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+              onChange={(e) => {
+                setState({ ...state, reviewStatus: 1 });
+              }}
+              defaultChecked={state.reviewStatus == 1}
+              label="Enabled"
+            />
+            <CFormCheck
+              type="radio"
+              name="flexRadioDefault"
+              onChange={(e) => {
+                setState({ ...state, reviewStatus: 0 });
+              }}
+              defaultChecked={state.reviewStatus == 0}
+              id="flexRadioDefault2"
+              label="Disabled"
+            />
+          </CCol>
+          {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
+        </CRow>
+      </CForm>
+    );
+  };
   return (
     <>
       {/* {console.log('ME SB BADALTA DEKHIYA!!', props.match)} */}
@@ -137,7 +145,6 @@ const review = (props) => {
           </CRow>
         </CCardHeader>
         <CCardBody>
-
           <CheckBox />
         </CCardBody>
       </CCard>

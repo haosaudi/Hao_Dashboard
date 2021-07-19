@@ -78,6 +78,7 @@ const Category = (props) => {
               />
             ),
             totalReview: totalReview || 0,
+            status: item.status == 1 ? "Enabled" : "Disabled",
             created_at: moment(created_at).format("yy-MM-DD"),
             // email: <p style={{ color: "#309CE4" }}>{providerDetail?.email}</p>,
             action: (

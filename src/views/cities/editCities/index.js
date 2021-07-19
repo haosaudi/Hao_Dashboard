@@ -68,18 +68,29 @@ const Category = (props) => {
     console.log("imageData", imageData);
   };
   const CheckBox = () => {
-    console.log("WHAT I GOT!!", state.status);
     return (
-      <CFormCheck
-        defaultChecked={state.status}
-        onChange={(e) => {
-          // setStatus(e.target.checked);
-          setState({ ...state, status: e.target.checked });
-        }}
-        type="checkbox"
-        id="gridCheck1"
-        label=""
-      />
+      <CCol sm="4">
+        <CFormCheck
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault1"
+          onChange={(e) => {
+            setState({ ...state, status: 1 });
+          }}
+          defaultChecked={state.status == 1}
+          label="Enabled"
+        />
+        <CFormCheck
+          type="radio"
+          name="flexRadioDefault"
+          onChange={(e) => {
+            setState({ ...state, status: 0 });
+          }}
+          defaultChecked={state.status == 0}
+          id="flexRadioDefault2"
+          label="Disabled"
+        />
+      </CCol>
     );
   };
   const EditCity = async () => {
