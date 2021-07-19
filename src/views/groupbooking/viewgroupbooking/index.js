@@ -404,58 +404,7 @@ const Category = (props) => {
                 </CFormSelect>
               </CCol> */}
             </CRow>
-            <CRow className="mb-3">
-              <CFormLabel
-                htmlFor="inputPassword3"
-                className="col-sm-2 col-form-label"
-              >
-                Price
-              </CFormLabel>
-              <CCol
-                sm="4"
-                style={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                {props?.groupbooking?.price || "Not Entered"}
-                {/* {moment(props?.groupbooking?.start_time).format("yy-MM-DD") || "not entered"} */}
-                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
-              </CCol>
-              {/* <CCol sm="4">
-                <CFormSelect
-                  id="done"
-                  onChange={(e) => {
-                    setState({ ...state, req_status: e.target.value });
-                  }}
-                  defaultValue={state.req_status}
-                  aria-label="Default select example"
-                >
-                  <option value="Requested">Requested</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Rejected">Rejected</option>
-                </CFormSelect>
-              </CCol> */}
-            </CRow>
 
-            <CRow className="mb-3">
-              <CFormLabel
-                htmlFor="inputPassword3"
-                className="col-sm-2 col-form-label"
-              >
-                Price
-              </CFormLabel>
-              <CCol
-                sm="4"
-                style={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                {props?.groupbooking?.price || "not entered"}
-                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
-              </CCol>
-            </CRow>
             <CRow className="mb-3">
               <CFormLabel
                 htmlFor="inputPassword3"
