@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   CSidebar,
@@ -7,52 +7,39 @@ import {
   CSidebarNav,
   CSidebarToggler,
   CCreateNavItem,
-} from '@coreui/react'
-import { connect } from 'react-redux'
-import { AuthAction } from '../redux-store/actions'
+} from "@coreui/react";
+import { connect } from "react-redux";
+import { AuthAction } from "../redux-store/actions";
 
-import CIcon from '@coreui/icons-react'
+import CIcon from "@coreui/icons-react";
 
-import SimpleBar from 'simplebar-react'
-import 'simplebar/dist/simplebar.min.css'
+import SimpleBar from "simplebar-react";
+import "simplebar/dist/simplebar.min.css";
 
 // sidebar nav config
-import { _nav, Provider } from '../_nav'
-import { array } from 'prop-types'
-
+import { _nav, Provider } from "../_nav";
+import { array } from "prop-types";
 
 const AppSidebar = (props) => {
-  const dispatch = useDispatch()
-  const unfoldable = useSelector((state) => state.sidebarUnfoldable)
-  const sidebarShow = useSelector((state) => state.sidebarShow)
-  let navigation = props.role == "Provider" ? Provider : _nav
-  console.log("rolerole==========", props.role)
-
-
-
-
-
-
-
+  const dispatch = useDispatch();
+  const unfoldable = useSelector((state) => state.sidebarUnfoldable);
+  const sidebarShow = useSelector((state) => state.sidebarShow);
+  let navigation = props.role == "Provider" ? Provider : _nav;
+  console.log("rolerole==========", props.role);
 
   //1
   //javascritp
   //react
-  //react native 
+  //react native
   //axios
 
   ///promises
-
-
-
 
   // Q1
   // let a = 10
   // console.log(a + "1")
   // let b = 10
   // console.log(b - "1")
-
-
 
   // Q2
 
@@ -62,17 +49,9 @@ const AppSidebar = (props) => {
   // array2.push(2)
   // console.log("array", array)
 
-
-
-
-
-
-
   // Q3
 
-
   // for (i = 0; i < 10; i++) {
-
 
   //   setTimeout(() => {
   //     console.log("print",i)
@@ -98,32 +77,25 @@ const AppSidebar = (props) => {
   //   max2 = array[i] > max2 && array[i] < max ? array[i] : max2;
   // }
 
-
-
-
-
-
-
-
-
-
-
-
   return (
     <CSidebar
       position="fixed"
       selfHiding="md"
       unfoldable={unfoldable}
       show={sidebarShow}
-      onShow={() => console.log('show')}
+      onShow={() => console.log("show")}
       onHide={() => {
-        dispatch({ type: 'set', sidebarShow: false })
+        dispatch({ type: "set", sidebarShow: false });
       }}
     >
-      <CSidebarBrand style={{ backgroundColor: '#A2CCC4' }} className="d-none d-md-flex" to="/">
+      <CSidebarBrand
+        style={{ backgroundColor: "#A2CCC4" }}
+        className="d-none d-md-flex"
+        to="/"
+      >
         {/* <CIcon className="sidebar-brand-full" name="logo-negative" height={35} />
         <CIcon className="sidebar-brand-narrow" name="sygnet" height={35} /> */}
-        <h3 style={{ fontWeight: 'bold' }}>Haosaudi</h3>
+        <h3 style={{ fontWeight: "bold" }}>HAOSAUDI 1.1</h3>
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
@@ -133,11 +105,13 @@ const AppSidebar = (props) => {
       </CSidebarNav>
       <CSidebarToggler
         className="d-none d-lg-flex"
-        onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
+        onClick={() =>
+          dispatch({ type: "set", sidebarUnfoldable: !unfoldable })
+        }
       />
     </CSidebar>
-  )
-}
+  );
+};
 
 // export default React.memo(AppSidebar)
 
