@@ -114,7 +114,9 @@ const Category = (props) => {
                       </CTableHeaderCell>
                       <CTableDataCell>{val.name_ar}</CTableDataCell>
                       {/* <CTableDataCell>{val.description_ar}</CTableDataCell> */}
-                      <CTableDataCell>{val.status}</CTableDataCell>
+                      <CTableDataCell>
+                        {val.status == 1 ? "Enabled" : "Disabled"}
+                      </CTableDataCell>
                       <CTableDataCell
                       // style={{ color: '#309CE4', fontSize: 12, cursor: 'pointer' }}
                       >

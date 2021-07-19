@@ -32,7 +32,7 @@ const Category = (props) => {
     img: "",
     loading: false,
   });
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState(1);
   // useEffect(() => {
   //   if (props.token) {
   //     props.GetCategories(props.token)
@@ -74,6 +74,34 @@ const Category = (props) => {
       );
     }
   };
+
+  const RadioButton = () => {
+    return (
+      <CCol sm="4">
+        <CFormCheck
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault1"
+          onChange={(e) => {
+            setStatus(1);
+          }}
+          defaultChecked={status == 1}
+          label="Enabled"
+        />
+        <CFormCheck
+          type="radio"
+          name="flexRadioDefault"
+          onChange={(e) => {
+            setStatus(0);
+          }}
+          defaultChecked={status == 0}
+          id="flexRadioDefault2"
+          label="Disabled"
+        />
+      </CCol>
+    );
+  };
+
   return (
     <>
       <CCard className="mb-4">
@@ -179,18 +207,9 @@ const Category = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
-                Enabled
+                Status
               </CFormLabel>
-              <CCol sm="4">
-                <CFormCheck
-                  onChange={(e) => {
-                    setStatus(e.target.checked);
-                  }}
-                  type="checkbox"
-                  id="gridCheck1"
-                  label=""
-                />
-              </CCol>
+              <CCol sm="4">{RadioButton()}</CCol>
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
             </CRow>
             <CRow className="mb-3">

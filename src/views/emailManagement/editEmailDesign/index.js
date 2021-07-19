@@ -130,19 +130,32 @@ const Category = (props) => {
     });
   };
 
-  const CheckBox = () => (
-    <CFormCheck
-      id="enabled"
-      defaultChecked={state.status}
-      style={{ marginLeft: 0 }}
-      onChange={(e) => {
-        setState({ ...state, status: e.target.checked });
-      }}
-      type="checkbox"
-      id="gridCheck1"
-      label=""
-    />
-  );
+  const CheckBox = () => {
+    return (
+      <CCol sm="4">
+        <CFormCheck
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault1"
+          onChange={(e) => {
+            setState({ ...state, status: 1 });
+          }}
+          defaultChecked={state.status == 1}
+          label="Enabled"
+        />
+        <CFormCheck
+          type="radio"
+          name="flexRadioDefault"
+          onChange={(e) => {
+            setState({ ...state, status: 0 });
+          }}
+          defaultChecked={state.status == 0}
+          id="flexRadioDefault2"
+          label="Disabled"
+        />
+      </CCol>
+    );
+  };
 
   return (
     <>
@@ -257,7 +270,7 @@ const Category = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
-                Active
+                Status
               </CFormLabel>
               <CCol sm="4">
                 <CheckBox />

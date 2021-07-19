@@ -22,6 +22,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { DocsLink } from "src/reusable";
+import { DocsCallout, Example } from "src/reusable";
 import {
   CategoryAction,
   CityAction,
@@ -45,6 +46,9 @@ const Category = (props) => {
     price: "",
     language: "Arabic",
     city_id: "",
+    experience_link: "",
+    status: 1,
+    entrance_img: "",
     pre_requisition_ar: "",
     tools_ar: "",
     location_desc_ar: "",
@@ -62,7 +66,7 @@ const Category = (props) => {
       setState({ ...state, category_id: props.categories[0].id });
     }
   }, [props.cities, props.categories]);
-  const imageUpload = async (file) => {
+  const imageUpload = async (file, key) => {
     setState({ ...state, loading: true });
     let data = new FormData();
     data.append("photo", file);
@@ -70,7 +74,7 @@ const Category = (props) => {
     if (imageData.success) {
       setState({
         ...state,
-        img_background: imageData?.data?.location,
+        [key ? key : "img_background"]: imageData?.data?.location,
         loading: false,
       });
     } else {
@@ -98,7 +102,6 @@ const Category = (props) => {
       props.AddExperience(
         {
           ...data,
-          status: 1,
           online: state.online ? 1 : 0,
           slug: state.title_ar,
         },
@@ -318,6 +321,25 @@ const Category = (props) => {
                 htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
               >
+                Experience Link
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  onChange={(e) =>
+                    setState({ ...state, experience_link: e.target.value })
+                  }
+                  placeholder="Experience Link"
+                  value={state.experience_link}
+                  id="inputEmail3"
+                />
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputEmail3"
+                className="col-sm-2 col-form-label"
+              >
                 Price
               </CFormLabel>
               <CCol sm="4">
@@ -442,6 +464,36 @@ const Category = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
+                Enabled
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormCheck
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
+                  onChange={(e) => {
+                    setState({ ...state, status: 1 });
+                  }}
+                  defaultChecked
+                  label="Enabled"
+                />
+                <CFormCheck
+                  type="radio"
+                  name="flexRadioDefault"
+                  onChange={(e) => {
+                    setState({ ...state, status: 0 });
+                  }}
+                  id="flexRadioDefault2"
+                  label="Disabled"
+                />
+              </CCol>
+              {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputPassword3"
+                className="col-sm-2 col-form-label"
+              >
                 Background Image
               </CFormLabel>
               <CCol sm="4">
@@ -477,6 +529,47 @@ const Category = (props) => {
 
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
             </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputPassword3"
+                className="col-sm-2 col-form-label"
+              >
+                Entrance Image
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  onChange={(e) => {
+                    imageUpload(e.target.files[0], "entrance_img");
+                  }}
+                  type="file"
+                  id="formFile"
+                />
+              </CCol>
+              {state.loading ? (
+                <CCol sm="2">
+                  <CSpinner style={{ height: 25, width: 25 }} />
+                </CCol>
+              ) : state.entrance_img?.length > 0 ? (
+                <>
+                  <CCol sm="2">Uploaded</CCol>
+                  <img
+                    style={{ width: 150 }}
+                    src={
+                      state.entrance_img?.search("amazonaws") !== -1
+                        ? state.entrance_img
+                        : `http://18.217.187.206/img/course_img/${
+                            state.entrance_img
+                              ? state.entrance_img.toLowerCase()
+                              : ""
+                          }`
+                    }
+                  />
+                </>
+              ) : null}
+
+              {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
+            </CRow>
+
             <CRow className="mb-3">
               <CFormLabel
                 htmlFor="inputPassword3"

@@ -54,11 +54,11 @@ const Category = (props) => {
         props.designs &&
         props.designs.map((item, i) => {
           console.log("itemmmmm", item);
-          let { id, updated_at, created_at, html } = item;
+          let { id, updated_at, created_at, html, status } = item;
           return {
             ...item,
             id: `#${id}`,
-
+            status: status == 1 ? "Enabled" : "Disabled",
             updated_at: moment(updated_at).format("yy-MM-DD"),
             created_at: moment(created_at).format("yy-MM-DD"),
             actions: (
