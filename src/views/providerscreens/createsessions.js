@@ -3,7 +3,6 @@ import React, { useEffect, useState, createRef } from "react";
 import classNames from "classnames";
 import { AutoComplete } from 'antd';
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
 import {
     CCard,
@@ -39,12 +38,11 @@ import { toast } from "react-toastify";
 import Datetime from "react-datetime";
 import { Tabs, Table, Navbar, DropdownButton, Button, Form, InputGroup, Col, Row, Dropdown } from 'react-bootstrap';
 
-
+import moment from 'moment'
 import FormControl from "@material-ui/core/FormControl";
 import "react-datetime/css/react-datetime.css";
 
 const Category = (props) => {
-    const [startDate, setStartDate] = useState(new Date());
     const [result, setResult] = useState([{
 
 
@@ -62,26 +60,18 @@ const Category = (props) => {
         setResult(res);
     };
 
-
+    const [experienceArray, setExperienceArray] = useState([])
+    const [experience, setExperience] = useState('')
     const [state, setState] = useState({
-        title_ar: "",
-        description_ar: "",
-        img_background: "",
-        category_id: "",
-        gender: "Male",
-        time: "",
+        course_id: "",
+        start_date: '',
+        end_date: "",
+        end_time: "",
         price: "",
-        language: "Arabic",
-        city_id: "",
-        pre_requisition_ar: "",
-        tools_ar: "",
-        location_desc_ar: "",
-        online: false,
-        longitude: "",
-        latitude: "",
         loading: false,
-        result: [],
-
+        seats: "",
+        start_time: "",
+        repeat_until: "",
         CreateSessions: [
             {
                 key: "Experience",
@@ -128,6 +118,9 @@ const Category = (props) => {
             {
                 key: "Repeat Count",
             },
+            {
+                key: "End Date"
+            },
         ],
         categories: [
             "Sciences", "Art", "football"
@@ -142,11 +135,7 @@ const Category = (props) => {
 
         ],
 
-
-
-        startDate: new Date()
     });
-
     const _OnchangeText = (val, index) => {
 
         const updatedArray = state.CreateSessions.map((item, i) => {
@@ -157,24 +146,17 @@ const Category = (props) => {
                 return item
             }
         })
-
-
-
         setState({ ...state, CreateSessions: updatedArray })
-
-
-
-
     }
 
     useEffect(() => {
 
-        console.log("props.allExperiences", props.allExperiences.map((item, i) => {
-            console.log("   item.title_ar", item.title_ar)
-        }))
-        // if (props.allExperiences.length > 0) {
-        //     setState({ ...state, result: props.allExperiences });
-        // }
+
+        let experienceUpdatedArray = props.allExperiences.map(item => {
+            return { course_id: item.id, value: item.title_ar }
+        })
+        setExperienceArray(experienceUpdatedArray)
+
     }, [props.allExperiences]);
 
     const AddSessions = async () => {
@@ -193,18 +175,17 @@ const Category = (props) => {
                 progress: undefined,
             });
         } else {
-            console.log("data", data, "online", state.online, "token", props.token)
-            let data = {
-                "course_id": 9,
-                "start_date": "2021-06-20",
-                "end_date": "2021-06-20",
-                "start_time": "12:00",
-                "end_time": "14:00",
-                "price": 200,
-                "seats": 20
 
+            let data = {
+                "course_id": state.course_id,
+                "start_date": moment(state.start_date).format("YYYY-MM-DD"),
+                "end_date": moment(state.end_date).format("YYYY-MM-DD"),
+                "start_time": moment(state.start_time, 'HHmmss').format("HH:mm:ss"),
+                "end_time": moment(state.end_time, 'HHmmss').format("HH:mm:ss"),
+                "price":  state.price<=0?alert("price must be greater than 0"): state.price,
+                "seats": state.seats<=0?alert("seats must be greater than 0"):state.seats
             }
-            props.AddExperience(
+            props.CreateSession(
                 {
                     ...data,
                     status: 1,
@@ -230,6 +211,9 @@ const Category = (props) => {
             label=""
         />
     );
+    const onSelect = (data, opt) => {
+        setState({ ...state, course_id: opt.course_id })
+    };
     return (
         <CCard className="mb-4"
             style={{ paddingRight: 10, paddingRight: 10 }}
@@ -296,23 +280,34 @@ const Category = (props) => {
                                 {
 
                                     item.key == "Experience" ?
-
-                                        <DropdownButton
-                                            style={{ padding: 0, margin: 0, justifyItems: 'center', alignItems: 'center' }}
-                                            id="dropdown-basic-button" title={item.value || "select gender"}
-                                        >
-                                            {
-                                                state.result && state.result.map((item) => {
-
-                                                    return <Dropdown.Item
-                                                        onClick={() =>
-                                                            _OnchangeText(item, i)
-                                                        }
-
-                                                    > {item} </Dropdown.Item>
-                                                })
+                                        <AutoComplete
+                                            style={{
+                                                width: 200,
+                                            }}
+                                            options={experienceArray}
+                                            placeholder="Type Something"
+                                            filterOption={(inputValue, option) =>
+                                                option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
                                             }
-                                        </DropdownButton>
+                                            onChange={(inputValue, option) => onSelect(inputValue, option)}
+                                        // onSelect={(option)=>onSelect(option)}
+                                        />
+                                        // <DropdownButton
+                                        //     style={{ padding: 0, margin: 0, justifyItems: 'center', alignItems: 'center' }}
+                                        //     id="dropdown-basic-button" title={item.value || "select gender"}
+                                        // >
+                                        //     {
+                                        //         state.result && state.result.map((item) => {
+
+                                        //             return <Dropdown.Item
+                                        //                 onClick={() =>
+                                        //                     _OnchangeText(item, i)
+                                        //                 }
+
+                                        //             > {item} </Dropdown.Item>
+                                        //         })
+                                        //     }
+                                        // </DropdownButton>
 
 
 
@@ -321,7 +316,7 @@ const Category = (props) => {
                                         :
                                         item.key == "Date" ?
 
-                                            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
+                                            <DatePicker selected={state.start_date} onChange={(date) => setState({ ...state, start_date: date })}
 
                                                 style={{ border: '0px solid #d3d3d3', background: '#f6f6f6' }}
 
@@ -336,95 +331,81 @@ const Category = (props) => {
                                                         <Datetime
                                                             dateFormat={false}
                                                             inputProps={{ placeholder: "select Start Time" }}
+                                                            onChange={e => setState({ ...state, start_time: e })}
                                                         />
                                                     </FormControl>
                                                 </div>
                                                 :
-                                                item.key == "End Time" ?
+                                                item.key == "End Date" ?
 
-                                                    <div class="md-form"
-
-
-                                                    >
+                                                    <div class="md-form">
 
 
                                                         <FormControl fullWidth>
-                                                            <Datetime
-                                                                dateFormat={false}
-                                                                inputProps={{ placeholder: "select End Time" }}
+                                                            <DatePicker selected={state.end_date} onChange={(date) => setState({ ...state, end_date: date })}
+
+                                                                style={{ border: '0px solid #d3d3d3', background: '#f6f6f6' }}
+
                                                             />
                                                         </FormControl>
                                                     </div>
                                                     :
-                                                    item.key == "Repeat Until" ?
+                                                    item.key == "Number of seats" ?
+                                                        <CCol sm="4">
 
-                                                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
-
-                                                            style={{ border: '0px solid #d3d3d3', background: '#f6f6f6' }}
-
-                                                        />
+                                                            <CFormControl
+                                                                onChange={(e) =>
+                                                                    setState({ ...state, seats: e.target.value })
+                                                                }
+                                                                placeholder="No of seats"
+                                                                type="text"
+                                                                value={state.seats}
+                                                                id="inputEmail3"
+                                                            />
+                                                        </CCol>
                                                         :
+                                                        item.key == "Price" ?
+                                                            <CCol sm="4">
+
+                                                                <CFormControl
+                                                                    onChange={(e) => setState({ ...state, price: e.target.value })
+                                                                    }
+                                                                    placeholder=" enter price"
+                                                                    type="text"
+                                                                    value={state.price}
+                                                                    id="inputEmail3"
+                                                                />
+                                                            </CCol>
+                                                            :
+                                                            item.key == "End Time" ?
+
+                                                                <div class="md-form"
 
 
-
-                                                        item.key == "Online" ?
-                                                            <>
-
-                                                                <div class="form-check">
-                                                                    <input
-                                                                        class="form-check-input"
-                                                                        type="checkbox"
-                                                                        value=""
-                                                                        id="flexCheckDefault"
-                                                                    // onChange={(text) => console.log("ssssss", text.target.value)}
-                                                                    />
-                                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                                        Yes
-                                                                    </label>
-                                                                </div>
+                                                                >
 
 
-
-                                                            </>
-                                                            : item.key == "Active" ?
-                                                                <>
-
-                                                                    <div class="form-check">
-                                                                        <input
-                                                                            class="form-check-input"
-                                                                            type="checkbox"
-                                                                            value=""
-                                                                            id="flexCheckDefault"
-                                                                        // onChange={(text) => console.log("ssssss", text.target.value)}
+                                                                    <FormControl fullWidth>
+                                                                        <Datetime
+                                                                            dateFormat={false}
+                                                                            inputProps={{ placeholder: "select End Time" }}
+                                                                            onChange={e => setState({ ...state, end_time: e })}
                                                                         />
-                                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                                            Yes
-                                                                        </label>
-                                                                    </div>
+                                                                    </FormControl>
+                                                                </div>
+                                                                :
+                                                                item.key == "Repeat Until" ?
+
+                                                                    <DatePicker selected={state.repeat_until} onChange={(date) => setState({ ...state, repeat_until: date })}
+
+                                                                        style={{ border: '0px solid #d3d3d3', background: '#f6f6f6' }}
+
+                                                                    />
+                                                                    :
 
 
 
-                                                                </>
-                                                                : item.key == "Repeat" ?
-                                                                    <>
-
-                                                                        <div class="form-check">
-                                                                            <input
-                                                                                class="form-check-input"
-                                                                                type="checkbox"
-                                                                                value=""
-                                                                                id="flexCheckDefault"
-                                                                            // onChange={(text) => console.log("ssssss", text.target.value)}
-                                                                            />
-                                                                            <label class="form-check-label" for="flexCheckDefault">
-                                                                                Yes
-                                                                            </label>
-                                                                        </div>
-
-
-
-                                                                    </>
-                                                                    : item.key == "Is There Additional Price For Equipment" ?
+                                                                    item.key == "Online" ?
                                                                         <>
 
                                                                             <div class="form-check">
@@ -444,74 +425,132 @@ const Category = (props) => {
 
                                                                         </>
                                                                         : item.key == "Active" ?
-                                                                            <div class="form-check">
-                                                                                <input
-                                                                                    class="form-check-input"
-                                                                                    type="checkbox"
-                                                                                    value=""
-                                                                                    id="flexCheckDefault"
-                                                                                // onChange={(text) => console.log("ssssss", text.target.value)}
-                                                                                />
-                                                                                <label class="form-check-label" for="flexCheckDefault">
-                                                                                    Yes
-                                                                                </label>
-                                                                            </div>
+                                                                            <>
 
-                                                                            :
-                                                                            item.key == "Repeat Type" ?
+                                                                                <div class="form-check">
+                                                                                    <input
+                                                                                        class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        value=""
+                                                                                        id="flexCheckDefault"
+                                                                                    // onChange={(text) => console.log("ssssss", text.target.value)}
+                                                                                    />
+                                                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                                                        Yes
+                                                                                    </label>
+                                                                                </div>
+
+
+
+                                                                            </>
+                                                                            : item.key == "Repeat" ?
                                                                                 <>
 
-                                                                                    <DropdownButton
-                                                                                        style={{ padding: 0, margin: 0, justifyItems: 'center', alignItems: 'center' }}
-                                                                                        id="dropdown-basic-button" title={item.value || "select"}
-                                                                                    >
-                                                                                        {
-                                                                                            state.RepeatType && state.RepeatType.map((item) => {
-
-                                                                                                return <Dropdown.Item
-                                                                                                    onClick={() =>
-                                                                                                        _OnchangeText(item, i)
-                                                                                                    }
-
-                                                                                                > {item} </Dropdown.Item>
-                                                                                            })
-                                                                                        }
-                                                                                    </DropdownButton>
-                                                                                    <div style={{ flexDirection: 'row', display: 'flex', marginTop: 8 }} >
-
-                                                                                        {
-                                                                                            state.days && state.days.map((item, i) => {
-                                                                                                return <div class="form-check"
-                                                                                                    style={{ marginRight: 10, justifyContent: 'center' }}
-                                                                                                >
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="checkbox"
-                                                                                                        value=""
-                                                                                                        id="flexCheckDefault"
-                                                                                                    // onChange={(text) => console.log("ssssss", text.target.value)}
-                                                                                                    />
-                                                                                                    <label class="form-check-label"
-                                                                                                    //  for="flexCheckDefault"
-                                                                                                    // onClick={() => alert("Be")}
-                                                                                                    >
-                                                                                                        {item}
-                                                                                                    </label>
-                                                                                                </div>
-                                                                                            })
-                                                                                        }
+                                                                                    <div class="form-check">
+                                                                                        <input
+                                                                                            class="form-check-input"
+                                                                                            type="checkbox"
+                                                                                            value=""
+                                                                                            id="flexCheckDefault"
+                                                                                        // onChange={(text) => console.log("ssssss", text.target.value)}
+                                                                                        />
+                                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                                            Yes
+                                                                                        </label>
                                                                                     </div>
 
 
+
                                                                                 </>
+                                                                                : item.key == "Is There Additional Price For Equipment" ?
+                                                                                    <>
+
+                                                                                        <div class="form-check">
+                                                                                            <input
+                                                                                                class="form-check-input"
+                                                                                                type="checkbox"
+                                                                                                value=""
+                                                                                                id="flexCheckDefault"
+                                                                                            // onChange={(text) => console.log("ssssss", text.target.value)}
+                                                                                            />
+                                                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                                                Yes
+                                                                                            </label>
+                                                                                        </div>
 
 
-                                                                                : <Form.Control plaintext defaultValue=""
-                                                                                    style={{ border: '1px solid #d3d3d3', background: '#f6f6f6' }}
 
-                                                                                    value={item.value}
-                                                                                    onChange={(text) => _OnchangeText(text.target.value, i)}
-                                                                                />
+                                                                                    </>
+                                                                                    : item.key == "Active" ?
+                                                                                        <div class="form-check">
+                                                                                            <input
+                                                                                                class="form-check-input"
+                                                                                                type="checkbox"
+                                                                                                value=""
+                                                                                                id="flexCheckDefault"
+                                                                                            // onChange={(text) => console.log("ssssss", text.target.value)}
+                                                                                            />
+                                                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                                                Yes
+                                                                                            </label>
+                                                                                        </div>
+
+                                                                                        :
+                                                                                        item.key == "Repeat Type" ?
+                                                                                            <>
+
+                                                                                                <DropdownButton
+                                                                                                    style={{ padding: 0, margin: 0, justifyItems: 'center', alignItems: 'center' }}
+                                                                                                    id="dropdown-basic-button" title={item.value || "select"}
+                                                                                                >
+                                                                                                    {
+                                                                                                        state.RepeatType && state.RepeatType.map((item) => {
+
+                                                                                                            return <Dropdown.Item
+                                                                                                                onClick={() =>
+                                                                                                                    _OnchangeText(item, i)
+                                                                                                                }
+
+                                                                                                            > {item} </Dropdown.Item>
+                                                                                                        })
+                                                                                                    }
+                                                                                                </DropdownButton>
+                                                                                                <div style={{ flexDirection: 'row', display: 'flex', marginTop: 8 }} >
+
+                                                                                                    {
+                                                                                                        state.days && state.days.map((item, i) => {
+
+                                                                                                            return <div class="form-check"
+                                                                                                                style={{ marginRight: 10, justifyContent: 'center' }}
+                                                                                                            >
+                                                                                                                <input
+                                                                                                                    class="form-check-input"
+                                                                                                                    type="checkbox"
+                                                                                                                    value=""
+                                                                                                                    id="flexCheckDefault"
+                                                                                                                // onChange={(text) => console.log("ssssss", text.target.value)}
+                                                                                                                />
+                                                                                                                <label class="form-check-label"
+                                                                                                                //  for="flexCheckDefault"
+                                                                                                                // onClick={() => alert("Be")}
+                                                                                                                >
+                                                                                                                    {item}
+                                                                                                                </label>
+                                                                                                            </div>
+                                                                                                        })
+                                                                                                    }
+                                                                                                </div>
+
+
+                                                                                            </>
+
+
+                                                                                            : <Form.Control plaintext defaultValue=""
+                                                                                                style={{ border: '1px solid #d3d3d3', background: '#f6f6f6' }}
+
+                                                                                                value={item.value}
+                                                                                                onChange={(text) => _OnchangeText(text.target.value, i)}
+                                                                                            />
                                 }
 
 
@@ -901,6 +940,7 @@ const Category = (props) => {
 };
 
 Category.propTypes = {
+    CreateSession: PropTypes.func,
     AddExperience: PropTypes.func,
     token: PropTypes.string,
     isLoading: PropTypes.bool,
@@ -914,8 +954,7 @@ const mapStateToProp = (state) => ({
     token: state.AuthReducer.token,
     categories: state.CategoryReducer.categories,
     cities: state.CityReducer.cities,
-    allExperiences: state.ExperienceReducer.experiences
-    // userData: state.AuthReducer.userData,
+    allExperiences: state.GetAllProviderReducer.experiences,
 });
 
 const mapDispatchToProps = {
@@ -923,6 +962,8 @@ const mapDispatchToProps = {
     GetCities: CityAction.GetAllCities,
     GetCategories: CategoryAction.GetAllCategories,
     AddExperience: MyexperienceAction.AddExperience,
+    CreateSession: MyexperienceAction.CreateSession,
+
 };
 
 export default connect(mapStateToProp, mapDispatchToProps)(Category);

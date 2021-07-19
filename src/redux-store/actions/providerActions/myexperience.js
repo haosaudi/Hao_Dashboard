@@ -52,6 +52,31 @@ export default class CategoryAction {
             });
         };
     };
+
+
+    static CreateSession = (data, token, history) => {
+        return async (dispatch) => {
+            console.log("post experience data in Action", data);
+            dispatch({ type: ActionType.PROVIDER_EXPERIENCE_ADD });
+            await POST("session", data, token).then((data) => {
+                if (data) {
+                    toast("EXPERIENCE ADDED SUCCESSFULLY");
+                    dispatch({ type: ActionType.PROVIDER_EXPERIENCE_ADD_SUCCESS });
+                    history.goBack()
+                    // history.push("/myexperience");
+                } else {
+                    dispatch({ type: ActionType.PROVIDER_EXPERIENCE_ADD_FAIL });
+                }
+            });
+        };
+    }
+
+    static ShowMySessions = (data) => {
+        return async (dispatch) => {
+            dispatch({ type: ActionType.GET_MY_EXPERIENCE_SESSION, payload: data });
+        };
+    };
+
     static UpdateExperience = (id, data, token, history) => {
         return async (dispatch) => {
             console.log("update experience data in Action", data);

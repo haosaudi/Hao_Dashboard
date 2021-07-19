@@ -34,9 +34,26 @@ export default class BookingAction {
         } else {
           dispatch({ type: ActionType.GET_SESSIONS_FAIL });
         }
-      });
-    };
-  };
+      })
+    }
+  }
+
+
+  static Attendees = (id, token) => {
+    return async (dispatch) => {
+      dispatch({ type: ActionType.GET_ATTENDEES })
+      await GET(`session/detail/${id}`, token).then((data) => {
+        if (data) {
+          dispatch({ type: ActionType.GET_ATTENDEES_SUCCESS, payload: data?.data })
+        } else {
+          dispatch({ type: ActionType.GET_ATTENDEES_FAIL })
+        }
+      })
+    }
+  }
+
+
+
   static RejectGroupBooking = (id, token, history) => {
     return async (dispatch) => {
       // console.log('update RejectGroupBooking data in Action', data)
