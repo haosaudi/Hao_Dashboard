@@ -47,6 +47,7 @@ const Category = (props) => {
     tools_ar: "",
     location_desc_ar: "",
     online: false,
+    status: 1,
     longitude: "",
     latitude: "",
     loading: false,
@@ -86,7 +87,6 @@ const Category = (props) => {
         img_background: experience.img_background,
         status: experience.status,
       });
-      console.log(experience.status == 1);
       // if (document.getElementById("gridCheck1")) {
       document.getElementById("category").value = experience.category_id;
       document.getElementById("city").value = experience.city_id;
@@ -460,6 +460,16 @@ const Category = (props) => {
                 <CheckBox />{" "}
                 <span style={{ marginLeft: 20, fontSize: 12 }}>Online</span>
               </CCol>
+              {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputPassword3"
+                className="col-sm-2 col-form-label"
+              >
+                Enabled
+              </CFormLabel>
+
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
             </CRow>
             <CRow className="mb-3">
