@@ -136,19 +136,19 @@ const Category = (props) => {
     }
   };
 
-    const CheckBox = () => (
-      <CFormCheck
-        id="enabled"
-        defaultChecked={state.online}
-        style={{ marginLeft: 0 }}
-        onChange={(e) => {
-          setState({ ...state, online: e.target.checked });
-        }}
-        type="checkbox"
-        id="gridCheck1"
-        label=""
-      />
-    );
+  const CheckBox = () => (
+    <CFormCheck
+      id="enabled"
+      defaultChecked={state.online}
+      style={{ marginLeft: 0 }}
+      onChange={(e) => {
+        setState({ ...state, online: e.target.checked });
+      }}
+      type="checkbox"
+      id="gridCheck1"
+      label=""
+    />
+  );
 
   return (
     <>
@@ -480,7 +480,21 @@ const Category = (props) => {
                   <CSpinner style={{ height: 25, width: 25 }} />
                 </CCol>
               ) : state.img_background?.length > 0 ? (
-                <CCol sm="2">Uploaded</CCol>
+                <>
+                  <CCol sm="2">Uploaded</CCol>
+                  <img
+                    style={{ width: 150 }}
+                    src={
+                      state.img_background?.search("amazonaws") !== -1
+                        ? state.img_background
+                        : `http://18.217.187.206/img/course_img/${
+                            state.img_background
+                              ? state.img_background.toLowerCase()
+                              : ""
+                          }`
+                    }
+                  />
+                </>
               ) : null}
 
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}

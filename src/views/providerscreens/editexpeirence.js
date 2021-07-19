@@ -27,9 +27,7 @@ import {
     CityAction,
     ExperienceAction,
 } from "src/redux-store/actions";
-import {
-    MyexperienceAction
-} from "src/redux-store/actions/providerActions";
+import { MyexperienceAction } from "src/redux-store/actions/providerActions";
 import { connect } from "react-redux";
 import { ImageUpload } from "src/utils/api_calls";
 import { missingFieldsCheckOut } from "src/utils/globalFunction";
@@ -68,7 +66,7 @@ const Category = (props) => {
     useEffect(() => {
         if (props.experience) {
             let { experience } = props;
-            console.log("experience.online===", experience.status)
+            console.log("experience.online===", experience.status);
             setState({
                 ...state,
                 title_ar: experience.title_ar,
@@ -86,7 +84,7 @@ const Category = (props) => {
                 longitude: experience.longitude,
                 latitude: experience.latitude,
                 img_background: experience.img_background,
-                status: experience.status
+                status: experience.status,
             });
             console.log(experience.status == 1);
             // if (document.getElementById("gridCheck1")) {
@@ -104,7 +102,7 @@ const Category = (props) => {
         let data = new FormData();
         data.append("photo", file);
         let imageData = await ImageUpload(data, props.token);
-        console.log("imageeeedata", imageData)
+        console.log("imageeeedata", imageData);
         if (imageData?.success) {
             setState({
                 ...state,
@@ -461,9 +459,7 @@ const Category = (props) => {
                                 Online?
                             </CFormLabel>
                             <CCol sm="4">
-                                <CheckBox
-
-                                />{" "}
+                                <CheckBox />{" "}
                                 <span style={{ marginLeft: 20, fontSize: 12 }}>Online</span>
                             </CCol>
                             {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
@@ -494,8 +490,8 @@ const Category = (props) => {
 
                             {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
                         </CRow>
-                        <img src={state.img_background || state.img_background}
-
+                        <img
+                            src={state.img_background || ""}
                             style={{ height: 40, width: 40 }}
                         />
                         <CRow className="mb-3">

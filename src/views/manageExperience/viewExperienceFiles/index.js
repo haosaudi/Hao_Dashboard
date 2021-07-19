@@ -129,29 +129,27 @@ const Category = (props) => {
                 props?.experience?.course_files.map((val) => (
                   <CCol md="6" sm="8">
                     <CCard style={{ width: "18rem", marginTop: 20 }}>
-                      <CCardImage
+                      {/* <CCardImage
                         component="svg"
                         orientation="top"
                         className="docs-placeholder-img"
                         width="100%"
                         height="180"
-                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns={`https://www.haosaudi.com/img/course_img/${val.filename}`}
                         role="img"
                         aria-label="Placeholder: Image cap"
                         preserveAspectRatio="xMidYMid slice"
                         focusable="false"
-                      >
-                        <img
-                          style={{ width: "100%", height: "100%" }}
-                          src={
-                            val.filename?.search("amazonaws") !== -1
-                              ? val.filename
-                              : `https://www.haosaudi.com/img/course_img/${
-                                  val.filename ? val.filename.toLowerCase() : ""
-                                }`
-                          }
-                        />
-                      </CCardImage>
+                      > */}
+                      <img
+                        style={{ width: "100%", height: "100%" }}
+                        src={
+                          val.filename?.search("https") !== -1
+                            ? val.filename
+                            : `https://www.haosaudi.com/img/course_img/${val.filename}`
+                        }
+                      />
+                      {/* </CCardImage> */}
                     </CCard>
                   </CCol>
                 ))

@@ -30,7 +30,9 @@ import {
 import { connect } from "react-redux";
 import { ImageUpload } from "src/utils/api_calls";
 import { missingFieldsCheckOut } from "src/utils/globalFunction";
+import GoogleMapReact from "google-map-react";
 import { toast } from "react-toastify";
+import { Button } from "antd";
 
 const Category = (props) => {
   const [state, setState] = useState({
@@ -51,7 +53,7 @@ const Category = (props) => {
     latitude: "",
     loading: false,
   });
-  const [status, setStatus] = useState(false);
+  const [coords, setCoords] = useState({ lat: 24.62565, lng: 56.7821736 });
   useEffect(() => {
     if (props.cities.length > 0) {
       setState({ ...state, city_id: props.cities[0].id });
@@ -215,9 +217,9 @@ const Category = (props) => {
                   component="textarea"
                   value={state.description_ar}
                   id="validationTextarea"
-                // placeholder="Required example textarea"
-                // invalid
-                // required
+                  // placeholder="Required example textarea"
+                  // invalid
+                  // required
                 ></CFormControl>
               </CCol>
             </CRow>
@@ -303,7 +305,7 @@ const Category = (props) => {
               <CCol sm="4">
                 <CFormControl
                   onChange={(e) => setState({ ...state, time: e.target.value })}
-                  placeholder="Experience Name"
+                  placeholder="Duration"
                   type="number"
                   value={state.time}
                   id="inputEmail3"
@@ -374,9 +376,9 @@ const Category = (props) => {
                   component="textarea"
                   value={state.tools_ar}
                   id="validationTextarea"
-                // placeholder="Required example textarea"
-                // invalid
-                // required
+                  // placeholder="Required example textarea"
+                  // invalid
+                  // required
                 ></CFormControl>
               </CCol>
             </CRow>
@@ -395,9 +397,9 @@ const Category = (props) => {
                   component="textarea"
                   value={state.pre_requisition_ar}
                   id="validationTextarea"
-                // placeholder="Required example textarea"
-                // invalid
-                // required
+                  // placeholder="Required example textarea"
+                  // invalid
+                  // required
                 ></CFormControl>
               </CCol>
             </CRow>
@@ -416,9 +418,9 @@ const Category = (props) => {
                   component="textarea"
                   value={state.location_desc_ar}
                   id="validationTextarea"
-                // placeholder="Required example textarea"
-                // invalid
-                // required
+                  // placeholder="Required example textarea"
+                  // invalid
+                  // required
                 ></CFormControl>
               </CCol>
             </CRow>
@@ -456,7 +458,21 @@ const Category = (props) => {
                   <CSpinner style={{ height: 25, width: 25 }} />
                 </CCol>
               ) : state.img_background?.length > 0 ? (
-                <CCol sm="2">Uploaded</CCol>
+                <>
+                  <CCol sm="2">Uploaded</CCol>
+                  <img
+                    style={{ width: 150 }}
+                    src={
+                      state.img_background?.search("amazonaws") !== -1
+                        ? state.img_background
+                        : `http://18.217.187.206/img/course_img/${
+                            state.img_background
+                              ? state.img_background.toLowerCase()
+                              : ""
+                          }`
+                    }
+                  />
+                </>
               ) : null}
 
               {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
@@ -484,9 +500,9 @@ const Category = (props) => {
                     // component="textarea"
                     value={state.latitude}
                     id="validationTextarea"
-                  // placeholder="Required example textarea"
-                  // invalid
-                  // required
+                    // placeholder="Required example textarea"
+                    // invalid
+                    // required
                   ></CFormControl>
                 </CRow>
               </CCol>
@@ -506,12 +522,49 @@ const Category = (props) => {
                     // component="textarea"
                     value={state.longitude}
                     id="validationTextarea"
-                  // placeholder="Required example textarea"
-                  // invalid
-                  // required
+                    // placeholder="Required example textarea"
+                    // invalid
+                    // required
                   ></CFormControl>
                 </CRow>
               </CCol>
+              <CCol sm="3">
+                <CRow className="mb-3">
+                  <Button
+                    onClick={() => {
+                      setCoords({
+                        lat: Number(state.latitude),
+                        log: Number(state.longitude),
+                      });
+                    }}
+                    style={{
+                      width: 150,
+                      background: "lightblue",
+                      marginTop: 5,
+                    }}
+                  >
+                    SEE IN THE MAP
+                  </Button>
+                </CRow>
+              </CCol>
+              {/* <div style={{ height: 200, width: 200 }}> */}
+              <CCard
+                style={{
+                  height: 400,
+                  width: 400,
+                }}
+                className="mb-12"
+              >
+                <GoogleMapReact
+                  bootstrapURLKeys={{
+                    key: "AIzaSyDxdw0CuRwe3cw-1t8bIHfvLsF1Qi4X5Yk",
+                  }}
+                  style={{ height: 200, width: 200 }}
+                  defaultCenter={{ ...coords }}
+                  defaultZoom={12}
+                ></GoogleMapReact>
+              </CCard>
+              {/* </div> */}
             </CRow>
           </CForm>
         </CCardBody>

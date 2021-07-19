@@ -46,6 +46,7 @@
     "classnames": "^2.3.1",
     "core-js": "^3.10.1",
     "enzyme": "^3.11.0",
+    "google-map-react": "^2.1.10",
     "mdbreact": "^5.0.2",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
