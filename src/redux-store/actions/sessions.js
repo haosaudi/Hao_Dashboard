@@ -120,4 +120,20 @@ export default class BookingAction {
       });
     };
   };
+  static DeleteSession = (id, token, history) => {
+    console.log("REDUX ID ", id);
+    return async (dispatch) => {
+      console.log("delete SESSIONS_DELETE data in Action", id);
+      dispatch({ type: ActionType.SESSIONS_DELETE });
+      await DELETE(`session/${id}`, token).then((data) => {
+        if (data) {
+          console.log("DELETE THE SESSIONS_DELETE", data);
+          toast("SESSIONS_DELETE DELETED SUCCESSFULLY");
+          dispatch({ type: ActionType.SESSIONS_DELETE_SUCCESS });
+        } else {
+          dispatch({ type: ActionType.SESSIONS_DELETE_FAIL });
+        }
+      });
+    };
+  };
 }
