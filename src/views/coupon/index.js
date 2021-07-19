@@ -47,6 +47,7 @@ const Category = (props) => {
         return {
           ...val,
           expiry_date: moment(val.expiry_date).format("DD-MM-yy"),
+          created_at: moment(val.created_at).format("DD-MM-yy"),
           status: val.status == 1 ? "Enabled" : "Disabled",
           action: (
             <>
@@ -173,38 +174,45 @@ const Category = (props) => {
             dataArray={coupons}
             columns={[
               {
-                label: "Booked By",
+                label: "Coupon Code",
                 field: "coupon_code",
                 sort: "asc",
                 width: 150,
               },
               {
-                label: "Amount",
+                label: "Coupon Amount",
                 field: "amount",
                 sort: "asc",
                 width: 270,
               },
               {
-                label: "Amount Type",
+                label: "Coupon Amount Type",
                 field: "amount_type",
                 sort: "asc",
                 width: 270,
               },
               {
-                label: "Expire Date",
-                field: "expiry_date",
+                label: "Coupon Level",
+                field: "coupon_type",
                 sort: "asc",
                 width: 270,
               },
               {
-                label: "Single Use?",
+                label: "Used Count",
+                field: "user",
+                sort: "asc",
+                width: 270,
+              },
+
+              {
+                label: "Coupon Status",
                 field: "status",
                 sort: "asc",
                 width: 270,
               },
               {
-                label: "Status",
-                field: "status",
+                label: "Created at",
+                field: "created_at",
                 sort: "asc",
                 width: 270,
               },
