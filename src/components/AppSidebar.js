@@ -35,69 +35,6 @@ const AppSidebar = (props) => {
 
 
 
-  //1
-  //javascritp
-  //react
-  //react native 
-  //axios
-
-  ///promises
-
-
-
-
-  // Q1
-  // let a = 10
-  // console.log(a + "1")
-  // let b = 10
-  // console.log(b - "1")
-
-
-
-  // Q2
-
-  // var array = [1, 2, 3, 5, 7]
-
-  // var array2 = array
-  // array2.push(2)
-  // console.log("array", array)
-
-
-
-
-
-
-
-  // Q3
-
-
-  // for (i = 0; i < 10; i++) {
-
-
-  //   setTimeout(() => {
-  //     console.log("print",i)
-
-  //   }, 1000);
-  // }
-
-  // var i;
-  // console.log(i)
-
-  // find second highest number
-
-  // const array = [1, 2, 3, 5, 6, 101, -101]
-
-  // var max = array[0];
-
-  // for (i = 1; i < array.length; i++) {
-  //   max = array[i] > max ? array[i] : max;
-  // }
-
-  // var max2 = array[0];
-  // for (i = 1; i < array.length; i++) {
-  //   max2 = array[i] > max2 && array[i] < max ? array[i] : max2;
-  // }
-
 
 
 
