@@ -24,7 +24,7 @@ import {
 } from "src/redux-store/actions/providerActions";
 import { connect } from "react-redux";
 import swal from "sweetalert";
-import Sortedtable from "../../../components/sortedtables";
+import Sortedtable from "../../components/sortedtables";
 import moment from "moment";
 
 const Category = (props) => {
@@ -85,32 +85,10 @@ const Category = (props) => {
                         created_at: moment(created_at).format("yy-MM-DD"),
                         action: (
                             <div style={{ display: "flex", flexWrap: "wrap" }}>
-                                <span
-                                    onClick={() =>
-                                        props.history.push(`/myexperience/edit/${item.id}`)
-                                    }
-                                    style={{ color: "#309CE4", fontSize: 12, cursor: "pointer" }}
-                                >
-                                    Edit
-                                </span>
+
                                 <span
                                     onClick={() =>
                                         props.history.push(`/experience/view/files/${item.id}`)
-                                    }
-                                    style={{
-                                        color: "#309C2E",
-                                        fontSize: 12,
-                                        cursor: "pointer",
-                                        marginLeft: 10,
-                                    }}
-                                >
-                                    Experience Files
-                                </span>
-                                <span
-                                    onClick={() =>
-                                        // props.history.push(`/experience/view/files/${item.id}`)
-                                        props.history.push(`/myexperience/viewprovidersessions/${item.id}`)
-
                                     }
                                     style={{
                                         color: "red",
@@ -119,22 +97,9 @@ const Category = (props) => {
                                         marginLeft: 10,
                                     }}
                                 >
-                                    View Sessions
+                                    View Details
                                 </span>
-                                {/* <span
-                                    onClick={() =>
-                                        props.history.push(`/experience/view/${item.id}`)
-                                    }
-                                    style={{
-                                        color: "lightblue",
-                                        textDecoration: "underline",
-                                        fontSize: 12,
-                                        cursor: "pointer",
-                                        // marginLeft: 10,
-                                    }}
-                                >
-                                    View Experience
-                                </span> */}
+
                             </div>
                         ),
                     };
@@ -156,60 +121,9 @@ const Category = (props) => {
                 }}
             >
                 <CCardHeader>
-                    My Experiences{" "}
-                    <span
-                        onClick={() => props.history.push("/myexperience/createexperience")}
-                        style={{
-                            fontSize: 12,
-                            fontWeight: "400",
-                            marginLeft: 30,
-                            color: "#309CE4",
-                            textDecorationLine: "underline",
-                            cursor: "pointer",
-                        }}
-                    >
-                        Create New  Expereince
-                    </span>
-                    <span
-                        onClick={() => props.history.push("/myexperience/createsessions")}
-                        style={{
-                            fontSize: 12,
-                            fontWeight: "400",
-                            marginLeft: 30,
-                            color: "#309CE4",
-                            textDecorationLine: "underline",
-                            cursor: "pointer",
-                        }}
-                    >
-                        Create New  sessions
-                    </span>
-                    <span
-                        onClick={() => props.history.push("/myexperience/viewregisteredusers")}
+                    viewregisteredusers{" "}
 
-                        style={{
-                            fontSize: 12,
-                            marginLeft: 30,
-                            fontWeight: "400",
-                            color: "#309CE4",
-                            textDecorationLine: "underline",
-                            cursor: "pointer",
-                        }}
-                    >
-                        View Registered Users
-                    </span>
-                    <span
-                        onClick={() => props.history.push("/myexperience/viewregisteredusers")}
-                        style={{
-                            fontSize: 12,
-                            marginLeft: 30,
-                            fontWeight: "400",
-                            color: "#309CE4",
-                            textDecorationLine: "underline",
-                            cursor: "pointer",
-                        }}
-                    >
-                        Chat
-                    </span>
+
                 </CCardHeader>
                 <Sortedtable
                     dataArray={state.experiences.reverse()}
