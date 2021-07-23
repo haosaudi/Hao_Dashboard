@@ -26,6 +26,8 @@ const Category = (props) => {
   const categoryTableHeading = [
     "Booked By",
     "Coupon Level",
+    "Experience",
+    "User",
     "Amount",
     "Amount Type",
     "Expire Date",
@@ -182,6 +184,18 @@ const Category = (props) => {
               {
                 label: "Coupon Amount",
                 field: "amount",
+                sort: "asc",
+                width: 270,
+              },
+              {
+                label: "Experience",
+                field: "title_ar",
+                sort: "asc",
+                width: 270,
+              },
+              {
+                label: "User",
+                field: "user",
                 sort: "asc",
                 width: 270,
               },
