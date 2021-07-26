@@ -57,6 +57,21 @@ export default class CategoryAction {
       });
     };
   };
+  static AddExperienceFile = (data, token) => {
+    return async (dispatch) => {
+      console.log("post experience file data in Action", data);
+      dispatch({ type: ActionType.EXPERIENCE_ADD_FILE });
+      await POST("experience/file", data, token).then((data) => {
+        if (data) {
+          console.log("ADD THE EXPERIENCE FILES", data);
+          toast("EXPERIENCE ADDED SUCCESSFULLY");
+          dispatch({ type: ActionType.EXPERIENCE_ADD_FILE_SUCCESS });
+        } else {
+          dispatch({ type: ActionType.EXPERIENCE_ADD_FILE_FAIL });
+        }
+      });
+    };
+  };
   static UpdateExperience = (id, data, token, history) => {
     return async (dispatch) => {
       console.log("update experience data in Action", data);

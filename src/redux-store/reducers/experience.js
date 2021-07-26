@@ -52,6 +52,18 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
       };
+    case ActionType.EXPERIENCE_ADD_FILE:
+      return { ...state, isLoading: true };
+    case ActionType.EXPERIENCE_ADD_FILE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case ActionType.EXPERIENCE_ADD_FILE_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+      };
     case ActionType.EXPERIENCE_UPDATE:
       return { ...state, isLoading: true };
     case ActionType.EXPERIENCE_UPDATE_SUCCESS:

@@ -36,21 +36,23 @@ import { missingFieldsCheckOut } from "src/utils/globalFunction";
 import { toast } from "react-toastify";
 const Category = (props) => {
   const [state, setState] = useState({
-    title_ar: "",
-    description_ar: "",
-    img_background: "",
-    category_id: "",
-    gender: "",
-    time: "",
-    price: "",
-    language: "",
-    city_id: "",
-    pre_requisition_ar: "",
-    tools_ar: "",
-    location_desc_ar: "",
-    online: false,
-    longitude: "",
-    latitude: "",
+    // title_ar: "",
+    // description_ar: "",
+    // course_file: "",
+    // category_id: "",
+    // gender: "",
+    // time: "",
+    // price: "",
+    // language: "",
+    // city_id: "",
+    // pre_requisition_ar: "",
+    // tools_ar: "",
+    // location_desc_ar: "",
+    // online: false,
+    // longitude: "",
+    // latitude: "",
+    course_files: [],
+    course_file: "",
     loading: false,
   });
   const [status, setStatus] = useState(false);
@@ -69,38 +71,60 @@ const Category = (props) => {
       console.log("EXPERIENCE!!", experience);
       setState({
         ...state,
-        title_ar: experience.title_ar,
-        description_ar: experience.description_ar,
-        category_id: experience.category_id,
-        city_id: experience.city_id,
-        gender: experience.gender,
-        time: experience.time,
-        price: experience.price,
-        language: experience.language,
-        pre_requisition_ar: experience.pre_requisition_ar,
-        tools_ar: experience.tools_ar,
-        location_desc_ar: experience.location_desc_ar,
-        online: experience.online,
-        longitude: experience.longitude,
-        latitude: experience.latitude,
-        img_background: experience.img_background,
+
+        course_files: experience.course_files,
       });
     }
   }, [props.experience]);
 
-  const CheckBox = () => (
-    <CFormCheck
-      defaultChecked={state.online}
-      style={{ marginLeft: 0 }}
-      onChange={(e) => {
-        setState({ ...state, online: e.target.checked });
-      }}
-      type="checkbox"
-      id="gridCheck1"
-      label=""
-      disabled
-    />
-  );
+  // const CheckBox = () => (
+  //   <CFormCheck
+  //     defaultChecked={state.online}
+  //     style={{ marginLeft: 0 }}
+  //     onChange={(e) => {
+  //       setState({ ...state, online: e.target.checked });
+  //     }}
+  //     type="checkbox"
+  //     id="gridCheck1"
+  //     label=""
+  //     disabled
+  //   />
+  // );
+
+  const imageUpload = async (file, key) => {
+    setState({ ...state, loading: true });
+    let data = new FormData();
+    data.append("photo", file);
+    let imageData = await ImageUpload(data, props.token);
+    if (imageData.success) {
+      setState({
+        ...state,
+        course_file: imageData?.data?.location,
+        loading: false,
+      });
+    } else {
+      setState({ ...state, loading: false });
+    }
+    // setState({ ...state, loading: false })
+    console.log("imageData", imageData);
+  };
+
+  const addInToExperience = () => {
+    props.AddExperienceFile(
+      {
+        filename: state.course_file,
+        type: "png",
+        course_id: props.match?.params?.id,
+      },
+      props.token
+    );
+    setState({
+      ...state,
+      course_files: [...state.course_files, { filename: state.course_file }],
+      course_file: "",
+    });
+    console.log("CHECKING DATA", state);
+  };
 
   return (
     <>
@@ -125,35 +149,63 @@ const Category = (props) => {
         <CCardBody>
           <CForm>
             <CRow className="mb-3">
+              <CFormLabel
+                htmlFor="inputPassword3"
+                className="col-sm-2 col-form-label"
+              >
+                Background Image
+              </CFormLabel>
+              <CCol sm="4">
+                <CFormControl
+                  onChange={(e) => {
+                    imageUpload(e.target.files[0]);
+                  }}
+                  type="file"
+                  id="formFile"
+                />
+              </CCol>
+              {state.loading ? (
+                <CCol sm="2">
+                  <CSpinner style={{ height: 25, width: 25 }} />
+                </CCol>
+              ) : state.course_file?.length > 0 ? (
+                <>
+                  <CCol sm="2">Uploaded</CCol>
+                  <img
+                    style={{ width: 150 }}
+                    src={
+                      state.course_file?.search("amazonaws") !== -1
+                        ? state.course_file
+                        : `http://18.217.187.206/img/course_img/${
+                            state.course_file
+                              ? state.course_file.toLowerCase()
+                              : ""
+                          }`
+                    }
+                  />
+                </>
+              ) : null}
+
+              {/* <CFormCheck type="checkbox" id="gridCheck1" label="Example checkbox" /> */}
+            </CRow>
+            <CRow className="mb-3">
               <CCol>
                 <CButton
-                  disabled={true}
-                  onClick={() => props.history.push("/experience")}
+                  disabled={state.course_file.length == 0}
+                  onClick={addInToExperience}
                   style={{ color: "white", fontSize: 12 }}
                   color={"dark"}
                   shape="rounded-0"
                 >
                   ADD IN TO FILE
-                </CButton>  
+                </CButton>
               </CCol>
             </CRow>
             <CRow className="mb-3">
-              {props?.experience?.course_files?.length > 0 ? (
-                props?.experience?.course_files.map((val) => (
+              {state?.course_files?.length > 0 ? (
+                state?.course_files.map((val) => (
                   <CCol md="6" sm="8">
                     <CCard style={{ width: "18rem", marginTop: 20 }}>
-                      {/* <CCardImage
-                        component="svg"
-                        orientation="top"
-                        className="docs-placeholder-img"
-                        width="100%"
-                        height="180"
-                        xmlns={`https://www.haosaudi.com/img/course_img/${val.filename}`}
-                        role="img"
-                        aria-label="Placeholder: Image cap"
-                        preserveAspectRatio="xMidYMid slice"
-                        focusable="false"
-                      > */}
                       <img
                         style={{ width: "100%", height: "100%" }}
                         src={
@@ -178,7 +230,7 @@ const Category = (props) => {
 };
 
 Category.propTypes = {
-  UpdateExperience: PropTypes.func,
+  AddExperienceFile: PropTypes.func,
   GetCategories: PropTypes.func,
   GetCities: PropTypes.func,
   GetExperienceById: PropTypes.func,
@@ -204,7 +256,7 @@ const mapDispatchToProps = {
   GetCategories: CategoryAction.GetAllCategories,
   GetCities: CityAction.GetAllCities,
   GetExperienceById: ExperienceAction.GetExperienceById,
-  UpdateExperience: ExperienceAction.UpdateExperience,
+  AddExperienceFile: ExperienceAction.AddExperienceFile,
 };
 
 export default connect(mapStateToProp, mapDispatchToProps)(Category);
