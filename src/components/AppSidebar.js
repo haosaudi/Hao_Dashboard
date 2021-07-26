@@ -26,18 +26,6 @@ const AppSidebar = (props) => {
   const sidebarShow = useSelector((state) => state.sidebarShow);
   let navigation = props.role == "Provider" ? Provider : _nav;
   console.log("rolerole==========", props.role);
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <CSidebar
       position="fixed"
