@@ -134,7 +134,7 @@ const Category = (props) => {
                   shape="rounded-0"
                 >
                   ADD IN TO FILE
-                </CButton>
+                </CButton>  
               </CCol>
             </CRow>
             <CRow className="mb-3">
