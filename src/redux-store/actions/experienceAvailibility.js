@@ -6,7 +6,7 @@ export default class CategoryAction {
     return async (dispatch) => {
       console.log("get category data in Action", token);
       dispatch({ type: ActionType.GET_ALL_AVAILIBILITY_REMINDER });
-      await GET("sessions/reminders?limit=50", token).then((data) => {
+      await GET("sessions/reminders/admin", token).then((data) => {
         if (data) {
           dispatch({
             type: ActionType.GET_ALL_AVAILIBILITY_REMINDER_SUCCESS,
