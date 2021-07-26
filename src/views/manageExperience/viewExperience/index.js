@@ -293,7 +293,7 @@ const Category = (props) => {
                 <CRow className="mb-5">
                   <CFormLabel
                     htmlFor="inputPassword3"
-                    className="col-sm-4 col-form-label"
+                    className="col-sm-4 co l-form-label"
                   >
                     Lng:
                   </CFormLabel>
