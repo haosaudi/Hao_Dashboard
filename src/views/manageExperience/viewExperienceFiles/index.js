@@ -125,6 +125,19 @@ const Category = (props) => {
         <CCardBody>
           <CForm>
             <CRow className="mb-3">
+              <CCol>
+                <CButton
+                  disabled={true}
+                  onClick={() => props.history.push("/experience")}
+                  style={{ color: "white", fontSize: 12 }}
+                  color={"dark"}
+                  shape="rounded-0"
+                >
+                  ADD IN TO FILE
+                </CButton>
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
               {props?.experience?.course_files?.length > 0 ? (
                 props?.experience?.course_files.map((val) => (
                   <CCol md="6" sm="8">
