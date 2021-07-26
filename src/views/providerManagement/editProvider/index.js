@@ -143,7 +143,7 @@ const EditProviderManagement = (props) => {
                 htmlFor="inputPassword3"
                 className="col-sm-2 col-form-label"
               >
-                Category Image
+                User Image
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
@@ -164,10 +164,12 @@ const EditProviderManagement = (props) => {
                   <img
                     style={{ width: 150 }}
                     src={
-                      state.img?.search("amazonaws") !== -1
-                        ? state.img
+                      state.profile_img?.search("amazonaws") !== -1
+                        ? state.profile_img
                         : `http://18.217.187.206/img/category_img/${
-                            state.img ? state.img.toLowerCase() : ""
+                            state.profile_img
+                              ? state.profile_img.toLowerCase()
+                              : ""
                           }`
                     }
                   />
@@ -214,9 +216,10 @@ const EditProviderManagement = (props) => {
                 /> */}
                 <CInputGroup>
                   <CFormControl
-                    onChange={(e) =>
-                      setState({ ...state, percentage: e.target.value })
-                    }
+                    onChange={(e) => {
+                      if (e.target.value >= 0)
+                        setState({ ...state, percentage: e.target.value });
+                    }}
                     placeholder="Percentage"
                     value={state.percentage}
                     aria-label="Recipient's username"

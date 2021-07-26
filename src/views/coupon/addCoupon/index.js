@@ -178,9 +178,11 @@ const City = (props) => {
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
-                  onChange={(e) =>
-                    setState({ ...state, amount: e.target.value })
-                  }
+                  onChange={(e) => {
+                    if (e.target.value >= 0)
+                      setState({ ...state, amount: e.target.value });
+                  }}
+                  value={state.amount}
                   placeholder="Amount"
                   type="number"
                   id="inputEmail3"

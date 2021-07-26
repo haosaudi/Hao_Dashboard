@@ -214,10 +214,14 @@ const Category = (props) => {
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
-                  onChange={(e) => setState({ ...state, qty: e.target.value })}
-                  component="textarea"
+                  onChange={(e) => {
+                    if (e.target.value >= 0)
+                      setState({ ...state, qty: e.target.value });
+                  }}
+                  // component="textarea"
                   id="validationTextarea"
                   placeholder="11"
+                  value={state.qty}
                   // invalid
                   // required
                 ></CFormControl>

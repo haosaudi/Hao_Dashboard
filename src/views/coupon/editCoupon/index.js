@@ -205,9 +205,10 @@ const Category = (props) => {
               <CCol sm="4">
                 <CFormControl
                   value={state.amount}
-                  onChange={(e) =>
-                    setState({ ...state, amount: e.target.value })
-                  }
+                  onChange={(e) => {
+                    if (e.target.value >= 0)
+                      setState({ ...state, amount: e.target.value });
+                  }}
                   placeholder="Amount"
                   type="number"
                   id="inputEmail3"

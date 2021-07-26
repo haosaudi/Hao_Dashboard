@@ -355,7 +355,10 @@ const Category = (props) => {
               </CFormLabel>
               <CCol sm="4">
                 <CFormControl
-                  onChange={(e) => setState({ ...state, time: e.target.value })}
+                  onChange={(e) => {
+                    if (e.target.value >= 0)
+                      setState({ ...state, time: e.target.value });
+                  }}
                   placeholder="Experience Name"
                   type="number"
                   value={state.time}
@@ -388,14 +391,15 @@ const Category = (props) => {
                 htmlFor="inputEmail3"
                 className="col-sm-2 col-form-label"
               >
-                Duration
+                Price
               </CFormLabel>
               <CCol sm="4">
                 <CInputGroup>
                   <CFormControl
-                    onChange={(e) =>
-                      setState({ ...state, price: e.target.value })
-                    }
+                    onChange={(e) => {
+                      if (e.target.value >= 0)
+                        setState({ ...state, price: e.target.value });
+                    }}
                     placeholder="Price"
                     value={state.price}
                     type="Number"
