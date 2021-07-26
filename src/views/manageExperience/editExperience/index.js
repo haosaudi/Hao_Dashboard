@@ -199,7 +199,7 @@ const Category = (props) => {
               </CButton>
               &nbsp; &nbsp;
               <CButton
-                onClick={() => props.history.push("/experience")}
+                onClick={() => props.history.goBack()}
                 style={{ color: "grey", fontSize: 12 }}
                 color={"light"}
                 shape="rounded-0"

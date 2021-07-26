@@ -6,7 +6,7 @@ export default class BookingAction {
     return async (dispatch) => {
       console.log("get GetAllGroupBooking data in Action", token);
       dispatch({ type: ActionType.GET_ALL_SESSIONS });
-      await GET("session?limit=50", token).then((data) => {
+      await GET("session?limit=9999", token).then((data) => {
         if (data) {
           console.log("GOT THE GetAllGroupGROUPBooking ALL!!", data);
           dispatch({
