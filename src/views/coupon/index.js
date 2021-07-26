@@ -118,60 +118,6 @@ const Category = (props) => {
           </span>
         </CCardHeader>
         <CCardBody>
-          {/* <CTable caption="top">
-            <CTableCaption>List of Coupons</CTableCaption>
-            <CTableHead>
-              <CTableRow>
-                {categoryTableHeading.map((val, index) => (
-                  <CTableHeaderCell key={index} scope="col">
-                    {val}
-                  </CTableHeaderCell>
-                ))}
-              </CTableRow>
-            </CTableHead>
-            <CTableBody> */}
-          {/* {coupons?.length > 0
-                ? coupons?.map((val, index) => (
-                    <CTableRow key={index}>
-                      <CTableHeaderCell scope="row">
-                        {val.coupon_code}
-                      </CTableHeaderCell>
-                      <CTableDataCell>{val.coupon_type}</CTableDataCell>
-                      <CTableDataCell>{val.amount}</CTableDataCell>
-                      <CTableDataCell>{val.amount_type}</CTableDataCell>
-                      <CTableDataCell>
-                        {moment(val.expiry_date).format("DD-MM-yy")}
-                      </CTableDataCell>
-                      <CTableDataCell>{val.status}</CTableDataCell>
-                      <CTableDataCell>{val.status}</CTableDataCell>
-                      <CTableDataCell>
-                        <span
-                          onClick={() => {
-                            DeleteCoupon(index, val.id);
-                          }}
-                          style={{
-                            color: "red",
-                            fontSize: 12,
-                            cursor: "pointer",
-                            paddingLeft: 5,
-                          }}
-                        >
-                          Delete
-                        </span>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))
-                : null} */}
-          {/* </CTableBody>
-          </CTable> */}
-          {/* "Booked By",
-    "Coupon Level",
-    "Amount",
-    "Amount Type",
-    "Expire Date",
-    "Single Use?",
-    "Enabled",
-    "Action", */}
           <Sortedtable
             dataArray={coupons}
             columns={[
@@ -190,6 +136,12 @@ const Category = (props) => {
               {
                 label: "Experience",
                 field: "title_ar",
+                sort: "asc",
+                width: 270,
+              },
+              {
+                label: "Coupon Expiry Date",
+                field: "expiry_date",
                 sort: "asc",
                 width: 270,
               },

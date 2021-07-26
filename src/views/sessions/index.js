@@ -52,15 +52,11 @@ const Category = (props) => {
     }
   }, []);
   useEffect(() => {
-    // setCategories(props.categories)
-    // console.log("itemmmmm")
-
     setState({
       ...state,
       sessions:
         props.sessions &&
         props.sessions.map((item, i) => {
-          console.log("itemmmmm", item.id);
           return {
             ...item,
             start_date: moment(item.start_date).format("yy-MM-DD"),
@@ -116,9 +112,7 @@ const Category = (props) => {
         }),
     });
   }, [props.sessions]);
-  const EditBooking = (i, id) => {
-    //  ہب
-  };
+
   const DeleteSession = (i, id) => {
     swal({
       title: "Are you sure?",
@@ -128,14 +122,18 @@ const Category = (props) => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        swal("Poof! Your session has been deleted!", {
+        swal("Your session has been deleted!", {
           icon: "success",
         });
         props.DeleteSession(id, props.token, props.history);
         // setCategories(categories.filter((item, ind) => ind !== i))
+        state.sessions.splice(i, 1);
+        let session = state.sessions;
+        // let session = props.sessions.filter((item, ind) => ind !== i);
+        console.log("SESSIONS, BROTHER", session);
         setState({
           ...state,
-          sessions: state.sessions.filter((item, ind) => ind !== i),
+          sessions: session,
         });
       } else {
         swal("Your session is safe!");
@@ -156,9 +154,7 @@ const Category = (props) => {
         <CCardHeader>
           All Session{" "}
           <span
-            onClick={() =>
-              props.history.push("/session/add")
-            }
+            onClick={() => props.history.push("/session/add")}
             style={{
               fontSize: 12,
               fontWeight: "400",

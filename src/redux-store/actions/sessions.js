@@ -34,25 +34,25 @@ export default class BookingAction {
         } else {
           dispatch({ type: ActionType.GET_SESSIONS_FAIL });
         }
-      })
-    }
-  }
-
+      });
+    };
+  };
 
   static Attendees = (id, token) => {
     return async (dispatch) => {
-      dispatch({ type: ActionType.GET_ATTENDEES })
+      dispatch({ type: ActionType.GET_ATTENDEES });
       await GET(`session/detail/${id}`, token).then((data) => {
         if (data) {
-          dispatch({ type: ActionType.GET_ATTENDEES_SUCCESS, payload: data?.data })
+          dispatch({
+            type: ActionType.GET_ATTENDEES_SUCCESS,
+            payload: data?.data,
+          });
         } else {
-          dispatch({ type: ActionType.GET_ATTENDEES_FAIL })
+          dispatch({ type: ActionType.GET_ATTENDEES_FAIL });
         }
-      })
-    }
-  }
-
-
+      });
+    };
+  };
 
   static RejectGroupBooking = (id, token, history) => {
     return async (dispatch) => {
@@ -141,14 +141,14 @@ export default class BookingAction {
     console.log("REDUX ID ", id);
     return async (dispatch) => {
       console.log("delete SESSIONS_DELETE data in Action", id);
-      dispatch({ type: ActionType.SESSIONS_DELETE });
+      // dispatch({ type: ActionType.SESSIONS_DELETE });
       await DELETE(`session/${id}`, token).then((data) => {
         if (data) {
           console.log("DELETE THE SESSIONS_DELETE", data);
           toast("SESSIONS_DELETE DELETED SUCCESSFULLY");
-          dispatch({ type: ActionType.SESSIONS_DELETE_SUCCESS });
+          // dispatch({ type: ActionType.SESSIONS_DELETE_SUCCESS });
         } else {
-          dispatch({ type: ActionType.SESSIONS_DELETE_FAIL });
+          // dispatch({ type: ActionType.SESSIONS_DELETE_FAIL });
         }
       });
     };
